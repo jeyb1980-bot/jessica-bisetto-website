@@ -1,0 +1,62 @@
+---
+interface Props {
+  variant?: "default" | "compact";
+}
+const { variant = "default" } = Astro.props;
+const isCompact = variant === "compact";
+
+const BREVO_FORM_URL =
+  "https://803f88cf.sibforms.com/serve/MUIFAG_8N9KU-HPVIbBAf6kIwm9OBFHtz9VzN_WKGc_2f6C71Nh9ZelZu5Jdjubo8cZR3rVHXOZJ_UhNc6MhWdP2pOD8-AA_T83PTuzmvyk1HyKADUV6rx7qVHMizjA0XHY3y6A9zMpOqf7nA99Xt56ZE3GCkv1987vUQcl23OOBiTVyK_LDBIf7jhHYkUhC4uhEYO8Wh9Mjw8v3";
+---
+<section class={"nl" + (isCompact ? " nl--compact" : "")}>
+  <div class="nl__inner">
+    <div class="nl__text">
+      <p class="eyebrow nl__eb">Newsletter</p>
+      <h2 class={isCompact ? "h2" : "h1"}>Bleib in Kontakt.</h2>
+      {!isCompact && (
+        <p class="lede nl__lede">
+          Ab und an schicke ich dir, was es Neues bei mir gibt — kommende
+          Kurse, freie Termine, Events und kleine Impulse zum Nachdenken.
+          Ohne Druck, ohne festen Rhythmus. Du kannst dich jederzeit
+          wieder austragen.
+        </p>
+      )}
+      {isCompact && (
+        <p class="body nl__lede">
+          Hat dich der Beitrag berührt? Bleib dran — ab und an schicke
+          ich dir, was bei mir los ist: Kurse, Angebote, Events und
+          kleine Impulse. Jederzeit abbestellbar.
+        </p>
+      )}
+    </div>
+
+    <div class="nl__embed">
+      <iframe
+        title="Newsletter-Anmeldung"
+        src={BREVO_FORM_URL}
+        width="100%"
+        height="330"
+        frameborder="0"
+        scrolling="no"
+        allowfullscreen
+      ></iframe>
+      <p class="nl__fineprint nl__fineprint--embed">
+        Double-Opt-in über Brevo. Mit der Anmeldung stimmst du den{" "}
+        <a href="/datenschutz">Datenschutzhinweisen</a> zu.
+      </p>
+    </div>
+  </div>
+</section>
+
+<style>
+  .nl__embed{
+    background: var(--color-bone);
+    border-radius: var(--r-lg);
+    padding: 20px 20px 4px;
+  }
+  .nl--compact .nl__embed{ background: var(--bg); }
+  .nl__embed iframe{ display: block; border: 0; width: 100%; }
+  .nl__fineprint--embed{
+    color: var(--fg-subtle); margin: 0 0 12px; padding: 0 4px;
+  }
+</style>

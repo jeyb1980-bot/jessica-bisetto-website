@@ -1,0 +1,202 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+
+const FORMSPREE_ENDPOINT = "https://formspree.io/f/mwlepoad";
+---
+<BaseLayout
+  title="Kontakt"
+  description="Schreib mir — für Kinder, Erwachsene und Unternehmen. Ich melde mich innerhalb von zwei Werktagen."
+  current="kontakt"
+>
+  <main class="screen screen--kontakt">
+    <div data-kontakt-form-view>
+      <div class="page-head">
+        <p class="eyebrow">Kontakt</p>
+        <h1 class="h-display" data-kontakt-heading>Schreib mir.</h1>
+        <p class="lede page-head__lede" data-kontakt-lede>
+          Erzähl mir kurz, was dich beschäftigt. Du kannst so kurz oder ausführlich schreiben, wie du magst.
+        </p>
+      </div>
+      <div class="kontakt-grid">
+        <form
+          class="kontakt-form"
+          data-kontakt-form
+          action={FORMSPREE_ENDPOINT}
+          method="POST"
+        >
+          <input type="hidden" name="_subject" value="Neue Kontaktanfrage — jessica-bisetto.de" />
+          <div class="fld-group">
+            <label class="lbl">Anliegen</label>
+            <div class="seg">
+              <button type="button" class="seg-btn" data-audience-btn="kinder">Für mein Kind</button>
+              <button type="button" class="seg-btn is-on" data-audience-btn="erwachsene">Für mich</button>
+              <button type="button" class="seg-btn" data-audience-btn="unternehmen">Für mein Team / Unternehmen</button>
+            </div>
+            <input type="hidden" name="anliegen" value="erwachsene" data-audience-input />
+          </div>
+          <div class="fld-row">
+            <div class="fld-group">
+              <label class="lbl">Name</label>
+              <input class="fld" name="name" data-kontakt-name-input placeholder="Wie heißt du?" required />
+            </div>
+            <div class="fld-group">
+              <label class="lbl">E-Mail</label>
+              <input class="fld" type="email" name="email" placeholder="name@beispiel.de" required />
+            </div>
+          </div>
+          <div class="fld-group">
+            <label class="lbl">Telefon · optional</label>
+            <input class="fld" name="telefon" placeholder="Falls Sie lieber telefonieren" />
+          </div>
+          <div class="fld-group">
+            <label class="lbl" data-kontakt-message-label>Was beschäftigt dich gerade?</label>
+            <textarea
+              class="fld"
+              name="nachricht"
+              rows="5"
+              data-kontakt-message-input
+              placeholder="So kurz oder ausführlich, wie du magst."
+            ></textarea>
+          </div>
+          <label class="cbox">
+            <input type="checkbox" required />
+            <span data-kontakt-consent-label>Ich hab die <a href="/datenschutz">Datenschutzhinweise</a> gelesen.</span>
+          </label>
+          <button type="submit" class="btn btn-pri btn-block" data-kontakt-submit>
+            <span data-kontakt-submit-label>Nachricht abschicken</span>
+            <span class="arr" aria-hidden="true">→</span>
+          </button>
+          <p class="body-sm" data-kontakt-error hidden style="color: var(--color-clay-700);">
+            Das hat leider nicht geklappt. Schreib mir gerne direkt an
+            <a href="mailto:kontakt@jessica-bisetto.de">kontakt@jessica-bisetto.de</a>.
+          </p>
+        </form>
+        <aside class="kontakt-side">
+          <h2 class="h3">Direkt erreichen</h2>
+          <p class="kontakt-line">
+            <img src="/assets/icons/map-pin.svg" width="18" height="18" alt="" />
+            <span>Stuttgarter Straße 3<br />73525 Schwäbisch Gmünd</span>
+          </p>
+          <p class="kontakt-line">
+            <img src="/assets/icons/phone.svg" width="18" height="18" alt="" />
+            <a href="tel:+4915253636003">0152 / 536 360 03</a>
+          </p>
+          <p class="kontakt-line">
+            <img src="/assets/icons/mail.svg" width="18" height="18" alt="" />
+            <a href="mailto:kontakt@jessica-bisetto.de">kontakt@jessica-bisetto.de</a>
+          </p>
+          <div class="kontakt-aside-note">
+            <p class="eyebrow">Erstgespräch</p>
+            <p class="body-sm">
+              Kostenfrei · 20 Minuten · am Telefon. Damit wir herausfinden,
+              ob es passt — ganz ohne Verpflichtung.
+            </p>
+          </div>
+        </aside>
+      </div>
+    </div>
+
+    <div class="kontakt-done" data-kontakt-done-view hidden>
+      <img src="/assets/icons/check.svg" width="40" height="40" alt="" />
+      <h1 class="h1" data-kontakt-done-heading>Danke. Ich hab's bekommen.</h1>
+      <p class="lede" data-kontakt-done-lede>
+        Ich melde mich innerhalb von zwei Werktagen bei dir. Falls etwas dringend ist, ruf gerne direkt an.
+      </p>
+      <button type="button" class="btn btn-sec" data-kontakt-reset>Zurück</button>
+    </div>
+  </main>
+</BaseLayout>
+
+<script>
+  const formView = document.querySelector<HTMLElement>("[data-kontakt-form-view]");
+  const doneView = document.querySelector<HTMLElement>("[data-kontakt-done-view]");
+  const form = document.querySelector<HTMLFormElement>("[data-kontakt-form]");
+  const errorMsg = document.querySelector<HTMLElement>("[data-kontakt-error]");
+  const resetBtn = document.querySelector<HTMLButtonElement>("[data-kontakt-reset]");
+
+  const heading = document.querySelector("[data-kontakt-heading]")!;
+  const lede = document.querySelector("[data-kontakt-lede]")!;
+  const messageLabel = document.querySelector("[data-kontakt-message-label]")!;
+  const messageInput = document.querySelector<HTMLTextAreaElement>("[data-kontakt-message-input]")!;
+  const nameInput = document.querySelector<HTMLInputElement>("[data-kontakt-name-input]")!;
+  const consentLabel = document.querySelector("[data-kontakt-consent-label]")!;
+  const submitLabel = document.querySelector("[data-kontakt-submit-label]")!;
+  const audienceInput = document.querySelector<HTMLInputElement>("[data-audience-input]")!;
+  const doneHeading = document.querySelector("[data-kontakt-done-heading]")!;
+  const doneLede = document.querySelector("[data-kontakt-done-lede]")!;
+
+  const copy = {
+    du: {
+      heading: "Schreib mir.",
+      lede: "Erzähl mir kurz, was dich beschäftigt. Du kannst so kurz oder ausführlich schreiben, wie du magst.",
+      messageLabel: "Was beschäftigt dich gerade?",
+      messagePlaceholder: "So kurz oder ausführlich, wie du magst.",
+      namePlaceholder: "Wie heißt du?",
+      consent: 'Ich hab die <a href="/datenschutz">Datenschutzhinweise</a> gelesen.',
+      submit: "Nachricht abschicken",
+      doneHeading: "Danke. Ich hab's bekommen.",
+      doneLede: "Ich melde mich innerhalb von zwei Werktagen bei dir. Falls etwas dringend ist, ruf gerne direkt an.",
+    },
+    sie: {
+      heading: "Schreiben Sie mir.",
+      lede: "Erzählen Sie mir kurz, worum es geht — ich melde mich innerhalb von zwei Werktagen.",
+      messageLabel: "Worum geht es?",
+      messagePlaceholder: "Anlass, Zielgruppe, gewünschter Rahmen, gewünschter Termin …",
+      namePlaceholder: "Vor- und Nachname",
+      consent: 'Ich habe die <a href="/datenschutz">Datenschutzhinweise</a> gelesen.',
+      submit: "Anfrage senden",
+      doneHeading: "Danke für Ihre Anfrage.",
+      doneLede: "Ich melde mich innerhalb von zwei Werktagen bei Ihnen — telefonisch oder per E-Mail.",
+    },
+  };
+
+  function applyRegister(audience: string) {
+    const register = audience === "unternehmen" ? copy.sie : copy.du;
+    heading.textContent = register.heading;
+    lede.textContent = register.lede;
+    messageLabel.textContent = register.messageLabel;
+    messageInput.placeholder = register.messagePlaceholder;
+    nameInput.placeholder = register.namePlaceholder;
+    consentLabel.innerHTML = register.consent;
+    submitLabel.textContent = register.submit;
+    doneHeading.textContent = register.doneHeading;
+    doneLede.textContent = register.doneLede;
+  }
+
+  document.querySelectorAll<HTMLButtonElement>("[data-audience-btn]").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      document.querySelectorAll("[data-audience-btn]").forEach((b) => b.classList.remove("is-on"));
+      btn.classList.add("is-on");
+      const audience = btn.dataset.audienceBtn!;
+      audienceInput.value = audience;
+      applyRegister(audience);
+    });
+  });
+
+  form?.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    if (errorMsg) errorMsg.hidden = true;
+    const data = new FormData(form);
+    try {
+      const res = await fetch(form.action, {
+        method: "POST",
+        body: data,
+        headers: { Accept: "application/json" },
+      });
+      if (res.ok) {
+        if (formView) formView.hidden = true;
+        if (doneView) doneView.hidden = false;
+      } else if (errorMsg) {
+        errorMsg.hidden = false;
+      }
+    } catch {
+      if (errorMsg) errorMsg.hidden = false;
+    }
+  });
+
+  resetBtn?.addEventListener("click", () => {
+    form?.reset();
+    if (doneView) doneView.hidden = true;
+    if (formView) formView.hidden = false;
+  });
+</script>

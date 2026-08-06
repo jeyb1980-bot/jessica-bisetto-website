@@ -1,0 +1,151 @@
+---
+---
+<div class="cookie-banner" data-cookie-banner hidden aria-live="polite">
+  <div class="cookie-banner__card" role="dialog" aria-modal="false" aria-labelledby="cookie-banner-heading">
+    <div data-cookie-view="main">
+      <p id="cookie-banner-heading" class="h3" style="margin: 0 0 8px;">Deine Privatsphäre ist mir wichtig.</p>
+      <p class="body-sm" style="margin: 0 0 18px;">
+        Ich nutze auf dieser Seite nur technisch notwendige Cookies. Optionale
+        Kategorien (Statistik, Marketing) werden erst aktiv, wenn du zustimmst
+        — du kannst deine Auswahl jederzeit über den Link im Footer ändern.
+      </p>
+      <div class="cookie-banner__actions">
+        <button type="button" class="btn btn-sec btn-sm" data-cookie-settings>Einstellungen</button>
+        <button type="button" class="btn btn-sec btn-sm" data-cookie-necessary-only>Nur notwendige</button>
+        <button type="button" class="btn btn-pri btn-sm" data-cookie-accept-all>Alle akzeptieren</button>
+      </div>
+    </div>
+
+    <div data-cookie-view="settings" hidden>
+      <p class="h3" style="margin: 0 0 8px;">Cookie-Einstellungen</p>
+      <div class="cookie-banner__row">
+        <label class="cookie-banner__row-label">
+          <span>Notwendig</span>
+          <input type="checkbox" checked disabled />
+        </label>
+        <p class="body-sm" style="margin: 4px 0 0;">Für den Betrieb der Seite erforderlich — immer aktiv.</p>
+      </div>
+      <div class="cookie-banner__row">
+        <label class="cookie-banner__row-label">
+          <span>Statistik</span>
+          <input type="checkbox" data-cookie-toggle="statistics" />
+        </label>
+        <p class="body-sm" style="margin: 4px 0 0;">Anonymisierte Nutzungsstatistiken, aktuell nicht im Einsatz.</p>
+      </div>
+      <div class="cookie-banner__row">
+        <label class="cookie-banner__row-label">
+          <span>Marketing</span>
+          <input type="checkbox" data-cookie-toggle="marketing" />
+        </label>
+        <p class="body-sm" style="margin: 4px 0 0;">Für externe Anmeldeformulare (z. B. Newsletter), aktuell nicht im Einsatz.</p>
+      </div>
+      <div class="cookie-banner__actions">
+        <button type="button" class="btn btn-sec btn-sm" data-cookie-back">Zurück</button>
+        <button type="button" class="btn btn-pri btn-sm" data-cookie-save>Auswahl speichern</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .cookie-banner{
+    position: fixed; left: 0; right: 0; bottom: 0; z-index: 200;
+    display: flex; justify-content: center;
+    padding: 16px;
+  }
+  .cookie-banner__card{
+    max-width: 640px; width: 100%;
+    background: var(--bg-raised);
+    border: 1px solid var(--border);
+    border-radius: var(--r-lg);
+    box-shadow: var(--shadow-lg);
+    padding: 24px 28px;
+  }
+  .cookie-banner__actions{ display: flex; gap: 10px; flex-wrap: wrap; justify-content: flex-end; }
+  .cookie-banner__row{ padding: 10px 0; border-top: 1px solid var(--border); }
+  .cookie-banner__row:first-of-type{ border-top: none; }
+  .cookie-banner__row-label{
+    display: flex; align-items: center; justify-content: space-between;
+    font-family: var(--font-body); font-weight: 600; font-size: 14px;
+  }
+  .cookie-banner__row-label input{ accent-color: var(--color-teal-500); width: 18px; height: 18px; }
+</style>
+
+<script>
+  const STORAGE_KEY = "cookie-consent";
+  const banner = document.querySelector<HTMLElement>("[data-cookie-banner]");
+  const mainView = document.querySelector<HTMLElement>('[data-cookie-view="main"]');
+  const settingsView = document.querySelector<HTMLElement>('[data-cookie-view="settings"]');
+
+  function readConsent(): { statistics: boolean; marketing: boolean } | null {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      return raw ? JSON.parse(raw).categories : null;
+    } catch {
+      return null;
+    }
+  }
+
+  function saveConsent(categories: { statistics: boolean; marketing: boolean }) {
+    localStorage.setItem(
+      STORAGE_KEY,
+      JSON.stringify({ categories, timestamp: new Date().toISOString() })
+    );
+    document.dispatchEvent(new CustomEvent("cookie-consent-changed", { detail: categories }));
+  }
+
+  function openBanner(showSettings = false) {
+    if (!banner) return;
+    banner.hidden = false;
+    if (mainView) mainView.hidden = showSettings;
+    if (settingsView) settingsView.hidden = !showSettings;
+  }
+
+  function closeBanner() {
+    if (banner) banner.hidden = true;
+  }
+
+  document.querySelector("[data-cookie-accept-all]")?.addEventListener("click", () => {
+    saveConsent({ statistics: true, marketing: true });
+    closeBanner();
+  });
+
+  document.querySelector("[data-cookie-necessary-only]")?.addEventListener("click", () => {
+    saveConsent({ statistics: false, marketing: false });
+    closeBanner();
+  });
+
+  document.querySelector("[data-cookie-settings]")?.addEventListener("click", () => {
+    openBanner(true);
+  });
+
+  document.querySelector("[data-cookie-back]")?.addEventListener("click", () => {
+    openBanner(false);
+  });
+
+  document.querySelector("[data-cookie-save]")?.addEventListener("click", () => {
+    const statistics = (document.querySelector('[data-cookie-toggle="statistics"]') as HTMLInputElement)?.checked ?? false;
+    const marketing = (document.querySelector('[data-cookie-toggle="marketing"]') as HTMLInputElement)?.checked ?? false;
+    saveConsent({ statistics, marketing });
+    closeBanner();
+  });
+
+  // Footer-Link "Cookie-Einstellungen" öffnet den Banner erneut.
+  document.querySelectorAll("[data-cookie-reopen]").forEach((el) => {
+    el.addEventListener("click", (e) => {
+      e.preventDefault();
+      const consent = readConsent();
+      if (settingsView) {
+        const statsToggle = settingsView.querySelector('[data-cookie-toggle="statistics"]') as HTMLInputElement | null;
+        const marketingToggle = settingsView.querySelector('[data-cookie-toggle="marketing"]') as HTMLInputElement | null;
+        if (statsToggle) statsToggle.checked = consent?.statistics ?? false;
+        if (marketingToggle) marketingToggle.checked = consent?.marketing ?? false;
+      }
+      openBanner(true);
+    });
+  });
+
+  if (!readConsent()) {
+    openBanner(false);
+  }
+</script>

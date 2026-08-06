@@ -1,0 +1,336 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <title>Flyer · Coaching im Überblick — Jessica Bisetto</title>
+  <link rel="stylesheet" href="../colors_and_type.css">
+  <style>
+    /* ============================================================
+       Flyer "Coaching im Überblick" — A4 portrait, single-sided.
+       Use browser Print → Save as PDF (no margins) to export.
+       ============================================================ */
+    @page { size: A4 portrait; margin: 0; }
+
+    html, body {
+      margin: 0; padding: 0;
+      background: #2A2A28;        /* dark backdrop for on-screen preview */
+      font-family: var(--font-body);
+      color: var(--fg);
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+    body { display: flex; justify-content: center; padding: 32px 16px; }
+
+    .sheet {
+      width: 210mm; height: 297mm;
+      background: var(--color-bone);
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 20px 60px rgba(0,0,0,.35);
+      display: grid;
+      grid-template-rows: auto auto 1fr auto auto;
+      padding: 22mm 20mm 18mm;
+      box-sizing: border-box;
+    }
+
+    /* === decorative waves ====================================== */
+    .wave {
+      position: absolute; left: 0; right: 0;
+      width: 100%; height: 30mm;
+      pointer-events: none;
+    }
+    .wave--top    { top: 0;     opacity: .10; color: var(--color-teal-500); }
+    .wave--bot    { bottom: 0;  opacity: .08; color: var(--color-teal-700); transform: scaleY(-1); }
+    .wave svg { width: 100%; height: 100%; display: block; }
+
+    /* === header ================================================ */
+    .head {
+      display: flex; justify-content: space-between; align-items: flex-start;
+      position: relative; z-index: 2;
+    }
+    .brand { display: flex; align-items: center; gap: 4mm; }
+    .brand__logo { width: 16mm; height: 16mm; }
+    .brand__name {
+      font-family: var(--font-display);
+      font-weight: 400;
+      font-size: 22pt;
+      letter-spacing: -0.01em;
+      line-height: 1; color: var(--color-ink);
+    }
+    .brand__tag {
+      font-family: var(--font-body);
+      font-size: 9pt; letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--color-teal-700);
+      margin-top: 3mm;
+    }
+    .contact-head {
+      text-align: right;
+      font-family: var(--font-body);
+      font-size: 8.5pt; line-height: 1.5; color: var(--color-stone-700);
+    }
+    .contact-head a { color: inherit; text-decoration: none; }
+    .contact-head strong { color: var(--color-ink); font-weight: 500; }
+
+    /* === hero =================================================== */
+    .hero {
+      margin-top: 14mm;
+      position: relative; z-index: 2;
+    }
+    .hero__eb {
+      font-family: var(--font-body);
+      font-size: 9pt; letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--color-teal-700); font-weight: 600;
+      margin: 0 0 4mm;
+    }
+    .hero__h {
+      font-family: var(--font-display);
+      font-weight: 400;
+      font-size: 36pt;
+      line-height: 1.05;
+      letter-spacing: -0.02em;
+      color: var(--color-ink);
+      margin: 0 0 5mm;
+      max-width: 16ch;
+      text-wrap: balance;
+    }
+    .hero__h em { font-style: italic; color: var(--color-teal-700); font-weight: 400; }
+    .hero__lede {
+      font-family: var(--font-display);
+      font-style: italic; font-weight: 300;
+      font-size: 14pt; line-height: 1.4; color: var(--color-stone-700);
+      margin: 0; max-width: 28em;
+    }
+
+    /* === three audiences ========================================= */
+    .auds {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 6mm;
+      margin-top: 14mm;
+      position: relative; z-index: 2;
+    }
+    .aud-col {
+      background: var(--bg-raised);
+      border-radius: 4mm;
+      padding: 6mm 6mm 6.5mm;
+      display: flex; flex-direction: column; gap: 3mm;
+      border-top: 1mm solid var(--accent-color);
+    }
+    .aud-col--kinder      { --accent-color: var(--color-clay-500); }
+    .aud-col--erwachsene  { --accent-color: var(--color-teal-500); }
+    .aud-col--unternehmen { --accent-color: var(--color-sage-500); }
+    .aud-col__eb {
+      font-family: var(--font-body);
+      font-size: 8pt; letter-spacing: 0.14em; text-transform: uppercase;
+      font-weight: 700;
+      color: var(--accent-color);
+      margin: 0;
+    }
+    .aud-col__t {
+      font-family: var(--font-display);
+      font-weight: 400; font-size: 14pt; line-height: 1.15;
+      color: var(--color-ink); margin: 0; text-wrap: balance;
+    }
+    .aud-col__d {
+      font-family: var(--font-body);
+      font-size: 8.5pt; line-height: 1.5;
+      color: var(--color-stone-700); margin: 0;
+    }
+    .aud-col__ul {
+      list-style: none; padding: 0; margin: 1mm 0 0;
+      display: flex; flex-direction: column; gap: 1.5mm;
+    }
+    .aud-col__ul li {
+      font-family: var(--font-body);
+      font-size: 8.5pt; line-height: 1.4;
+      color: var(--color-ink);
+      padding-left: 5mm; position: relative;
+    }
+    .aud-col__ul li::before {
+      content: ""; position: absolute; left: 0; top: 1.5mm;
+      width: 2mm; height: 2mm; border-radius: 50%;
+      background: var(--accent-color); opacity: .65;
+    }
+
+    /* === methods + contact ====================================== */
+    .info {
+      margin-top: 12mm;
+      display: grid; grid-template-columns: 1.2fr 1fr; gap: 10mm;
+      position: relative; z-index: 2;
+    }
+    .info__eb {
+      font-family: var(--font-body);
+      font-size: 9pt; letter-spacing: 0.16em; text-transform: uppercase;
+      font-weight: 700; color: var(--color-teal-700);
+      margin: 0 0 4mm;
+    }
+    .methods {
+      font-family: var(--font-body);
+      font-size: 9pt; line-height: 1.65; color: var(--color-ink);
+    }
+    .methods b { font-weight: 600; color: var(--color-ink); }
+    .methods .grid {
+      display: grid; grid-template-columns: auto 1fr; gap: 1.5mm 5mm;
+      margin-top: 2mm;
+    }
+    .methods .grid dt { color: var(--color-teal-700); font-weight: 600; }
+    .methods .grid dd { margin: 0; color: var(--color-stone-700); }
+
+    .contact {
+      background: var(--color-teal-700);
+      color: var(--color-bone);
+      border-radius: 4mm;
+      padding: 6mm 7mm 6.5mm;
+      display: flex; flex-direction: column; gap: 2mm;
+    }
+    .contact__eb {
+      font-family: var(--font-body);
+      font-size: 8pt; letter-spacing: 0.16em; text-transform: uppercase;
+      font-weight: 700; color: var(--color-clay-300); margin: 0 0 1mm;
+    }
+    .contact__h {
+      font-family: var(--font-display);
+      font-weight: 400; font-size: 16pt; line-height: 1.15;
+      margin: 0 0 3mm; color: var(--color-bone);
+    }
+    .contact__line {
+      font-family: var(--font-body);
+      font-size: 9pt; line-height: 1.5; color: var(--color-bone);
+      margin: 0;
+    }
+    .contact__line strong { font-weight: 500; color: var(--color-clay-300); display: block; font-size: 7.5pt; letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 0.5mm; }
+    .contact__line a { color: inherit; text-decoration: none; }
+
+    /* === foot strip ============================================ */
+    .foot {
+      margin-top: 10mm; padding-top: 5mm;
+      border-top: 0.5pt solid var(--color-stone-300);
+      display: flex; justify-content: space-between; align-items: center;
+      position: relative; z-index: 2;
+      font-family: var(--font-body); font-size: 8pt; color: var(--color-stone-500);
+      letter-spacing: 0.06em;
+    }
+    .foot__pillars { color: var(--color-ink); font-weight: 500; letter-spacing: 0.04em; }
+    .foot__pillars span { color: var(--color-clay-500); margin: 0 2mm; }
+    .foot__sig { font-family: var(--font-display); font-style: italic; font-weight: 300; color: var(--color-stone-700); font-size: 10pt; letter-spacing: 0; }
+
+    /* === print tweaks ========================================== */
+    @media print {
+      html, body { background: #fff; padding: 0; }
+      .sheet { box-shadow: none; margin: 0; }
+    }
+  </style>
+</head>
+<body>
+  <div class="sheet">
+    <!-- decorative waves -->
+    <div class="wave wave--top">
+      <svg viewBox="0 0 1200 100" preserveAspectRatio="none" fill="currentColor">
+        <path d="M0,60 C200,20 400,90 600,55 C800,20 1000,90 1200,55 L1200,100 L0,100 Z"/>
+      </svg>
+    </div>
+    <div class="wave wave--bot">
+      <svg viewBox="0 0 1200 100" preserveAspectRatio="none" fill="currentColor">
+        <path d="M0,55 C200,90 400,20 600,55 C800,90 1000,20 1200,60 L1200,100 L0,100 Z"/>
+      </svg>
+    </div>
+
+    <!-- HEADER -->
+    <header class="head">
+      <div>
+        <div class="brand">
+          <img class="brand__logo" src="../assets/logo.png" alt="">
+          <span class="brand__name">Jessica Bisetto</span>
+        </div>
+        <p class="brand__tag">Coaching · Ostalbkreis</p>
+      </div>
+      <div class="contact-head">
+        <strong>Stuttgarter Straße 3</strong><br>
+        73525 Schwäbisch Gmünd<br>
+        0152 / 536 360 03<br>
+        <a href="mailto:kontakt@jessica-bisetto.de">kontakt@jessica-bisetto.de</a><br>
+        <strong>jessica-bisetto.de</strong>
+      </div>
+    </header>
+
+    <!-- HERO -->
+    <section class="hero">
+      <p class="hero__eb">Coaching im Überblick</p>
+      <h1 class="hero__h">Du bist der wichtigste Mensch in <em>deinem</em> Leben.</h1>
+      <p class="hero__lede">
+        Manchmal reicht ein Gespräch — manchmal braucht es mehr. Ich helfe
+        dir, dein eigenes Surfbrett zu gestalten, das dich trägt, wenn die
+        Welle hochkommt.
+      </p>
+    </section>
+
+    <!-- THREE AUDIENCES -->
+    <section class="auds">
+      <article class="aud-col aud-col--kinder">
+        <p class="aud-col__eb">Kinder &amp; Jugendliche</p>
+        <h2 class="aud-col__t">Spielen, fragen, wachsen.</h2>
+        <ul class="aud-col__ul">
+          <li>Bei Stress in Schule, Familie oder Freundeskreis</li>
+          <li>Bei Mobbing, Blockaden und Selbstzweifeln</li>
+          <li>Kinder- &amp; Jugendcoaching, Reflexintegration</li>
+          <li>Altersgerecht, spielerisch — keine Therapie</li>
+        </ul>
+      </article>
+
+      <article class="aud-col aud-col--erwachsene">
+        <p class="aud-col__eb">Erwachsene</p>
+        <h2 class="aud-col__t">Ruhig hinschauen.</h2>
+        <ul class="aud-col__ul">
+          <li>Bei Blockaden, Triggern, dauerhafter Belastung</li>
+          <li>In Lebensübergängen — Beruf, Familie, Trennung</li>
+          <li>Gegen Perfektionismus und Anerkennungssuche</li>
+          <li>Einzelcoaching · 60 oder 90 Minuten</li>
+        </ul>
+      </article>
+
+      <article class="aud-col aud-col--unternehmen">
+        <p class="aud-col__eb">Unternehmen &amp; Schulen</p>
+        <h2 class="aud-col__t">Gemeinsam tragen.</h2>
+        <ul class="aud-col__ul">
+          <li>Workshops zu Resilienz, Konflikt, Kommunikation</li>
+          <li>Halbtags-, Tages- und Begleitformate</li>
+          <li>Für Schulen, Kommunen und Unternehmen</li>
+          <li>Vor Ort im Ostalbkreis oder hybrid</li>
+        </ul>
+      </article>
+    </section>
+
+    <!-- METHODS + CONTACT -->
+    <section class="info">
+      <div class="methods">
+        <p class="info__eb">Methoden, mit denen ich arbeite</p>
+        <dl class="grid">
+          <dt>EMDR</dt><dd>Eye Movement Desensitization &amp; Reprocessing — bewährt aus der Trauma-Therapie</dd>
+          <dt>AMR</dt><dd>Advanced Movement Reprocessing — das „Eisschollen-Prinzip"</dd>
+          <dt>EFT</dt><dd>Emotional Freedom Techniques</dd>
+          <dt>Reflex&shy;integration</dt><dd>Bei Kindern und Jugendlichen</dd>
+          <dt>Ressourcen&shy;arbeit, NLP</dt><dd>Ergänzend, im Tempo des Coachee</dd>
+        </dl>
+      </div>
+
+      <div class="contact">
+        <p class="contact__eb">Erstgespräch</p>
+        <h2 class="contact__h">Unverbindlich und kostenfrei.</h2>
+        <p class="contact__line">
+          <strong>Telefon</strong>0152 / 536 360 03
+        </p>
+        <p class="contact__line">
+          <strong>E-Mail</strong><a href="mailto:kontakt@jessica-bisetto.de">kontakt@jessica-bisetto.de</a>
+        </p>
+        <p class="contact__line">
+          <strong>Online</strong>jessica-bisetto.de
+        </p>
+      </div>
+    </section>
+
+    <!-- FOOTER STRIP -->
+    <footer class="foot">
+      <p class="foot__pillars">Innovation <span>·</span> Leichtigkeit <span>·</span> Balance</p>
+      <p class="foot__sig">— Jessi</p>
+    </footer>
+  </div>
+</body>
+</html>

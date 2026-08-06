@@ -1,0 +1,49 @@
+/* ===== Kurse — Übersichtsseite ===== */
+.kurs-grid{
+  max-width: var(--w-wide); margin: 0 auto;
+  display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px;
+}
+@media (max-width: 760px){ .kurs-grid{ grid-template-columns: 1fr; } }
+
+.kurs-card{
+  background: var(--bg-raised); border-radius: var(--r-lg); overflow: hidden;
+  box-shadow: var(--shadow-xs);
+  display: flex; flex-direction: column;
+  transition: box-shadow var(--dur-med) var(--ease-soft), transform var(--dur-med) var(--ease-soft);
+}
+.kurs-card:hover{ box-shadow: var(--shadow-md); transform: translateY(-2px); }
+.kurs-card__img{
+  aspect-ratio: 16/9; background-size: cover; background-position: center;
+}
+.kurs-card__body{ padding: 28px 28px 32px; display: flex; flex-direction: column; gap: 10px; flex: 1; }
+.kurs-card__eb--kinder{ color: var(--color-clay-700); }
+.kurs-card__eb--erwachsene{ color: var(--color-teal-700); }
+.kurs-card__eb--unternehmen{ color: var(--color-sage-700); }
+.kurs-card__date{
+  display: flex; align-items: center; gap: 8px;
+  font-family: var(--font-body); font-size: 13px; color: var(--fg-muted);
+  font-feature-settings: "tnum";
+}
+.kurs-card__t{ font-family: var(--font-display); font-weight: 400; font-size: 24px; line-height: 1.2; margin: 0; }
+.kurs-card__sub{ font-family: var(--font-body); font-size: 15px; color: var(--fg-muted); margin: 0; }
+.kurs-card__meta{ font-family: var(--font-body); font-size: 13px; color: var(--fg-subtle); margin: 0; }
+.kurs-card__meta .dot{ margin: 0 6px; opacity: 0.6; }
+.kurs-card__foot{
+  margin-top: auto; padding-top: 16px;
+  display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap;
+  border-top: 1px solid var(--border);
+}
+.kurs-card__price{ font-family: var(--font-body); font-size: 14px; color: var(--fg); font-feature-settings: "tnum"; }
+.kurs-card__price strong{ font-weight: 600; }
+.kurs-card__status{
+  font-family: var(--font-body); font-size: 13px; font-weight: 600;
+  padding: 9px 16px; border-radius: var(--r-pill);
+  background: var(--color-stone-300); color: var(--fg);
+  cursor: not-allowed;
+}
+.kurs-card__anfrage{
+  font-family: var(--font-body); font-size: 13px; color: var(--fg-muted);
+}
+.kurs-card__anfrage a{ color: var(--color-teal-700); }
+
+.kurse-empty{ max-width: 52ch; }

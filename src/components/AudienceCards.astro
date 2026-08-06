@@ -1,0 +1,49 @@
+---
+const cards = [
+  {
+    id: "kinder",
+    eb: "Kinder & Jugendliche",
+    t: "Spielen, fragen, wachsen.",
+    d: "Begleitung bei Schul- und Familienthemen, Selbstwert, Konzentration — altersgerecht und behutsam.",
+    photo: "/assets/kinder.jpg",
+    tone: "kinder",
+  },
+  {
+    id: "erwachsene",
+    eb: "Erwachsene",
+    t: "Ruhig hinschauen.",
+    d: "Coaching bei Blockaden, Belastung, Lebensübergängen. Wir schauen, was wirklich gerade dran ist.",
+    photo: "/assets/erwachsene.jpg",
+    tone: "erwachsene",
+  },
+  {
+    id: "unternehmen",
+    eb: "Unternehmen & Kommunen",
+    t: "Gemeinsam tragen.",
+    d: "Workshops und Trainings für Teams, Schulen und Verwaltungen — zu Resilienz, Kommunikation, Konflikt.",
+    photo: "/assets/unternehmen.jpg",
+    tone: "unternehmen",
+  },
+];
+---
+<section class="aud">
+  <div class="aud__head">
+    <p class="eyebrow">Drei Wege, ein Ziel</p>
+    <h2 class="h1">Für wen ich da bin.</h2>
+  </div>
+  <div class="aud__grid">
+    {cards.map((c) => (
+      <a href={`/angebote#${c.id}`} class={`aud-card aud-card--${c.tone}`}>
+        <div class="aud-card__img" style={`background-image: url(${c.photo})`}></div>
+        <div class="aud-card__body">
+          <p class={`eyebrow aud-card__eb`}>{c.eb}</p>
+          <h3 class="aud-card__t">{c.t}</h3>
+          <p class="aud-card__d">{c.d}</p>
+          <div class="aud-card__more">
+            Mehr erfahren <span class="arr" aria-hidden="true">→</span>
+          </div>
+        </div>
+      </a>
+    ))}
+  </div>
+</section>

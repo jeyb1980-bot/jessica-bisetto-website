@@ -1,0 +1,60 @@
+---
+const { current = "" } = Astro.props;
+
+const items = [
+  { id: "home", href: "/", label: "Home" },
+  { id: "angebote", href: "/angebote", label: "Angebote" },
+  { id: "kurse", href: "/kurse", label: "Kurse" },
+  { id: "ueber", href: "/ueber-mich", label: "Über mich" },
+  { id: "blog", href: "/blog", label: "Blog" },
+  { id: "kontakt", href: "/kontakt", label: "Kontakt" },
+];
+---
+<header class="site-header">
+  <div class="site-header__inner">
+    <a class="brand" href="/">
+      <img src="/assets/logo.png" alt="Jessica Bisetto" width="48" height="48" />
+      <span class="brand__wm">Jessica Bisetto</span>
+    </a>
+    <nav class="nav-desk" aria-label="Hauptnavigation">
+      {items.map((it) => (
+        <a
+          href={it.href}
+          class={"nav-link" + (current === it.id ? " is-current" : "")}
+          aria-current={current === it.id ? "page" : undefined}
+        >
+          {it.label}
+        </a>
+      ))}
+      <a href="/erstgespraech" class="btn btn-pri btn-sm">
+        Erstgespräch
+        <span class="arr" aria-hidden="true">→</span>
+      </a>
+    </nav>
+    <button class="nav-burger" aria-label="Menü öffnen" aria-expanded="false" aria-controls="nav-mobile" id="nav-burger-btn">
+      <img src="/assets/icons/menu.svg" width="22" height="22" alt="" />
+    </button>
+  </div>
+  <div class="nav-mobile" id="nav-mobile" hidden>
+    {items.map((it) => (
+      <a href={it.href} class={"nav-link" + (current === it.id ? " is-current" : "")}>
+        {it.label}
+      </a>
+    ))}
+    <a href="/kontakt" class="btn btn-pri btn-sm">
+      Erstgespräch
+      <span class="arr" aria-hidden="true">→</span>
+    </a>
+  </div>
+</header>
+
+<script>
+  const btn = document.getElementById("nav-burger-btn");
+  const menu = document.getElementById("nav-mobile");
+  btn?.addEventListener("click", () => {
+    const isOpen = !menu?.hidden;
+    if (menu) menu.hidden = isOpen;
+    btn.setAttribute("aria-expanded", String(!isOpen));
+    btn.setAttribute("aria-label", isOpen ? "Menü öffnen" : "Menü schließen");
+  });
+</script>

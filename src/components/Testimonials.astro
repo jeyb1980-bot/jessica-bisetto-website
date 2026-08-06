@@ -1,0 +1,52 @@
+---
+import { getTestimonials } from "../lib/sanity";
+
+const fallback = [
+  {
+    _id: "fallback-1",
+    zitat:
+      "Liebe Frau Bisetto, vielen herzlichen Dank. Sie haben mir mit ganz viel Empathie und mit super wirksamen Methoden, die langfristig wirken, sehr geholfen. Ich freue mich nun über ganz viel neu gewonnene Leichtigkeit, Freude und Kraft in meinem Leben. Zusammen mit Ihnen habe ich mich endlich getraut die Themen zu be- und verarbeiten, die mich schon sehr lange belasteten. Diese Themen waren Mobbing in meiner Jugend, daraus resultierender Perfektionismus und der ständige Drang nach Anerkennung. Seit dem Coaching mit Ihnen geht es mir endlich wieder gut. Ich bin Ihnen sehr dankbar!",
+    name: "Nadine S.",
+    kontext: "Erwachsenen-Coaching",
+  },
+  {
+    _id: "fallback-2",
+    zitat:
+      "Im Sommer 2021 sind mein Sohn Julius und ich zum ersten Mal bei Jessi gewesen. Das Erstgespräch war sehr angenehm und stiftete viel Vertrauen, auch Julius fühlte sich sehr wohl und gut aufgehoben. Wir entschieden uns für eine Reflexintegration und zusätzlich für ein Kinder- und Jugendcoaching. Das Coaching half Julius sehr schnell in der Schule selbstbewusster mit schwierigen Situationen umzugehen. Das Reflexintegrationstraining dauerte etwa ein Jahr, aber durch Jessis wunderbare Art war Julius immer motiviert, ging gerne zu den Stunden und machte auch zu Hause die Übungen regelmäßig. Vielen Dank, liebe Jessi, mach weiter so.",
+    name: "Mutter von Julius",
+    kontext: "Kinder- & Jugendcoaching · 2021",
+  },
+  {
+    _id: "fallback-3",
+    zitat:
+      "Liebe Jessi, von Herzen danke für das tolle Webinar: „Stark auf dem Schulhof — wie schütze ich mein Kind vor Mobbing?“ Was für ein AHA-Effekt! So wertvolle Tipps, die eigentlich einfach umsetzbar sind, wenn man sie weiß. Meiner Meinung nach sollten alle Eltern und Pädagogen dein Webinar besuchen! Ich hätte dir noch stundenlang zuhören können!",
+    name: "Andrea B.",
+    kontext: "Webinar — Stark auf dem Schulhof",
+  },
+];
+
+let items = fallback;
+try {
+  const fromCms = await getTestimonials();
+  if (fromCms && fromCms.length > 0) items = fromCms;
+} catch {
+  // Sanity noch nicht erreichbar (z. B. beim ersten lokalen Build) — Fallback greift.
+}
+---
+<section class="testi">
+  <div class="testi__head">
+    <p class="eyebrow">Kundenstimmen</p>
+    <h2 class="h1">Was Menschen mitnehmen.</h2>
+  </div>
+  <div class="testi__grid">
+    {items.map((it) => (
+      <figure class="testi-card">
+        <blockquote class="testi-card__q">{it.zitat}</blockquote>
+        <figcaption class="testi-card__sig">
+          <strong>{it.name}</strong>
+          <span>{it.kontext}</span>
+        </figcaption>
+      </figure>
+    ))}
+  </div>
+</section>

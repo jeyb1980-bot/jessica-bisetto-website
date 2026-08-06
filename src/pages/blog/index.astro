@@ -1,0 +1,93 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { getBlogPosts, urlFor } from "../../lib/sanity";
+import "../../styles/blog.css";
+
+let posts: Awaited<ReturnType<typeof getBlogPosts>> = [];
+try {
+  posts = await getBlogPosts();
+} catch {
+  // CMS aktuell nicht erreichbar — leere Liste, Seite bleibt trotzdem nutzbar.
+}
+
+const toneLabel: Record<string, string> = {
+  kinder: "Kinder & Eltern",
+  erwachsene: "Erwachsene",
+  unternehmen: "Unternehmen",
+};
+
+function formatDate(iso: string) {
+  return new Date(iso).toLocaleDateString("de-DE", { day: "2-digit", month: "long", year: "numeric" });
+}
+---
+<BaseLayout
+  title="Blog"
+  description="Reflexionen, Methoden und kleine Impulse aus der Coaching-Praxis von Jessica Bisetto."
+  current="blog"
+>
+  <main class="screen blog-list">
+    <div class="page-head">
+      <p class="eyebrow">Blog</p>
+      <h1 class="h-display">Texte zum Mitnehmen.</h1>
+      <p class="lede page-head__lede">
+        Reflexionen, Methoden, kleine Impulse für zwischendurch.
+      </p>
+    </div>
+
+    {posts.length > 0 && (
+      <div class="aud-tabs blog-filter">
+        <button class="aud-tab is-active" data-blog-filter="alle">Alle Beiträge</button>
+        <button class="aud-tab" data-blog-filter="erwachsene">Erwachsene</button>
+        <button class="aud-tab" data-blog-filter="kinder">Kinder & Eltern</button>
+        <button class="aud-tab" data-blog-filter="unternehmen">Unternehmen</button>
+      </div>
+    )}
+
+    {posts.length === 0 ? (
+      <p class="body-lg" style="max-width: 52ch;">
+        Hier entstehen bald die ersten Beiträge. Schau gern in ein paar Tagen wieder vorbei.
+      </p>
+    ) : (
+      <div class="blog-grid">
+        {posts.map((p, i) => (
+          <a
+            href={`/blog/${p.slug.current}`}
+            class={"blog-card" + (i === 0 ? " blog-card--lead" : "")}
+            data-blog-card
+            data-blog-tone={p.zielgruppe}
+          >
+            {p.coverBild && (
+              <div class="blog-card__img" style={`background-image: url(${urlFor(p.coverBild).width(800).height(600).url()})`}></div>
+            )}
+            <div class="blog-card__body">
+              <p class={`eyebrow blog-card__eb blog-card__eb--${p.zielgruppe}`}>
+                {toneLabel[p.zielgruppe] ?? p.zielgruppe}
+              </p>
+              <h2 class="blog-card__t">{p.titel}</h2>
+              {p.untertitel && <p class="blog-card__d">{p.untertitel}</p>}
+              <p class="blog-card__meta">
+                {formatDate(p.datum)}
+                {p.lesedauer && <> · {p.lesedauer}</>}
+              </p>
+            </div>
+          </a>
+        ))}
+      </div>
+    )}
+  </main>
+</BaseLayout>
+
+<script>
+  const buttons = document.querySelectorAll<HTMLButtonElement>("[data-blog-filter]");
+  const cards = document.querySelectorAll<HTMLElement>("[data-blog-card]");
+  buttons.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      buttons.forEach((b) => b.classList.remove("is-active"));
+      btn.classList.add("is-active");
+      const filter = btn.dataset.blogFilter;
+      cards.forEach((c) => {
+        c.hidden = filter !== "alle" && c.dataset.blogTone !== filter;
+      });
+    });
+  });
+</script>

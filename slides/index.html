@@ -1,0 +1,296 @@
+<!doctype html>
+<!-- @dsCard group="Slides" name="Slide Deck" subtitle="7 slide types — title, divider, content, quote, method, stat, closing" viewport="1280x720" -->
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Jessica Bisetto · Deck-Vorlage</title>
+<link rel="stylesheet" href="../colors_and_type.css">
+<script src="deck-stage.js"></script>
+<style>
+  :root{
+    --slide-bg: var(--color-bone);
+    --slide-fg: var(--color-ink);
+  }
+  html,body{ margin:0; background: #111; }
+  deck-stage{ --slide-bg: var(--color-bone); }
+  deck-stage > section{
+    background: var(--color-bone);
+    color: var(--color-ink);
+    font-family: var(--font-body);
+    overflow: hidden;
+    position: relative;
+  }
+
+  /* shared */
+  .pad{ padding: 96px 120px; box-sizing: border-box; width: 100%; height: 100%; }
+  .eb{
+    font-family: var(--font-body); font-size: 16px; font-weight: 500;
+    letter-spacing: 0.16em; text-transform: uppercase; color: var(--color-teal-700);
+    margin: 0 0 32px;
+  }
+  .display{
+    font-family: var(--font-display); font-weight: 300;
+    font-size: 84px; line-height: 1.08; letter-spacing: -0.02em;
+    margin: 0; color: var(--color-ink); text-wrap: balance;
+  }
+  .display em{ font-style: italic; font-weight: 400; color: var(--color-teal-700); }
+  .h2{
+    font-family: var(--font-display); font-weight: 400;
+    font-size: 56px; line-height: 1.12; margin: 0 0 24px; letter-spacing: -0.015em;
+  }
+  .lede{
+    font-family: var(--font-body); font-size: 24px; line-height: 1.5;
+    color: var(--fg-muted); margin: 0; max-width: 26ch;
+  }
+  .footer{
+    position: absolute; left: 120px; right: 120px; bottom: 56px;
+    display: flex; justify-content: space-between; align-items: center;
+    font-family: var(--font-body); font-size: 14px; color: var(--fg-subtle);
+    letter-spacing: 0.04em;
+  }
+  .footer img{ width: 34px; height: 34px; }
+  .footer .brand-line{ display: flex; gap: 12px; align-items: center; }
+
+  /* Title slide */
+  .title-slide{
+    background:
+      radial-gradient(circle at 80% 100%, rgba(58,142,143,0.18), transparent 55%),
+      radial-gradient(circle at 0% 0%, rgba(226,140,114,0.10), transparent 50%),
+      var(--color-cream);
+  }
+  .title-slide .pad{ display: grid; grid-template-columns: 1.2fr 1fr; align-items: end; gap: 80px; }
+  .title-slide .l{ display: flex; flex-direction: column; justify-content: end; padding-bottom: 40px; }
+  .title-slide .display{ font-size: 96px; }
+  .title-slide .r{
+    aspect-ratio: 4/5; background: url('../assets/portrait.jpg') center/cover;
+    border-radius: 4px; box-shadow: var(--shadow-lg);
+    align-self: stretch;
+  }
+  .title-meta{
+    margin-top: 48px; font-family: var(--font-body);
+    font-size: 18px; color: var(--fg-muted); display: flex; gap: 24px; align-items: center;
+  }
+  .title-meta::before{ content:""; width:48px; height:1px; background: var(--color-clay-500); }
+
+  /* Section divider */
+  .section-divider{
+    background: var(--color-teal-900); color: var(--color-bone);
+    display: flex; align-items: center; justify-content: center; flex-direction: column;
+    text-align: center; padding: 0 120px;
+  }
+  .section-divider .eb{ color: var(--color-sand); }
+  .section-divider .display{ color: var(--color-bone); }
+  .section-divider .display em{ color: var(--color-sand); }
+  .section-divider .num{
+    font-family: var(--font-display); font-weight: 200; font-size: 240px;
+    line-height: 1; color: rgba(255,255,255,0.08); position: absolute;
+    top: 50%; left: 50%; transform: translate(-50%,-50%); pointer-events: none;
+  }
+
+  /* Content + image */
+  .content-image{ display: grid; grid-template-columns: 1fr 1fr; height: 100%; }
+  .content-image .l{ padding: 96px 80px 96px 120px; align-self: center; }
+  .content-image .r{
+    background: url('../assets/hero-bg.jpg') center/cover;
+    position: relative;
+  }
+  .content-image .r::after{
+    content:""; position: absolute; inset: 0;
+    background: linear-gradient(180deg, transparent 40%, rgba(20,42,46,0.25));
+  }
+  .content-image ul{ list-style: none; padding: 0; margin: 28px 0 0; }
+  .content-image li{
+    font-family: var(--font-body); font-size: 22px; line-height: 1.5;
+    color: var(--fg); padding: 14px 0; border-bottom: 1px solid var(--border);
+    display: grid; grid-template-columns: 28px 1fr; align-items: baseline;
+  }
+  .content-image li::before{
+    content: ""; width: 8px; height: 8px; border-radius: 50%;
+    background: var(--color-teal-500); display: inline-block;
+  }
+
+  /* Quote */
+  .quote{
+    background: var(--color-sand);
+    display: flex; align-items: center; padding: 0 200px;
+  }
+  .quote blockquote{
+    margin: 0; font-family: var(--font-display); font-weight: 300;
+    font-style: italic; font-size: 64px; line-height: 1.25;
+    letter-spacing: -0.01em; color: var(--color-ink); text-wrap: balance;
+  }
+  .quote blockquote::before{
+    content: "\201C"; display: block; font-size: 200px; line-height: 0.5;
+    color: var(--color-clay-500); margin-bottom: 48px; height: 60px;
+  }
+  .quote cite{
+    display: block; margin-top: 40px; font-family: var(--font-body);
+    font-style: normal; font-size: 18px; letter-spacing: 0.04em;
+    color: var(--fg-muted);
+  }
+  .quote cite::before{ content:""; display: inline-block; width: 32px; height: 1px; background: var(--color-clay-500); margin-right: 16px; vertical-align: middle; }
+
+  /* Three column */
+  .three-col .grid{
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; margin-top: 56px;
+  }
+  .three-col .card{
+    background: var(--bg-raised); border-radius: var(--r-md); padding: 36px 32px;
+    border: 1px solid var(--border); box-shadow: var(--shadow-xs);
+    display: flex; flex-direction: column; gap: 16px; min-height: 360px;
+  }
+  .three-col .card .n{
+    font-family: var(--font-display); font-weight: 300; font-size: 56px;
+    color: var(--color-teal-700); line-height: 1;
+  }
+  .three-col .card h3{
+    font-family: var(--font-display); font-weight: 400; font-size: 26px;
+    line-height: 1.2; margin: 0;
+  }
+  .three-col .card p{
+    font-family: var(--font-body); font-size: 16px; line-height: 1.6;
+    color: var(--fg-muted); margin: 0;
+  }
+
+  /* Big number */
+  .stat{ display: grid; grid-template-columns: 1.1fr 1fr; height: 100%; }
+  .stat .l{
+    background: var(--color-teal-900); color: var(--color-bone);
+    display: flex; align-items: center; justify-content: center;
+    padding: 80px;
+  }
+  .stat .num{
+    font-family: var(--font-display); font-weight: 200;
+    font-size: 320px; line-height: 0.9; letter-spacing: -0.04em;
+    color: var(--color-sand);
+  }
+  .stat .num sup{ font-size: 96px; vertical-align: top; margin-left: 8px; color: var(--color-bone); }
+  .stat .r{ padding: 120px 100px; display: flex; flex-direction: column; justify-content: center; }
+  .stat .r .h2{ font-size: 44px; }
+
+  /* Closing */
+  .closing{
+    background: var(--color-teal-900);
+    color: var(--color-bone);
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    text-align: center; padding: 0 160px;
+  }
+  .closing .eb{ color: var(--color-sand); }
+  .closing .display{ color: var(--color-bone); font-size: 96px; }
+  .closing .lede{ color: var(--color-sand); margin: 32px auto 0; font-size: 22px; max-width: 32ch; }
+  .closing .contact{
+    margin-top: 80px; font-family: var(--font-body); font-size: 18px;
+    color: var(--color-bone); display: flex; gap: 48px;
+  }
+  .closing .contact span{ color: var(--color-sand); letter-spacing: 0.06em; font-size: 12px; text-transform: uppercase; display:block; margin-bottom: 4px; }
+</style>
+</head>
+<body>
+<deck-stage>
+
+  <!-- 01 Title -->
+  <section data-screen-label="01 Title">
+    <div class="title-slide" style="width:100%;height:100%">
+      <div class="pad">
+        <div class="l">
+          <p class="eb">Workshop · Frühjahr 2026</p>
+          <h1 class="display">Die Welle <em>surfen</em><br>statt von ihr<br>überrollt werden.</h1>
+          <div class="title-meta">Jessica Bisetto · Coaching für Unternehmen</div>
+        </div>
+        <div class="r"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 02 Section divider -->
+  <section data-screen-label="02 Section">
+    <div class="section-divider" style="width:100%;height:100%;position:relative">
+      <span class="num">01</span>
+      <p class="eb">Erstes Kapitel</p>
+      <h2 class="display">Was im Team gerade <em>wirklich</em> los ist.</h2>
+    </div>
+  </section>
+
+  <!-- 03 Content + Image -->
+  <section data-screen-label="03 Content">
+    <div class="content-image">
+      <div class="l">
+        <p class="eb">Drei Beobachtungen</p>
+        <h2 class="h2">Stille Signale, die im Alltag untergehen.</h2>
+        <ul>
+          <li><span>Meetings werden länger, Entscheidungen werden seltener.</span></li>
+          <li><span>Konflikte werden nicht ausgetragen, sondern verteilt.</span></li>
+          <li><span>Wer Energie hat, gibt sie zuerst an die ab, die laut sind.</span></li>
+        </ul>
+      </div>
+      <div class="r"></div>
+    </div>
+  </section>
+
+  <!-- 04 Big quote -->
+  <section data-screen-label="04 Quote">
+    <div class="quote">
+      <blockquote>
+        Konflikte im Team auflösen heißt nicht, sie weg&shy;zumoderieren — sondern ihnen Sprache zu geben.
+        <cite>Jessica Bisetto</cite>
+      </blockquote>
+    </div>
+  </section>
+
+  <!-- 05 Three column -->
+  <section data-screen-label="05 Method">
+    <div class="pad">
+      <p class="eb">So arbeiten wir</p>
+      <h2 class="h2">Drei Schritte, die zueinander gehören.</h2>
+      <div class="three-col">
+        <div class="grid">
+          <div class="card">
+            <span class="n">01</span>
+            <h3>Zuhören, nicht diagnostizieren.</h3>
+            <p>Wir starten mit Einzelgesprächen. Jede:r kommt zu Wort, niemand muss vor dem Team sprechen, bevor es sich richtig anfühlt.</p>
+          </div>
+          <div class="card">
+            <span class="n">02</span>
+            <h3>Muster sichtbar machen.</h3>
+            <p>Was wiederholt sich? Wo blockiert sich das Team selbst? Wir benennen es — gemeinsam, ohne Schuld.</p>
+          </div>
+          <div class="card">
+            <span class="n">03</span>
+            <h3>Veränderung verankern.</h3>
+            <p>Konkrete Vereinbarungen, kleine Rituale, klare Folgetermine. Damit Neues nicht im Alltag wieder verschwindet.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 06 Stat -->
+  <section data-screen-label="06 Stat">
+    <div class="stat">
+      <div class="l"><span class="num">10<sup>+</sup></span></div>
+      <div class="r">
+        <p class="eb" style="color:var(--color-teal-700)">Erfahrung</p>
+        <h2 class="h2">Jahre Praxis mit Erwachsenen, Familien und Teams — in einer Hand.</h2>
+        <p class="lede" style="margin-top:24px">Das heißt: weniger Methodenfeuerwerk, mehr ruhige Hand.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 07 Closing -->
+  <section data-screen-label="07 Closing">
+    <div class="closing" style="width:100%;height:100%;position:relative">
+      <p class="eb">Auf ein Gespräch</p>
+      <h2 class="display">Wo es bei euch <em>haken</em> könnte —<br>finden wir gemeinsam heraus.</h2>
+      <p class="lede">Erstgespräch kostenfrei. 45 Minuten. Telefonisch oder per Video.</p>
+      <div class="contact">
+        <div><span>E-Mail</span>kontakt@jessica-bisetto.de</div>
+        <div><span>Telefon</span>+49 (0)— — —</div>
+        <div><span>Web</span>jessica-bisetto.de</div>
+      </div>
+    </div>
+  </section>
+
+</deck-stage>
+</body>
+</html>

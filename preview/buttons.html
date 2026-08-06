@@ -1,0 +1,23 @@
+<!doctype html>
+<!-- @dsCard group="Components" name="Buttons" subtitle="Primary, secondary, ghost, clay" viewport="700x140" --><html lang="de"><head><meta charset="utf-8"><link rel="stylesheet" href="../colors_and_type.css"><style>
+body{padding:32px;background:var(--bg)}
+.row{display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+.btn{font-family:var(--font-body);font-weight:500;font-size:15px;padding:12px 22px;border-radius:var(--r-pill);border:1px solid transparent;cursor:pointer;transition:all 280ms var(--ease-soft);letter-spacing:-0.005em;display:inline-flex;align-items:center;gap:8px}
+.btn-pri{background:var(--color-teal-500);color:var(--color-bone)}
+.btn-pri:hover{background:var(--color-teal-700)}
+.btn-sec{background:transparent;color:var(--color-ink);border-color:var(--color-stone-500)}
+.btn-sec:hover{background:var(--color-cream);border-color:var(--color-ink)}
+.btn-ghost{background:transparent;color:var(--color-teal-700);padding:12px 14px}
+.btn-ghost:hover{color:var(--color-ink)}
+.btn-clay{background:var(--color-clay-500);color:var(--color-bone)}
+.btn-clay:hover{background:var(--color-clay-700)}
+.arr{display:inline-block;transition:transform 280ms var(--ease-soft)}
+.btn:hover .arr{transform:translateX(3px)}
+</style></head><body>
+<div class="row">
+  <button class="btn btn-pri">Termin anfragen <span class="arr">→</span></button>
+  <button class="btn btn-sec">Mehr erfahren</button>
+  <button class="btn btn-ghost">Zum Kursplan <span class="arr">→</span></button>
+  <button class="btn btn-clay">Erstgespräch buchen</button>
+</div>
+</body></html>

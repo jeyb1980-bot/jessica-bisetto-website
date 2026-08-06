@@ -1,0 +1,303 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import "../styles/booking.css";
+
+const FORMSPREE_ENDPOINT = "https://formspree.io/f/mwlepoad";
+
+const STEPS = ["Anliegen", "Zeit", "Daten", "Bestätigung"];
+const CONCERNS = [
+  { id: "erwachsene", label: "Für mich selbst", sub: "Erwachsenen-Coaching · 1:1", tone: "erwachsene" },
+  { id: "kinder", label: "Für mein Kind", sub: "Kinder & Jugendliche", tone: "kinder" },
+  { id: "unternehmen", label: "Für mein Team", sub: "Workshop · Unternehmen", tone: "unternehmen" },
+  { id: "offen", label: "Erstmal nur fragen", sub: "Ich bin mir noch nicht sicher", tone: "neutral" },
+];
+const WEEKDAYS = [
+  { id: "mo", label: "Mo", long: "Montag" },
+  { id: "di", label: "Di", long: "Dienstag" },
+  { id: "mi", label: "Mi", long: "Mittwoch" },
+  { id: "do", label: "Do", long: "Donnerstag" },
+  { id: "fr", label: "Fr", long: "Freitag" },
+];
+const TIMES = [
+  { id: "09", label: "09:00 Uhr" },
+  { id: "10", label: "10:00 Uhr" },
+  { id: "11", label: "11:00 Uhr" },
+  { id: "13", label: "13:00 Uhr" },
+  { id: "14", label: "14:00 Uhr" },
+  { id: "15", label: "15:00 Uhr" },
+  { id: "16", label: "16:00 Uhr" },
+];
+---
+<BaseLayout
+  title="Erstgespräch vereinbaren"
+  description="Vereinbare in vier ruhigen Schritten dein kostenfreies Erstgespräch mit Jessica Bisetto."
+  current="kontakt"
+>
+  <main class="bk-wrap">
+    <div class="bk-head">
+      <p class="eyebrow">Erstgespräch vereinbaren</p>
+      <h2 class="h-display">In vier ruhigen Schritten.</h2>
+    </div>
+
+    <ol class="bk-steps" data-bk-steps>
+      {STEPS.map((s, i) => (
+        <li class={"bk-step" + (i === 0 ? " is-current" : "")} data-bk-step-item={i}>
+          <span class="bk-step__n">{i + 1}</span>
+          <span class="bk-step__l">{s}</span>
+        </li>
+      ))}
+    </ol>
+
+    <form data-bk-form novalidate action={FORMSPREE_ENDPOINT} method="POST">
+      <input type="hidden" name="_subject" value="Neue Erstgespräch-Anfrage — jessica-bisetto.de" />
+      <!-- Schritt 1: Anliegen -->
+      <div class="bk-card" data-bk-panel="0">
+        <p class="eyebrow">Schritt 1 von 4</p>
+        <h1 class="h1">Worum geht es?</h1>
+        <p class="lede bk-lede">Wähle, was am ehesten passt. Du kannst es später noch genauer beschreiben.</p>
+        <div class="bk-options">
+          {CONCERNS.map((c) => (
+            <button type="button" class={`bk-option bk-option--${c.tone}`} data-bk-concern={c.id}>
+              <span class="bk-option__l">{c.label}</span>
+              <span class="bk-option__s">{c.sub}</span>
+            </button>
+          ))}
+        </div>
+        <input type="hidden" name="anliegen" data-bk-concern-input />
+      </div>
+
+      <!-- Schritt 2: Zeit -->
+      <div class="bk-card" data-bk-panel="1" hidden>
+        <p class="eyebrow">Schritt 2 von 4</p>
+        <h1 class="h1">Wann passt es dir?</h1>
+        <p class="lede bk-lede">Das Erstgespräch ist für dich kostenfrei und unverbindlich.</p>
+
+        <div class="bk-pref">
+          <p class="bk-pref__l">An welchen Wochentagen erreiche ich dich am besten?</p>
+          <div class="bk-pref__chips">
+            {WEEKDAYS.map((d) => (
+              <button type="button" class="bk-chip bk-chip--day" data-bk-day={d.id} aria-pressed="false" aria-label={d.long}>
+                {d.label}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        <div class="bk-pref">
+          <p class="bk-pref__l">Welche Uhrzeiten passen dir?</p>
+          <div class="bk-pref__chips">
+            {TIMES.map((t) => (
+              <button type="button" class="bk-chip bk-chip--time" data-bk-time={t.id} aria-pressed="false">
+                {t.label}
+              </button>
+            ))}
+          </div>
+          <p class="bk-pref__hint">Mehrfachauswahl möglich. Gespräche finden bis spätestens 17 Uhr statt.</p>
+        </div>
+
+        <div class="bk-note">
+          <span class="bk-note__icon" aria-hidden="true">
+            <img src="/assets/icons/clock.svg" width="18" height="18" alt="" />
+          </span>
+          <p>Ich melde mich innerhalb von zwei Werktagen bei dir — mit einem konkreten Terminvorschlag, der zu deiner Auswahl passt.</p>
+        </div>
+        <input type="hidden" name="wochentage" data-bk-days-input />
+        <input type="hidden" name="uhrzeiten" data-bk-times-input />
+      </div>
+
+      <!-- Schritt 3: Daten -->
+      <div class="bk-card" data-bk-panel="2" hidden>
+        <p class="eyebrow">Schritt 3 von 4</p>
+        <h1 class="h1">Deine Daten</h1>
+        <p class="lede bk-lede">Ich brauche nur das Nötigste, um dich zu erreichen.</p>
+        <div class="bk-form">
+          <label class="bk-field">
+            <span>Name</span>
+            <input type="text" name="name" data-bk-name placeholder="Vor- und Nachname" required />
+          </label>
+          <label class="bk-field">
+            <span>E-Mail</span>
+            <input type="email" name="email" data-bk-email placeholder="dein.name@example.de" required />
+          </label>
+          <label class="bk-field">
+            <span>Telefon <em>· optional</em></span>
+            <input type="tel" name="telefon" placeholder="0152 — — —" />
+          </label>
+          <label class="bk-field bk-field--full">
+            <span>Was beschäftigt dich? <em>· optional</em></span>
+            <textarea name="nachricht" rows="4" placeholder="Ein paar Sätze reichen. Wir sprechen alles weitere im Gespräch."></textarea>
+          </label>
+          <label class="bk-check">
+            <input type="checkbox" data-bk-consent required />
+            <span>Ich bin einverstanden, dass meine Angaben zur Terminvereinbarung verwendet werden. <a href="/datenschutz">Datenschutz</a></span>
+          </label>
+        </div>
+      </div>
+
+      <!-- Schritt 4: Bestätigung -->
+      <div class="bk-card bk-done" data-bk-panel="3" hidden>
+        <div class="bk-done__seal">✓</div>
+        <p class="eyebrow">Schritt 4 von 4</p>
+        <h1 class="h1" data-bk-done-heading>Danke.</h1>
+        <p class="lede bk-lede">
+          Ich melde mich innerhalb von zwei Werktagen mit einem konkreten Terminvorschlag.
+        </p>
+        <dl class="bk-summary" data-bk-summary></dl>
+        <p class="bk-aside" data-bk-done-aside></p>
+      </div>
+
+      <p class="body-sm" data-bk-error hidden style="color: var(--color-clay-700); text-align: center;">
+        Das hat leider nicht geklappt. Schreib mir gerne direkt an
+        <a href="mailto:kontakt@jessica-bisetto.de">kontakt@jessica-bisetto.de</a>.
+      </p>
+
+      <div class="bk-nav" data-bk-nav>
+        <button type="button" class="btn-ghost" data-bk-back disabled>← Zurück</button>
+        <button type="button" class="btn-pri" data-bk-next disabled>
+          Weiter <span class="arr" aria-hidden="true">→</span>
+        </button>
+      </div>
+      <div class="bk-nav bk-nav--center" data-bk-nav-done hidden>
+        <button type="button" class="btn-ghost" data-bk-restart>Neue Anfrage stellen</button>
+      </div>
+    </form>
+  </main>
+</BaseLayout>
+
+<script define:vars={{ WEEKDAYS, TIMES, CONCERNS }}>
+  const form = document.querySelector("[data-bk-form]");
+  const panels = [...document.querySelectorAll("[data-bk-panel]")];
+  const stepItems = [...document.querySelectorAll("[data-bk-step-item]")];
+  const backBtn = document.querySelector("[data-bk-back]");
+  const nextBtn = document.querySelector("[data-bk-next]");
+  const nav = document.querySelector("[data-bk-nav]");
+  const navDone = document.querySelector("[data-bk-nav-done]");
+  const errorMsg = document.querySelector("[data-bk-error]");
+
+  let step = 0;
+  let concern = null;
+  const days = new Set();
+  const times = new Set();
+
+  const concernInput = document.querySelector("[data-bk-concern-input]");
+  const daysInput = document.querySelector("[data-bk-days-input]");
+  const timesInput = document.querySelector("[data-bk-times-input]");
+  const nameInput = document.querySelector("[data-bk-name]");
+  const emailInput = document.querySelector("[data-bk-email]");
+  const consentInput = document.querySelector("[data-bk-consent]");
+
+  function canAdvance() {
+    if (step === 0) return !!concern;
+    if (step === 1) return days.size > 0 && times.size > 0;
+    if (step === 2) return nameInput.value.trim().length > 1 && /\S+@\S+\.\S+/.test(emailInput.value) && consentInput.checked;
+    return true;
+  }
+
+  function render() {
+    panels.forEach((p) => { p.hidden = Number(p.dataset.bkPanel) !== step; });
+    stepItems.forEach((li, i) => {
+      li.classList.toggle("is-current", i === step);
+      li.classList.toggle("is-done", i < step);
+    });
+    backBtn.disabled = step === 0;
+    nextBtn.disabled = !canAdvance();
+    nextBtn.firstChild.textContent = step === 2 ? "Anfrage senden " : "Weiter ";
+    if (step === 3) {
+      nav.hidden = true;
+      navDone.hidden = false;
+    } else {
+      nav.hidden = false;
+      navDone.hidden = true;
+    }
+  }
+
+  document.querySelectorAll("[data-bk-concern]").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      concern = btn.dataset.bkConcern;
+      concernInput.value = concern;
+      document.querySelectorAll("[data-bk-concern]").forEach((b) => b.classList.toggle("is-selected", b === btn));
+      render();
+    });
+  });
+
+  document.querySelectorAll("[data-bk-day]").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const id = btn.dataset.bkDay;
+      if (days.has(id)) days.delete(id); else days.add(id);
+      btn.classList.toggle("is-selected", days.has(id));
+      btn.setAttribute("aria-pressed", String(days.has(id)));
+      daysInput.value = [...days].join(", ");
+      render();
+    });
+  });
+
+  document.querySelectorAll("[data-bk-time]").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const id = btn.dataset.bkTime;
+      if (times.has(id)) times.delete(id); else times.add(id);
+      btn.classList.toggle("is-selected", times.has(id));
+      btn.setAttribute("aria-pressed", String(times.has(id)));
+      timesInput.value = [...times].join(", ");
+      render();
+    });
+  });
+
+  [nameInput, emailInput, consentInput].forEach((el) => {
+    el?.addEventListener("input", render);
+    el?.addEventListener("change", render);
+  });
+
+  backBtn.addEventListener("click", () => { if (step > 0) { step -= 1; render(); } });
+
+  nextBtn.addEventListener("click", async () => {
+    if (!canAdvance()) return;
+    if (step < 2) { step += 1; render(); return; }
+    if (step === 2) {
+      errorMsg.hidden = true;
+      nextBtn.disabled = true;
+      try {
+        const data = new FormData(form);
+        const res = await fetch(form.action, { method: "POST", body: data, headers: { Accept: "application/json" } });
+        if (!res.ok) throw new Error("submit failed");
+        fillSummary();
+        step = 3;
+        render();
+      } catch {
+        errorMsg.hidden = false;
+        nextBtn.disabled = false;
+      }
+    }
+  });
+
+  document.querySelector("[data-bk-restart]").addEventListener("click", () => {
+    form.reset();
+    concern = null;
+    days.clear();
+    times.clear();
+    document.querySelectorAll("[data-bk-concern], [data-bk-day], [data-bk-time]").forEach((b) => {
+      b.classList.remove("is-selected");
+      b.removeAttribute("aria-pressed");
+    });
+    step = 0;
+    render();
+  });
+
+  function fillSummary() {
+    const c = CONCERNS.find((x) => x.id === concern);
+    const dayLabels = [...days].map((id) => WEEKDAYS.find((w) => w.id === id)?.long).filter(Boolean).join(", ");
+    const timeLabels = [...times].map((id) => TIMES.find((t) => t.id === id)?.label).filter(Boolean).join(", ");
+    const firstName = nameInput.value.split(" ")[0] || "schön";
+    document.querySelector("[data-bk-done-heading]").textContent = `Danke, ${firstName}.`;
+    const summary = document.querySelector("[data-bk-summary]");
+    summary.innerHTML = `
+      <div><dt>Anliegen</dt><dd>${c ? c.label : "—"}</dd></div>
+      ${dayLabels ? `<div><dt>Wochentage</dt><dd>${dayLabels}</dd></div>` : ""}
+      ${timeLabels ? `<div><dt>Uhrzeiten</dt><dd>${timeLabels}</dd></div>` : ""}
+      <div><dt>E-Mail</dt><dd>${emailInput.value}</dd></div>
+    `;
+    document.querySelector("[data-bk-done-aside]").innerHTML =
+      `Du erhältst eine Eingangsbestätigung an <strong>${emailInput.value}</strong>. Sollte sie nicht ankommen, prüfe den Spam-Ordner oder schreib mir direkt an <a href="mailto:kontakt@jessica-bisetto.de">kontakt@jessica-bisetto.de</a>.`;
+  }
+
+  render();
+</script>

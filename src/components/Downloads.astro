@@ -1,0 +1,61 @@
+---
+const DOWNLOADS = [
+  {
+    eb: "Allgemein",
+    tone: "neutral",
+    title: "Coaching im Überblick",
+    desc: "Ein einseitiger Flyer, den du Freunden, Eltern oder Kolleginnen weitergeben kannst — Methoden, Zielgruppen, Kontakt.",
+    file: "/downloads/flyer-coaching-ueberblick.pdf",
+    meta: "PDF · A4",
+  },
+  {
+    eb: "Kinder & Eltern",
+    tone: "kinder",
+    title: "Malvorlage — Wutmonster",
+    desc: "Eine Vorlage, mit der dein Kind seiner Wut ein Gesicht geben kann — auf Papier statt im Wohnzimmer. Ausdrucken, ausmalen, drüber reden.",
+    file: "/downloads/malvorlage-wutmonster.pdf",
+    meta: "PDF · A4",
+  },
+  {
+    eb: "Kinder & Eltern",
+    tone: "kinder",
+    title: "Papierpuppe — Löwe",
+    desc: "Eine Bastelvorlage zum Ausschneiden. Mit kleinen Fragen für nebenher: Was macht dich mutig? Wann brüllst du, wann schmust du?",
+    file: "/downloads/papierpuppe-loewe.pdf",
+    meta: "PDF · A4",
+  },
+];
+---
+<section class="dl" id="elternbibliothek">
+  <div class="dl__head">
+    <p class="eyebrow">Material zum Mitnehmen · Elternbibliothek</p>
+    <h2 class="h1">Geschenkt, ohne Anmeldung.</h2>
+    <p class="lede dl__lede">
+      Vorlagen, Reflexionshilfen und Übersichten — alles direkt zum
+      Herunterladen. Wenn dir etwas davon hilft, freue ich mich, wenn
+      du es weitergibst.
+    </p>
+  </div>
+  <div class="dl__grid">
+    {DOWNLOADS.map((d) => (
+      <a href={d.file} download class={`dl-card dl-card--${d.tone}`}>
+        <div class="dl-card__corner" aria-hidden="true">
+          <svg width="32" height="40" viewBox="0 0 32 40" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round">
+            <path d="M4 2 L22 2 L30 10 L30 38 L4 38 Z" />
+            <path d="M22 2 L22 10 L30 10" />
+          </svg>
+        </div>
+        <p class="eyebrow dl-card__eb">{d.eb}</p>
+        <h3 class="dl-card__t">{d.title}</h3>
+        <p class="dl-card__d">{d.desc}</p>
+        <div class="dl-card__foot">
+          <span class="dl-card__meta">{d.meta}</span>
+          <span class="dl-card__cta">
+            Herunterladen
+            <span class="arr" aria-hidden="true">↓</span>
+          </span>
+        </div>
+      </a>
+    ))}
+  </div>
+</section>

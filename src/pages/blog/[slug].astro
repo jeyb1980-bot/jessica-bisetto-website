@@ -1,0 +1,89 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import NewsletterCTA from "../../components/NewsletterCTA.astro";
+import { getBlogPosts, urlFor } from "../../lib/sanity";
+import { toHTML } from "@portabletext/to-html";
+import "../../styles/blog.css";
+
+export async function getStaticPaths() {
+  let posts: Awaited<ReturnType<typeof getBlogPosts>> = [];
+  try {
+    posts = await getBlogPosts();
+  } catch {
+    posts = [];
+  }
+  return posts.map((post) => ({
+    params: { slug: post.slug.current },
+    props: { post, allPosts: posts },
+  }));
+}
+
+const { post, allPosts } = Astro.props;
+
+const toneLabel: Record<string, string> = {
+  kinder: "Kinder & Eltern",
+  erwachsene: "Erwachsene",
+  unternehmen: "Unternehmen",
+};
+
+function formatDate(iso: string) {
+  return new Date(iso).toLocaleDateString("de-DE", { day: "2-digit", month: "long", year: "numeric" });
+}
+
+const contentHtml = toHTML(post.inhalt, {
+  components: {
+    types: {
+      image: ({ value }) =>
+        `<img src="${urlFor(value).width(1200).url()}" alt="" loading="lazy" />`,
+    },
+  },
+});
+
+const related = allPosts.filter((p) => p._id !== post._id).slice(0, 2);
+---
+<BaseLayout
+  title={post.titel}
+  description={post.untertitel ?? post.titel}
+  current="blog"
+>
+  <main class="blog-article">
+    <a href="/blog" class="back-link">← Alle Beiträge</a>
+    <header class="article-head">
+      <p class={`eyebrow blog-card__eb--${post.zielgruppe}`}>
+        {toneLabel[post.zielgruppe] ?? post.zielgruppe}
+      </p>
+      <h1 class="h-display">{post.titel}</h1>
+      <p class="article-meta">
+        Von Jessica Bisetto · {formatDate(post.datum)}
+        {post.lesedauer && <> · {post.lesedauer}</>}
+      </p>
+    </header>
+    {post.coverBild && (
+      <div class="article-cover" style={`background-image: url(${urlFor(post.coverBild).width(1600).url()})`}></div>
+    )}
+    <article class="article-body" set:html={contentHtml} />
+
+    <NewsletterCTA variant="compact" />
+
+    {related.length > 0 && (
+      <section class="related">
+        <h2 class="h2">Weiterlesen</h2>
+        <div class="blog-grid">
+          {related.map((p) => (
+            <a href={`/blog/${p.slug.current}`} class="blog-card">
+              {p.coverBild && (
+                <div class="blog-card__img" style={`background-image: url(${urlFor(p.coverBild).width(800).height(600).url()})`}></div>
+              )}
+              <div class="blog-card__body">
+                <p class={`eyebrow blog-card__eb--${p.zielgruppe}`}>
+                  {toneLabel[p.zielgruppe] ?? p.zielgruppe}
+                </p>
+                <h3 class="blog-card__t">{p.titel}</h3>
+              </div>
+            </a>
+          ))}
+        </div>
+      </section>
+    )}
+  </main>
+</BaseLayout>

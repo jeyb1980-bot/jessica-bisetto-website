@@ -1,0 +1,92 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { getKurse, urlFor } from "../lib/sanity";
+import "../styles/kurse.css";
+
+let kurse: Awaited<ReturnType<typeof getKurse>> = [];
+try {
+  kurse = await getKurse();
+} catch {
+  // CMS aktuell nicht erreichbar — leere Liste, Seite bleibt trotzdem nutzbar.
+}
+
+const toneFor = (zielgruppe: string[]) => {
+  if (zielgruppe?.includes("Kinder")) return "kinder";
+  if (zielgruppe?.includes("Unternehmen")) return "unternehmen";
+  return "erwachsene";
+};
+
+function formatDate(iso: string) {
+  const d = new Date(iso);
+  const datum = d.toLocaleDateString("de-DE", { day: "2-digit", month: "short" });
+  const uhrzeit = d.toLocaleTimeString("de-DE", { hour: "2-digit", minute: "2-digit" });
+  return `${datum} · ${uhrzeit} Uhr`;
+}
+---
+<BaseLayout
+  title="Kurse"
+  description="Gruppenkurse für Kinder, Erwachsene und Unternehmen — präsenz und online."
+  current="kurse"
+>
+  <main class="screen">
+    <div class="page-head">
+      <p class="eyebrow">Kurse</p>
+      <h1 class="h-display">Aktuelle Kurse</h1>
+      <p class="lede">
+        Gruppenkurse für Kinder, Erwachsene und Unternehmen — präsenz und online.
+      </p>
+    </div>
+
+    {kurse.length === 0 ? (
+      <p class="body-lg kurse-empty">
+        Aktuell sind keine Kurse eingetragen. Schreib mir gerne direkt, wenn du
+        wissen möchtest, was in Planung ist.
+      </p>
+    ) : (
+      <div class="kurs-grid">
+        {kurse.map((k) => {
+          const tone = toneFor(k.zielgruppe);
+          return (
+            <article class="kurs-card">
+              {k.coverBild && (
+                <div class="kurs-card__img" style={`background-image: url(${urlFor(k.coverBild).width(800).height(450).url()})`}></div>
+              )}
+              <div class="kurs-card__body">
+                <p class={`eyebrow kurs-card__eb--${tone}`}>{k.zielgruppe?.join(" · ")}</p>
+                <div class="kurs-card__date">
+                  <img src="/assets/icons/calendar.svg" width="16" height="16" alt="" />
+                  <span>{formatDate(k.datum)}</span>
+                </div>
+                <h2 class="kurs-card__t">{k.titel}</h2>
+                {k.untertitel && <p class="kurs-card__sub">{k.untertitel}</p>}
+                <p class="kurs-card__meta">
+                  {k.ort}
+                  {k.ort && k.dauer && <span class="dot">·</span>}
+                  {k.dauer && <>{k.dauer} Min.</>}
+                </p>
+                <div class="kurs-card__foot">
+                  {typeof k.preis === "number" && k.preis > 0 && (
+                    <span class="kurs-card__price"><strong>{k.preis}&nbsp;€</strong></span>
+                  )}
+                  {k.status === "Offen" && k.anmeldeLink && (
+                    <a href={k.anmeldeLink} class="btn btn-pri btn-sm" target="_blank" rel="noopener noreferrer">
+                      Anmelden <span class="arr" aria-hidden="true">→</span>
+                    </a>
+                  )}
+                  {k.status === "Ausgebucht" && (
+                    <span class="kurs-card__status">Ausgebucht</span>
+                  )}
+                  {k.status === "Auf Anfrage" && (
+                    <span class="kurs-card__anfrage">
+                      Auf Anfrage — <a href="mailto:kontakt@jessica-bisetto.de">kontakt@jessica-bisetto.de</a>
+                    </span>
+                  )}
+                </div>
+              </div>
+            </article>
+          );
+        })}
+      </div>
+    )}
+  </main>
+</BaseLayout>

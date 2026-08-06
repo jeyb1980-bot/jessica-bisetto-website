@@ -1,0 +1,26 @@
+<!doctype html>
+<!-- @dsCard group="Components" name="Header & Nav" subtitle="Sticky header + breadcrumb" viewport="700x150" --><html lang="de"><head><meta charset="utf-8"><link rel="stylesheet" href="../colors_and_type.css"><style>
+body{padding:0;background:var(--bg)}
+.hdr{display:flex;align-items:center;justify-content:space-between;padding:12px 20px;border-bottom:1px solid var(--border);background:var(--bg);font-family:var(--font-body);gap:16px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--fg);flex-shrink:0}
+.brand img{width:44px;height:44px;display:block}
+.brand .wm{font-family:var(--font-display);font-weight:400;font-size:20px;letter-spacing:-.01em;color:var(--fg);white-space:nowrap}
+nav{display:flex;gap:2px;align-items:center;white-space:nowrap}
+nav a{color:var(--fg);text-decoration:none;font-size:13px;letter-spacing:-.005em;padding:7px 10px;border-radius:999px;transition:background 180ms var(--ease-soft),color 180ms var(--ease-soft);position:relative}
+nav a:hover{background:var(--color-cream);color:var(--color-teal-700)}
+nav a.is-current{color:var(--color-teal-700)}
+nav a.is-current::after{content:"";position:absolute;left:12px;right:12px;bottom:1px;height:1px;background:var(--color-teal-500)}
+nav a.cta{background:var(--color-ink);color:var(--color-bone);padding:8px 14px;font-weight:500;margin-left:4px}
+nav a.cta:hover{background:var(--color-teal-700);color:var(--color-bone)}
+.crumb{padding:12px 20px;font-family:var(--font-body);font-size:13px;color:var(--fg-subtle);display:flex;gap:8px;align-items:center;letter-spacing:.02em}
+.crumb b{color:var(--fg);font-weight:500}
+</style></head><body>
+<header class="hdr">
+  <a class="brand" href="#"><img src="../assets/logo.png" alt=""><span class="wm">Jessica Bisetto</span></a>
+  <nav>
+    <a href="#">Angebote</a><a href="#">Kurse</a><a href="#" class="is-current">Über mich</a><a href="#">Blog</a><a href="#">Kontakt</a>
+    <a href="#" class="cta">Erstgespräch</a>
+  </nav>
+</header>
+<div class="crumb">Angebote · <b>Erwachsene</b> · Coaching 1:1</div>
+</body></html>

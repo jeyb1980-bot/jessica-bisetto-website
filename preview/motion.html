@@ -1,0 +1,28 @@
+<!doctype html>
+<!-- @dsCard group="Spacing" name="Motion" subtitle="Easing + duration tokens" viewport="700x200" --><html lang="de"><head><meta charset="utf-8"><link rel="stylesheet" href="../colors_and_type.css"><style>
+body{padding:28px 32px;background:var(--bg)}
+.wrap{display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:start}
+.curve{font-family:var(--font-mono);font-size:11px;color:var(--fg-muted);background:var(--bg-raised);padding:10px 12px;border-radius:var(--r-sm)}
+.dot{width:18px;height:18px;border-radius:50%;background:var(--color-teal-500);animation:slide 2.4s var(--ease-soft) infinite}
+@keyframes slide{0%{transform:translateX(0)}50%{transform:translateX(220px)}100%{transform:translateX(0)}}
+.lab{font-family:var(--font-body);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--fg-subtle);margin-bottom:8px}
+.track{height:18px;border-bottom:1px dashed var(--border);position:relative;margin-bottom:10px}
+.dur{display:flex;gap:18px;font-family:var(--font-body);font-size:12px;color:var(--fg-muted)}
+.dur b{color:var(--fg);font-weight:600;font-family:var(--font-mono);font-size:11px}
+</style></head><body>
+<div class="wrap">
+  <div>
+    <div class="lab">Easing — soft ease-out</div>
+    <div class="track"><div class="dot"></div></div>
+    <div class="curve">cubic-bezier(0.22, 0.61, 0.36, 1)</div>
+  </div>
+  <div>
+    <div class="lab">Durations</div>
+    <div class="dur" style="flex-direction:column;gap:6px">
+      <div><b>160ms</b> · fast — hover, focus</div>
+      <div><b>280ms</b> · med — default for state changes</div>
+      <div><b>520ms</b> · slow — entrances, image cross-fades</div>
+    </div>
+  </div>
+</div>
+</body></html>

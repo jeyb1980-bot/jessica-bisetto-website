@@ -1,0 +1,18 @@
+<!doctype html>
+<!-- @dsCard group="Components" name="Form Inputs" subtitle="Text, textarea, checkbox" viewport="700x340" --><html lang="de"><head><meta charset="utf-8"><link rel="stylesheet" href="../colors_and_type.css"><style>
+body{padding:24px 32px;background:var(--bg)}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:18px 24px;max-width:600px}
+label{display:block;font-family:var(--font-body);font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--fg-muted);margin-bottom:8px;font-weight:600}
+.fld{width:100%;font-family:var(--font-body);font-size:15px;color:var(--fg);background:var(--bg);border:1px solid var(--border);border-radius:var(--r-sm);padding:12px 14px;transition:border-color 200ms var(--ease-soft);outline:none}
+.fld:focus{border-color:var(--color-teal-500);box-shadow:0 0 0 3px var(--color-teal-100)}
+.row{display:flex;align-items:center;gap:10px;font-family:var(--font-body);font-size:14px;color:var(--fg)}
+.cb{width:18px;height:18px;border:1.5px solid var(--color-stone-500);border-radius:4px;background:var(--bg);display:inline-flex;align-items:center;justify-content:center}
+.cb.on{background:var(--color-teal-500);border-color:var(--color-teal-500);color:var(--color-bone);font-size:12px}
+</style></head><body>
+<div class="grid">
+  <div><label>Name</label><input class="fld" value="Maria Werner"></div>
+  <div><label>E-Mail</label><input class="fld" value="maria@beispiel.de"></div>
+  <div style="grid-column:1/-1"><label>Was beschäftigt dich gerade?</label><textarea class="fld" rows="2">Ich fühle mich oft überfordert und möchte herausfinden, woran das liegt.</textarea></div>
+  <div class="row" style="grid-column:1/-1"><span class="cb on">✓</span> Ich habe die <u style="text-underline-offset:.25em">Datenschutzhinweise</u> gelesen.</div>
+</div>
+</body></html>

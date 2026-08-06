@@ -1,0 +1,237 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+
+const data = {
+  kinder: {
+    eb: "Kinder & Jugendliche",
+    tone: "kinder",
+    photo: "/assets/kinder.jpg",
+    title: "Du bist gut, so wie du bist.",
+    address: "du",
+    lede:
+      "Manchmal ist Schule schwer. Manchmal ist zuhause viel los. Manchmal weiß man nicht warum, aber irgendwas drückt. Ich höre dir zu — und wir finden zusammen heraus, was hilft.",
+    bullets: [
+      "Bei Stress in Schule, Familie oder Freundeskreis",
+      "Wenn dir oft alles zu viel wird oder du blockierst",
+      "Für mehr Mut, dich selbst zu zeigen",
+      "Spielerische Methoden, altersgerecht — keine Therapie",
+    ],
+    note: "Das erste Gespräch ist natürlich unverbindlich und kostenlos.",
+  },
+  erwachsene: {
+    eb: "Erwachsene",
+    tone: "erwachsene",
+    photo: "/assets/erwachsene.jpg",
+    title: "Wenn alles zu viel wird.",
+    address: "du",
+    lede:
+      "Vielleicht funktioniert gerade alles — und trotzdem stimmt etwas nicht. Wir schauen gemeinsam hin, ohne Druck, in deinem Tempo. Und finden Schritte, die sich wirklich gut anfühlen.",
+    bullets: [
+      "Bei Blockaden, Triggern, Belastung",
+      "In Lebensübergängen (Beruf, Familie, Trennung)",
+      "Gegen Perfektionismus und ständige Anerkennungssuche",
+      "Einzelcoaching · 60 oder 90 Minuten",
+    ],
+    note: "Das erste Gespräch ist natürlich unverbindlich und kostenlos.",
+  },
+  unternehmen: {
+    eb: "Unternehmen & Kommunen",
+    tone: "unternehmen",
+    photo: "/assets/unternehmen.jpg",
+    title: "Teams stärken, Strukturen halten.",
+    address: "sie",
+    lede:
+      "Ich arbeite mit Schulen, Verwaltungen und Unternehmen an Themen, die Menschen tragfähig machen — Resilienz, Konflikt, Kommunikation. Praxisnah, ohne Buzzwords.",
+    bullets: [
+      "Halbtags- und Tagesworkshops",
+      "Begleitprozesse über mehrere Termine",
+      "Vor Ort in Süddeutschland oder hybrid",
+      "Referenzen u. a. Stadt Schwäbisch Gmünd, VHS, Triumph (Heubach)",
+    ],
+    note: "Antwort innerhalb von zwei Werktagen.",
+  },
+};
+const order = ["kinder", "erwachsene", "unternehmen"] as const;
+---
+<BaseLayout
+  title="Angebote"
+  description="Coaching für Kinder, Erwachsene und Unternehmen im Ostalbkreis — drei Wege, ein Ziel."
+  current="angebote"
+>
+  <main class="screen screen--angebote">
+    <div class="page-head">
+      <p class="eyebrow">Angebote</p>
+      <h1 class="h-display page-head__h">Drei Wege, ein Ziel.</h1>
+      <p class="lede page-head__lede">
+        Wachstum sieht für jeden anders aus. Wähle den Weg, der zu dir passt —
+        oder schreib mir, wenn du unsicher bist.
+      </p>
+    </div>
+
+    <div class="aud-tabs" role="tablist">
+      {order.map((k) => (
+        <button
+          type="button"
+          class={`aud-tab aud-tab--${data[k].tone}`}
+          data-aud-tab={k}
+          role="tab"
+        >
+          {data[k].eb}
+        </button>
+      ))}
+    </div>
+
+    {order.map((k) => {
+      const d = data[k];
+      return (
+        <div data-aud-panel={k} hidden>
+          <article class={`ang-panel ang-panel--${d.tone}`}>
+            <div class="ang-panel__photo">
+              <img src={d.photo} alt="" />
+            </div>
+            <div class="ang-panel__body">
+              <p class="eyebrow ang-panel__eb">{d.eb}</p>
+              <h2 class="h1">{d.title}</h2>
+              <p class="lede">{d.lede}</p>
+              <ul class="check-list">
+                {d.bullets.map((b) => (
+                  <li>
+                    <img src="/assets/icons/check.svg" width="18" height="18" alt="" />
+                    <span>{b}</span>
+                  </li>
+                ))}
+              </ul>
+              <div class="ang-panel__cta">
+                <a href={d.address === "sie" ? "/kontakt" : "/erstgespraech"} class="btn btn-pri">
+                  {d.address === "sie" ? "Anfrage senden" : "Erstgespräch vereinbaren"}
+                  <span class="arr" aria-hidden="true">→</span>
+                </a>
+                <span class="ang-panel__note body-sm">{d.note}</span>
+              </div>
+              {k === "kinder" && (
+                <p class="ang-panel__link body-sm">
+                  Tipp: In der <a href="/#elternbibliothek">Elternbibliothek</a> findest du kostenfreie Mal- und Bastelvorlagen für zuhause.
+                </p>
+              )}
+            </div>
+          </article>
+
+          {k === "kinder" && (
+            <article class="ang-project">
+              <div class="ang-project__head">
+                <p class="eyebrow ang-project__eb">Schulprojekt · Prävention</p>
+                <h2 class="h1 ang-project__h">
+                  <em>Mut tut gut</em> — Projekt zur Prävention
+                  von sexueller Gewalt in den 4. Klassen.
+                </h2>
+              </div>
+
+              <div class="ang-project__grid">
+                <div class="ang-project__badge">
+                  <img src="/assets/mut-tut-gut-logo.png" alt="Mut tut gut" />
+                  <p class="ang-project__traeger">
+                    Ein Projekt von <strong>Frauen helfen Frauen Schwäbisch Gmünd e.&nbsp;V.</strong>
+                  </p>
+                </div>
+
+                <div class="ang-project__body">
+                  <p class="body-lg">
+                    „Mut tut gut" ist ein bewährtes Präventionsprojekt für
+                    Viertklässlerinnen und Viertklässler. Kinder lernen — ohne
+                    Angst, ohne Druck — gute und schlechte Geheimnisse zu
+                    unterscheiden, eigene Grenzen zu spüren und im Ernstfall zu
+                    sagen: <em>Stopp. Ich hole mir Hilfe.</em>
+                  </p>
+                  <p class="body">
+                    Als freie Mitarbeiterin im Bereich Prävention bringe ich
+                    das Projekt im Auftrag des Trägervereins direkt an Ihre
+                    Schule. Spielerisch, altersgerecht und mit großer
+                    Sensibilität für die Lebenswelt der Kinder.
+                  </p>
+                  <p class="body ang-project__hint">
+                    <strong>Anfragen laufen direkt über den Verein.</strong>
+                    Frauen helfen Frauen Schwäbisch Gmünd e.&nbsp;V. koordiniert
+                    die Anmeldung und die Terminvergabe für alle Schulen.
+                  </p>
+
+                  <ul class="check-list ang-project__bullets">
+                    <li>
+                      <img src="/assets/icons/check.svg" width="18" height="18" alt="" />
+                      <span>Zwei Termine à 90 Minuten in der Schulklasse</span>
+                    </li>
+                    <li>
+                      <img src="/assets/icons/check.svg" width="18" height="18" alt="" />
+                      <span>Optional ein begleitender Elternabend</span>
+                    </li>
+                    <li>
+                      <img src="/assets/icons/check.svg" width="18" height="18" alt="" />
+                      <span>Konzept des Vereins Frauen helfen Frauen, langjährig erprobt</span>
+                    </li>
+                    <li>
+                      <img src="/assets/icons/check.svg" width="18" height="18" alt="" />
+                      <span>Für Grundschulen im Ostalbkreis und Umgebung</span>
+                    </li>
+                  </ul>
+
+                  <div class="ang-project__price">
+                    <div class="ang-project__price-row">
+                      <span class="ang-project__price-l">Klassenworkshop</span>
+                      <span class="ang-project__price-r">
+                        <strong>180&nbsp;€</strong> · 2&nbsp;×&nbsp;90&nbsp;Minuten
+                      </span>
+                    </div>
+                    <div class="ang-project__price-row">
+                      <span class="ang-project__price-l">Elternabend · optional</span>
+                      <span class="ang-project__price-r">
+                        <strong>60&nbsp;€</strong> · zusätzlich
+                      </span>
+                    </div>
+                  </div>
+
+                  <div class="ang-project__cta">
+                    <a
+                      href="https://frauenhelfenfrauen-schwaebischgmuend.de/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="btn btn-pri"
+                    >
+                      Beim Verein anfragen
+                      <span class="arr" aria-hidden="true">↗</span>
+                    </a>
+                    <span class="ang-panel__note body-sm">
+                      Anmeldung &amp; Termine direkt über Frauen helfen Frauen Schwäbisch Gmünd e.&nbsp;V.
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </article>
+          )}
+        </div>
+      );
+    })}
+  </main>
+</BaseLayout>
+
+<script>
+  const tabs = document.querySelectorAll<HTMLButtonElement>("[data-aud-tab]");
+  const panels = document.querySelectorAll<HTMLElement>("[data-aud-panel]");
+  const valid = ["kinder", "erwachsene", "unternehmen"];
+
+  function activate(id: string) {
+    if (!valid.includes(id)) return;
+    tabs.forEach((t) => t.classList.toggle("is-active", t.dataset.audTab === id));
+    tabs.forEach((t) => t.setAttribute("aria-selected", String(t.dataset.audTab === id)));
+    panels.forEach((p) => { p.hidden = p.dataset.audPanel !== id; });
+  }
+
+  tabs.forEach((t) => {
+    t.addEventListener("click", () => {
+      const id = t.dataset.audTab!;
+      activate(id);
+      history.replaceState(null, "", "#" + id);
+    });
+  });
+
+  const initial = (window.location.hash || "").replace("#", "") || "kinder";
+  activate(initial);
+</script>

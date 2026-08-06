@@ -1,0 +1,28 @@
+<!doctype html>
+<!-- @dsCard group="Components" name="Cards" subtitle="Editorial + photo-led" viewport="700x320" --><html lang="de"><head><meta charset="utf-8"><link rel="stylesheet" href="../colors_and_type.css"><style>
+body{padding:24px 32px;background:var(--bg)}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.card{background:var(--bg-raised);border-radius:var(--r-lg);padding:24px;box-shadow:var(--shadow-sm);transition:box-shadow 280ms var(--ease-soft)}
+.card:hover{box-shadow:var(--shadow-md)}
+.eb{font-family:var(--font-body);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--color-teal-700);font-weight:600;margin-bottom:8px}
+.t{font-family:var(--font-display);font-weight:400;font-size:22px;line-height:1.15;margin-bottom:6px;color:var(--fg)}
+.d{font-family:var(--font-body);font-size:14px;line-height:1.5;color:var(--fg-muted)}
+.photo{background:#E4D9C6 url('../assets/erwachsene.jpg') center/cover;border-radius:var(--r-lg);overflow:hidden;aspect-ratio:5/3;margin:-24px -24px 18px}
+.foot{display:flex;align-items:center;gap:8px;margin-top:14px;font-family:var(--font-body);font-size:13px;font-weight:600;color:var(--color-teal-700)}
+.arr{transition:transform 280ms}.card:hover .arr{transform:translateX(3px)}
+</style></head><body>
+<div class="grid">
+  <div class="card">
+    <div class="eb">Erwachsene</div>
+    <div class="t">Wenn alles zu viel wird</div>
+    <div class="d">Wir schauen zusammen, was dich gerade belastet — und finden Schritt für Schritt einen Weg, der sich gut anfühlt.</div>
+    <div class="foot">Mehr lesen <span class="arr">→</span></div>
+  </div>
+  <div class="card" style="padding-top:0">
+    <div class="photo"></div>
+    <div class="eb">Über mich</div>
+    <div class="t">Jessica Bisetto</div>
+    <div class="d">Coach in Schwäbisch Gmünd seit 2017.</div>
+  </div>
+</div>
+</body></html>

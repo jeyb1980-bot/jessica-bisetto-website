@@ -309,6 +309,12 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* Das hidden-Attribut muss IMMER gewinnen.
+   Ohne diese Regel schlägt jede eigene `display`-Angabe (z. B. `display: flex`
+   auf einer Klasse) die Browser-Regel `[hidden] { display: none }` — das
+   Element bleibt dann trotz hidden sichtbar stehen. */
+[hidden] { display: none !important; }
+
 /* Focus — always visible (a11y) */
 :focus-visible {
   outline: 2px solid var(--color-focus);

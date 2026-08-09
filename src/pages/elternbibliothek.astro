@@ -1,0 +1,357 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { TOPICS } from "../data/elternBibliothek";
+
+const AGE_GROUPS = [
+  { value: "", label: "Alle Altersgruppen" },
+  { value: "0-3", label: "0 – 3 Jahre (Säugling/Kleinkind)" },
+  { value: "4-6", label: "4 – 6 Jahre (Kita / Vorschule)" },
+  { value: "7-10", label: "7 – 10 Jahre (Grundschule)" },
+  { value: "11-13", label: "11 – 13 Jahre (frühe Jugend)" },
+  { value: "14-17", label: "14 – 17 Jahre (Jugend)" },
+];
+const AREAS = [
+  { value: "", label: "Alle Bereiche" },
+  { value: "Familie", label: "Familie / Zuhause" },
+  { value: "Kita", label: "Kita / Krippe" },
+  { value: "Schule", label: "Schule" },
+  { value: "Freundeskreis", label: "Freundeskreis / Peers" },
+  { value: "Medien", label: "Online / Medien" },
+  { value: "Verein", label: "Sport / Verein / Freizeit" },
+  { value: "Übergreifend", label: "Übergreifend" },
+];
+const CATEGORIES = [
+  { value: "", label: "Alle Themenfelder" },
+  { value: "Angst", label: "Ängste & Sorgen" },
+  { value: "Verhalten", label: "Verhalten & Grenzen" },
+  { value: "Sozial", label: "Soziales & Beziehungen" },
+  { value: "Entwicklung", label: "Entwicklung & Lernen" },
+  { value: "Körper", label: "Körper & Schlaf" },
+  { value: "Krise", label: "Krisen & Belastung" },
+];
+
+// Entities/Markup für das Suchfeld entfernen, damit die Suche auf reinem Text arbeitet.
+const plain = (s: string) =>
+  s.replace(/<[^>]*>/g, " ").replace(/&nbsp;/g, " ").replace(/&amp;/g, "&")
+   .replace(/&[a-z]+;/g, " ").replace(/\s+/g, " ").trim().toLowerCase();
+
+const topics = TOPICS.map((t) => ({
+  ...t,
+  search: plain([t.title, t.summary, t.body.was, t.tags.join(" "),
+    t.body.anzeichen.join(" "), t.body.hilft.join(" ")].join(" ")),
+}));
+---
+<BaseLayout
+  title="Eltern-Bibliothek"
+  description="Orientierung für Eltern und Bezugspersonen: mentale und emotionale Themen rund ums Kind — verständlich erklärt, auf Basis anerkannter Leitlinien und Studien."
+  current="elternbibliothek"
+>
+  <main class="screen eb">
+    <div class="page-head">
+      <p class="eyebrow">Eltern-Bibliothek</p>
+      <h1 class="h-display page-head__h">
+        Mentale und emotionale Themen rund ums Kind — <em>verständlich erklärt</em>.
+      </h1>
+      <p class="lede page-head__lede">
+        Eine kuratierte Sammlung zu Themen wie Schulangst, Mobbing, Trotz, Ängsten
+        und Schlafproblemen. Alle Inhalte stützen sich auf Leitlinien, Studien und
+        Empfehlungen anerkannter Fachgesellschaften.
+      </p>
+    </div>
+
+    <div class="eb-note" role="note">
+      <p class="eb-note__title">Wichtiger Hinweis · Keine medizinische Beratung.</p>
+      <p class="body-sm">
+        Diese Bibliothek dient der ersten Orientierung. Sie ersetzt <strong>keine</strong>
+        ärztliche, psychotherapeutische oder psychologische Diagnose und Behandlung.
+        Wenn dein Kind akut belastet ist, wende dich bitte an eine Kinder- und
+        Jugendärztin, eine Erziehungsberatungsstelle oder an die
+        <a href="tel:116111">Nummer gegen Kummer (116 111)</a>. Im Notfall wähle die 112.
+      </p>
+    </div>
+
+    <div class="eb-controls">
+      <label class="eb-search">
+        <span class="visually-hidden">Suche</span>
+        <input
+          type="search"
+          id="eb-q"
+          class="fld"
+          placeholder="Suche nach Thema oder Stichwort — z. B. Schlaf, Wut, Schule"
+          autocomplete="off"
+        />
+      </label>
+      <div class="eb-filters">
+        <label class="eb-filter">
+          <span class="lbl">Altersgruppe</span>
+          <select class="fld" id="eb-age">
+            {AGE_GROUPS.map((o) => <option value={o.value}>{o.label}</option>)}
+          </select>
+        </label>
+        <label class="eb-filter">
+          <span class="lbl">Lebensbereich</span>
+          <select class="fld" id="eb-area">
+            {AREAS.map((o) => <option value={o.value}>{o.label}</option>)}
+          </select>
+        </label>
+        <label class="eb-filter">
+          <span class="lbl">Themenfeld</span>
+          <select class="fld" id="eb-cat">
+            {CATEGORIES.map((o) => <option value={o.value}>{o.label}</option>)}
+          </select>
+        </label>
+      </div>
+      <p class="eb-count body-sm" id="eb-count" aria-live="polite"></p>
+    </div>
+
+    <div class="eb-list">
+      {topics.map((t) => (
+        <details
+          class="eb-topic"
+          data-eb-topic
+          data-search={t.search}
+          data-area={t.area}
+          data-category={t.category}
+          data-age-min={t.ageMin}
+          data-age-max={t.ageMax}
+          id={t.id}
+        >
+          <summary class="eb-topic__summary">
+            <span class="eb-topic__head">
+              <span class="eb-topic__title" set:html={t.title} />
+              <span class="eb-topic__sum body-sm" set:html={t.summary} />
+              <span class="eb-topic__meta">
+                <span class="eb-tag">{t.area}</span>
+                <span class="eb-tag">{t.ageMin}–{t.ageMax} Jahre</span>
+              </span>
+            </span>
+            <span class="eb-topic__chev" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="4 6 8 10 12 6" />
+              </svg>
+            </span>
+          </summary>
+
+          <div class="eb-topic__body">
+            <h2 class="eb-h">Worum es geht</h2>
+            <p class="body" set:html={t.body.was} />
+
+            <h2 class="eb-h">Mögliche Anzeichen</h2>
+            <ul class="eb-ul">
+              {t.body.anzeichen.map((a) => <li set:html={a} />)}
+            </ul>
+
+            <h2 class="eb-h">Was erfahrungsgemäß hilft</h2>
+            <ul class="eb-ul">
+              {t.body.hilft.map((h) => <li set:html={h} />)}
+            </ul>
+
+            {t.body.redflag && (
+              <div class="eb-redflag">
+                <p class="eb-redflag__title">Wann fachliche Hilfe wichtig wird</p>
+                <p class="body-sm" set:html={t.body.redflag} />
+              </div>
+            )}
+
+            <h2 class="eb-h">Quellen</h2>
+            <ul class="eb-sources">
+              {t.body.quellen.map((q) => (
+                <li>
+                  <strong set:html={q.ref} /> — <span set:html={q.text} />
+                </li>
+              ))}
+            </ul>
+          </div>
+        </details>
+      ))}
+    </div>
+
+    <p class="eb-empty body-lg" id="eb-empty" hidden>
+      Zu deiner Suche habe ich nichts gefunden. Versuch es mit einem anderen Wort —
+      oder <a href="/kontakt">schreib mir</a>, dann schauen wir gemeinsam.
+    </p>
+
+    <section class="eb-outro">
+      <h2 class="h2">Dir fehlt ein Thema?</h2>
+      <p class="body">
+        Diese Sammlung wächst. Wenn dich etwas beschäftigt, das hier fehlt,
+        schreib mir gern — ich nehme Themen auf, für die es belastbare Quellen gibt.
+      </p>
+      <a href="/kontakt" class="btn btn-sec">Thema vorschlagen</a>
+    </section>
+  </main>
+</BaseLayout>
+
+<script>
+  const q = document.getElementById("eb-q") as HTMLInputElement | null;
+  const age = document.getElementById("eb-age") as HTMLSelectElement | null;
+  const area = document.getElementById("eb-area") as HTMLSelectElement | null;
+  const cat = document.getElementById("eb-cat") as HTMLSelectElement | null;
+  const count = document.getElementById("eb-count");
+  const empty = document.getElementById("eb-empty");
+  const topics = Array.from(document.querySelectorAll<HTMLElement>("[data-eb-topic]"));
+
+  function ageOverlaps(range: string, min: number, max: number) {
+    if (!range) return true;
+    const [a, b] = range.split("-").map(Number);
+    return min <= b && max >= a;
+  }
+
+  function apply() {
+    const term = (q?.value || "").trim().toLowerCase();
+    const selAge = age?.value || "";
+    const selArea = area?.value || "";
+    const selCat = cat?.value || "";
+    let visible = 0;
+
+    topics.forEach((el) => {
+      const matches =
+        (!term || (el.dataset.search || "").includes(term)) &&
+        (!selArea || el.dataset.area === selArea) &&
+        (!selCat || el.dataset.category === selCat) &&
+        ageOverlaps(selAge, Number(el.dataset.ageMin), Number(el.dataset.ageMax));
+
+      el.hidden = !matches;
+      if (!matches) (el as HTMLDetailsElement).open = false;
+      if (matches) visible++;
+    });
+
+    if (count) {
+      count.textContent =
+        visible === topics.length
+          ? `${topics.length} Themen in der Bibliothek`
+          : `${visible} von ${topics.length} Themen`;
+    }
+    if (empty) empty.hidden = visible !== 0;
+  }
+
+  [q, age, area, cat].forEach((el) => {
+    el?.addEventListener("input", apply);
+    el?.addEventListener("change", apply);
+  });
+
+  apply();
+
+  // Direktlink auf ein Thema (z. B. /elternbibliothek#schulangst) aufklappen
+  const target = decodeURIComponent(location.hash.replace("#", ""));
+  if (target) {
+    const el = document.getElementById(target) as HTMLDetailsElement | null;
+    if (el) {
+      el.open = true;
+      el.scrollIntoView({ block: "center" });
+    }
+  }
+</script>
+
+<style>
+  .eb { max-width: var(--w-content); }
+
+  .eb-note {
+    background: var(--color-clay-50);
+    border-left: 3px solid var(--color-clay-500);
+    border-radius: 0 var(--r-md) var(--r-md) 0;
+    padding: 18px 22px;
+    margin-bottom: var(--sp-7);
+  }
+  .eb-note__title {
+    font-family: var(--font-body); font-weight: 600; font-size: 14px;
+    color: var(--color-clay-700); margin: 0 0 4px;
+  }
+  .eb-note p { margin: 0; }
+
+  .eb-controls { margin-bottom: var(--sp-6); }
+  .eb-search { display: block; margin-bottom: var(--sp-4); }
+  .eb-search input { font-size: 16px; padding: 14px 16px; }
+  .eb-filters {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--sp-4);
+  }
+  @media (max-width: 720px) { .eb-filters { grid-template-columns: 1fr; } }
+  .eb-filter { display: flex; flex-direction: column; gap: 6px; }
+  .eb-filter select { cursor: pointer; }
+  .eb-count { margin: var(--sp-4) 0 0; color: var(--fg-subtle); }
+
+  .eb-list { display: flex; flex-direction: column; gap: 12px; }
+
+  .eb-topic {
+    background: var(--bg-raised);
+    border: 1px solid var(--border);
+    border-radius: var(--r-lg);
+    overflow: hidden;
+    transition: border-color var(--dur-fast) var(--ease-soft);
+  }
+  .eb-topic:hover { border-color: var(--color-teal-300); }
+  .eb-topic[open] { border-color: var(--color-teal-500); }
+
+  .eb-topic__summary {
+    list-style: none; cursor: pointer;
+    display: flex; align-items: flex-start; justify-content: space-between; gap: 16px;
+    padding: 22px 26px;
+  }
+  .eb-topic__summary::-webkit-details-marker { display: none; }
+  .eb-topic__summary:focus-visible { outline: 2px solid var(--color-focus); outline-offset: -2px; }
+  .eb-topic__head { display: flex; flex-direction: column; gap: 6px; }
+  .eb-topic__title {
+    font-family: var(--font-display); font-weight: 400; font-size: 22px;
+    line-height: 1.2; color: var(--fg);
+  }
+  .eb-topic__sum { margin: 0; max-width: 62ch; }
+  .eb-topic__meta { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 4px; }
+  .eb-tag {
+    font-family: var(--font-body); font-size: 11px; font-weight: 600;
+    letter-spacing: 0.06em; text-transform: uppercase;
+    color: var(--color-teal-700); background: var(--color-teal-50);
+    padding: 4px 10px; border-radius: var(--r-pill);
+  }
+  .eb-topic__chev {
+    flex-shrink: 0; color: var(--color-teal-700);
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 34px; height: 34px; border-radius: 50%; background: var(--bg);
+    transition: transform var(--dur-med) var(--ease-soft);
+  }
+  .eb-topic[open] .eb-topic__chev { transform: rotate(180deg); }
+
+  .eb-topic__body {
+    padding: 4px 26px 30px;
+    border-top: 1px solid var(--border);
+  }
+  .eb-h {
+    font-family: var(--font-body); font-size: 12px; font-weight: 700;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--color-teal-700);
+    margin: 26px 0 10px;
+  }
+  .eb-topic__body .body { margin: 0; max-width: var(--w-prose); }
+  .eb-ul, .eb-sources {
+    margin: 0; padding-left: 20px;
+    display: flex; flex-direction: column; gap: 8px;
+    max-width: var(--w-prose);
+  }
+  .eb-ul li, .eb-sources li {
+    font-family: var(--font-body); font-size: 15px; line-height: 1.6; color: var(--fg);
+  }
+  .eb-sources li { font-size: 13px; color: var(--fg-muted); }
+  .eb-sources strong { color: var(--fg); font-weight: 600; }
+
+  .eb-redflag {
+    margin-top: 22px; padding: 16px 20px;
+    background: var(--bg); border: 1px solid var(--color-clay-100);
+    border-left: 3px solid var(--color-clay-500);
+    border-radius: 0 var(--r-md) var(--r-md) 0;
+    max-width: var(--w-prose);
+  }
+  .eb-redflag__title {
+    font-family: var(--font-body); font-weight: 600; font-size: 13px;
+    color: var(--color-clay-700); margin: 0 0 4px;
+  }
+  .eb-redflag p:last-child { margin: 0; }
+
+  .eb-empty { margin-top: var(--sp-6); max-width: 52ch; }
+
+  .eb-outro {
+    margin-top: var(--sp-9); padding-top: var(--sp-7);
+    border-top: 1px solid var(--border);
+    max-width: 60ch;
+  }
+  .eb-outro .h2 { margin: 0 0 12px; }
+  .eb-outro .body { margin: 0 0 22px; }
+</style>

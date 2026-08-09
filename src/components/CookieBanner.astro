@@ -49,7 +49,9 @@
 
 <style>
   .cookie-banner{
-    position: fixed; left: 0; right: 0; bottom: 0; z-index: 200;
+    /* Sehr hoher z-index: verhindert, dass Browser-Erweiterungen oder andere
+       eingeblendete Leisten am unteren Rand die Klicks abfangen. */
+    position: fixed; left: 0; right: 0; bottom: 0; z-index: 2147483000;
     display: flex; justify-content: center;
     padding: 12px;
     /* Hard safety net: this element must never be tall enough to cover

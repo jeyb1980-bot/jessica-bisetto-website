@@ -1,0 +1,164 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+
+// Presseberichte über meine Arbeit. Die Beiträge selbst stammen von den
+// jeweiligen Redaktionen — Titel, Autor und Medium stehen deshalb bei
+// jedem Eintrag dabei.
+const ARTIKEL = [
+  {
+    medium: "Zeitungsartikel",
+    autor: "Jens Sitarek",
+    datum: "22. Januar 2022",
+    titel: "Die Mücken vom Schulhof abwehren",
+    dachzeile: "Mobbingprävention",
+    zusammenfassung:
+      "Ein Besuch im Kurs zur Selbstbehauptung an der Schule am Kreßberg in Marktlustenau. Der Bericht zeigt, wie eine Doppelstunde abläuft — von der Frage, was man tut, wenn einen jemand ärgert, bis zum Bild der Löwen, die ruhig bleiben.",
+    zitat:
+      "Verhaltet euch wie Löwen. Löwen sind ruhig und entspannt, denn in der Ruhe liegt die Kraft.",
+    zitatQuelle: "aus dem Artikel",
+    bild: "/presse/zeitung-2022-muecken-vom-schulhof.jpg",
+    bildAlt:
+      "Zeitungsseite mit dem Artikel „Die Mücken vom Schulhof abwehren“ vom 22. Januar 2022",
+  },
+  {
+    medium: "Rems-Zeitung",
+    autor: "Redaktion",
+    datum: "12. Mai 2021",
+    titel: "Bedarf an Unterstützung ist gestiegen",
+    dachzeile: "Corona und die Psyche (V)",
+    zusammenfassung:
+      "Ein Interview mit mir und meiner Kollegin Jessica Hrusa über das, was die Pandemie bei Kindern und Jugendlichen hinterlassen hat — und über die Situationen, in denen sie Stärke und Zusammenhalt gezeigt haben.",
+    zitat:
+      "Inhaltlich hat sich unsere Arbeit gar nicht großartig verändert. Der Bedarf an Unterstützung für Kinder, Eltern und Pädagogen allerdings ist gestiegen.",
+    zitatQuelle: "Jessica Bisetto im Interview",
+    bild: "/presse/rems-zeitung-2021-bedarf-an-unterstuetzung.jpg",
+    bildAlt:
+      "Artikel „Bedarf an Unterstützung ist gestiegen“ aus der Rems-Zeitung vom 12. Mai 2021",
+  },
+  {
+    medium: "Schulbericht der Kaufmännischen Schule Schwäbisch Gmünd",
+    autor: "Redaktion",
+    datum: "September 2019",
+    titel: "Motivation als Schlüssel zum Erfolg?",
+    dachzeile: "Motivations-Coaching in der Berufsfachschule",
+    zusammenfassung:
+      "Ein Bericht über den Auftakt eines Pilotprojekts an der Berufsfachschule für Wirtschaft: Wie sich eine Klasse zu Beginn des Schuljahrs Ziele setzt — und was ein Visionboard damit zu tun hat.",
+    zitat:
+      "Scheitern ist nicht das Gegenteil von Erfolg. Es ist ein Teil davon.",
+    zitatQuelle: "Motivationskarte für die Schülerinnen und Schüler",
+    bild: "/presse/schulbericht-2019-motivation.jpg",
+    bildAlt:
+      "Bericht „Motivation als Schlüssel zum Erfolg?“ aus dem Schulbericht, September 2019",
+  },
+];
+---
+<BaseLayout
+  title="Presse"
+  description="Berichte und Interviews über die Arbeit von Jessica Bisetto — in Zeitungen und Schulveröffentlichungen aus dem Ostalbkreis und der Region."
+  current="presse"
+>
+  <main class="screen presse">
+    <div class="page-head">
+      <p class="eyebrow">Presse</p>
+      <h1 class="h-display page-head__h">Wenn andere über meine Arbeit schreiben.</h1>
+      <p class="lede page-head__lede">
+        Eine Sammlung von Berichten und Interviews aus den vergangenen Jahren —
+        über Kurse an Schulen, über Coaching und darüber, was Kinder und
+        Jugendliche gerade beschäftigt.
+      </p>
+    </div>
+
+    <div class="presse-list">
+      {ARTIKEL.map((a) => (
+        <article class="presse-item">
+          <div class="presse-item__text">
+            <p class="eyebrow presse-item__eb">{a.medium} · {a.datum}</p>
+            <h2 class="presse-item__t">{a.titel}</h2>
+            <p class="presse-item__dach body-sm">{a.dachzeile}</p>
+            <p class="body">{a.zusammenfassung}</p>
+            <blockquote class="presse-item__zitat">
+              <p>{a.zitat}</p>
+              <footer class="caption">— {a.zitatQuelle}</footer>
+            </blockquote>
+            <p class="caption presse-item__quelle">
+              Erschienen in: {a.medium}, {a.datum}
+              {a.autor !== "Redaktion" && <> · Text und Foto: {a.autor}</>}.
+              Alle Rechte liegen beim jeweiligen Medium.
+            </p>
+          </div>
+          <figure class="presse-item__bild">
+            <a href={a.bild} target="_blank" rel="noopener noreferrer">
+              <img src={a.bild} alt={a.bildAlt} loading="lazy" />
+            </a>
+            <figcaption class="caption">Zum Vergrößern anklicken</figcaption>
+          </figure>
+        </article>
+      ))}
+    </div>
+
+    <section class="presse-outro">
+      <h2 class="h2">Sie möchten über meine Arbeit berichten?</h2>
+      <p class="body">
+        Für Anfragen von Redaktionen — zu Coaching, Prävention an Schulen oder
+        Resilienz im Beruf — erreichen Sie mich direkt.
+      </p>
+      <a href="/kontakt" class="btn btn-sec">Kontakt aufnehmen</a>
+    </section>
+  </main>
+</BaseLayout>
+
+<style>
+  .presse { max-width: var(--w-content); }
+
+  .presse-list { display: flex; flex-direction: column; gap: var(--sp-9); }
+
+  .presse-item {
+    display: grid; grid-template-columns: 1fr 1fr; gap: var(--sp-7);
+    align-items: start;
+  }
+  @media (max-width: 860px) {
+    .presse-item { grid-template-columns: 1fr; gap: var(--sp-5); }
+  }
+
+  .presse-item__eb { margin: 0 0 10px; }
+  .presse-item__t {
+    font-family: var(--font-display); font-weight: 400;
+    font-size: clamp(1.6rem, 2.4vw, 2rem); line-height: 1.15;
+    margin: 0 0 6px; text-wrap: balance;
+  }
+  .presse-item__dach { margin: 0 0 18px; color: var(--fg-subtle); }
+  .presse-item__text .body { margin: 0 0 20px; max-width: 52ch; }
+
+  .presse-item__zitat {
+    margin: 0 0 18px; padding: 16px 20px;
+    background: var(--bg-raised);
+    border-left: 3px solid var(--color-teal-500);
+    border-radius: 0 var(--r-md) var(--r-md) 0;
+  }
+  .presse-item__zitat p {
+    font-family: var(--font-display); font-style: italic; font-weight: 300;
+    font-size: var(--fs-18); line-height: 1.5; color: var(--fg); margin: 0 0 6px;
+  }
+  .presse-item__zitat p::before { content: "„"; color: var(--color-clay-500); }
+  .presse-item__zitat p::after { content: "“"; color: var(--color-clay-500); }
+  .presse-item__zitat footer { margin: 0; }
+
+  .presse-item__quelle { margin: 0; max-width: 52ch; }
+
+  .presse-item__bild { margin: 0; }
+  .presse-item__bild img {
+    width: 100%; height: auto; display: block;
+    border: 1px solid var(--border); border-radius: var(--r-md);
+    background: var(--bg-raised);
+    transition: box-shadow var(--dur-med) var(--ease-soft);
+  }
+  .presse-item__bild a:hover img { box-shadow: var(--shadow-md); }
+  .presse-item__bild figcaption { margin-top: 8px; text-align: center; }
+
+  .presse-outro {
+    margin-top: var(--sp-9); padding-top: var(--sp-7);
+    border-top: 1px solid var(--border); max-width: 60ch;
+  }
+  .presse-outro .h2 { margin: 0 0 12px; }
+  .presse-outro .body { margin: 0 0 22px; }
+</style>

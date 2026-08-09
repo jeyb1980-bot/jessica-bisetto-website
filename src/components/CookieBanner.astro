@@ -85,21 +85,48 @@
   const mainView = document.querySelector<HTMLElement>('[data-cookie-view="main"]');
   const settingsView = document.querySelector<HTMLElement>('[data-cookie-view="settings"]');
 
-  function readConsent(): { statistics: boolean; marketing: boolean } | null {
+  type Consent = { statistics: boolean; marketing: boolean };
+
+  // Fallback for browsers/extensions that block site storage entirely.
+  // The choice then only holds for the current page view, but the UI must
+  // still respond — never let a storage failure freeze the banner.
+  let inMemoryConsent: Consent | null = null;
+
+  function readConsent(): Consent | null {
     try {
       const raw = localStorage.getItem(STORAGE_KEY);
-      return raw ? JSON.parse(raw).categories : null;
+      if (raw) return JSON.parse(raw).categories;
     } catch {
-      return null;
+      // storage unavailable — fall through to the in-memory value
+    }
+    return inMemoryConsent;
+  }
+
+  function saveConsent(categories: Consent) {
+    inMemoryConsent = categories;
+    try {
+      localStorage.setItem(
+        STORAGE_KEY,
+        JSON.stringify({ categories, timestamp: new Date().toISOString() })
+      );
+    } catch {
+      // Storage blocked (privacy extension, "block all cookies", private mode
+      // quota). Consent still applies to this page view.
+    }
+    try {
+      document.dispatchEvent(new CustomEvent("cookie-consent-changed", { detail: categories }));
+    } catch {
+      // A misbehaving listener must not block the banner from closing.
     }
   }
 
-  function saveConsent(categories: { statistics: boolean; marketing: boolean }) {
-    localStorage.setItem(
-      STORAGE_KEY,
-      JSON.stringify({ categories, timestamp: new Date().toISOString() })
-    );
-    document.dispatchEvent(new CustomEvent("cookie-consent-changed", { detail: categories }));
+  // Save, then close no matter what — the banner must always respond to a click.
+  function decide(categories: Consent) {
+    try {
+      saveConsent(categories);
+    } finally {
+      closeBanner();
+    }
   }
 
   function openBanner(showSettings = false) {
@@ -114,13 +141,11 @@
   }
 
   document.querySelector("[data-cookie-accept-all]")?.addEventListener("click", () => {
-    saveConsent({ statistics: true, marketing: true });
-    closeBanner();
+    decide({ statistics: true, marketing: true });
   });
 
   document.querySelector("[data-cookie-necessary-only]")?.addEventListener("click", () => {
-    saveConsent({ statistics: false, marketing: false });
-    closeBanner();
+    decide({ statistics: false, marketing: false });
   });
 
   document.querySelector("[data-cookie-settings]")?.addEventListener("click", () => {
@@ -134,8 +159,7 @@
   document.querySelector("[data-cookie-save]")?.addEventListener("click", () => {
     const statistics = (document.querySelector('[data-cookie-toggle="statistics"]') as HTMLInputElement)?.checked ?? false;
     const marketing = (document.querySelector('[data-cookie-toggle="marketing"]') as HTMLInputElement)?.checked ?? false;
-    saveConsent({ statistics, marketing });
-    closeBanner();
+    decide({ statistics, marketing });
   });
 
   // Footer-Link "Cookie-Einstellungen" öffnet den Banner erneut.

@@ -192,34 +192,50 @@ body { background: var(--bg); color: var(--fg); }
 .about__sig{ font-family: var(--font-display); font-style: italic; color: var(--fg-muted); margin: 18px 0 28px; }
 
 /* ===== Testimonials ===== */
-.testi{ background: var(--bg-raised); padding: 76px 32px; }
-.testi__head{ max-width: var(--w-wide); margin: 0 auto 56px; }
+.testi{ background: var(--bg-raised); padding: 60px 32px; }
+.testi__head{ max-width: var(--w-wide); margin: 0 auto 28px; }
 .testi__head .eyebrow{ margin-bottom: 12px; }
 .testi__grid{
   max-width: var(--w-wide); margin: 0 auto;
-  display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px;
 }
-@media (max-width: 880px){ .testi__grid{ grid-template-columns: 1fr; } }
+@media (max-width: 1000px){ .testi__grid{ grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 620px){ .testi__grid{ grid-template-columns: 1fr; } }
+
+/* Die Zitate sind sehr verschieden lang. Ohne feste Höhe stehen die
+   Kacheln kreuz und quer — deshalb füllt jede Kachel ihre Rasterzelle
+   (kein align-self: start mehr), das Zitat wird auf sechs Zeilen
+   gekürzt und die Signatur per margin-top: auto nach unten gezogen.
+   So liegen alle Namen auf einer Linie. */
 .testi-card{
-  background: var(--bg); border-radius: var(--r-lg); padding: 26px 26px 24px;
+  background: var(--bg); border-radius: var(--r-md); padding: 20px 20px 18px;
   margin: 0; box-shadow: var(--shadow-xs);
-  display: flex; flex-direction: column; gap: 18px;
-  align-self: start;
-  transition: box-shadow var(--dur-med) var(--ease-soft),
-              transform var(--dur-med) var(--ease-soft);
+  display: flex; flex-direction: column; gap: 12px;
+  height: 100%;
+  transition: box-shadow var(--dur-med) var(--ease-soft);
 }
-.testi-card:hover{ box-shadow: var(--shadow-sm); transform: translateY(-3px); }
-@media (prefers-reduced-motion: reduce){
-  .testi-card:hover{ transform: none; }
-}
+.testi-card:hover{ box-shadow: var(--shadow-sm); }
 .testi-card__q{
   font-family: var(--font-display); font-style: italic; font-weight: 300;
-  font-size: 17px; line-height: 1.55; margin: 0; color: var(--fg); text-wrap: pretty;
+  font-size: 15px; line-height: 1.6; margin: 0; color: var(--fg); text-wrap: pretty;
+  display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 6;
+  overflow: hidden;
+}
+.testi-card.is-open .testi-card__q{
+  -webkit-line-clamp: unset; overflow: visible;
 }
 .testi-card__q::before{ content: "„ "; color: var(--color-clay-500); }
-.testi-card__sig{ font-family: var(--font-body); font-size: 13px; }
-.testi-card__sig strong{ display: block; color: var(--fg); }
-.testi-card__sig span{ color: var(--fg-subtle); font-size: 12px; }
+.testi-card__more{
+  align-self: flex-start;
+  background: none; border: 0; padding: 0; cursor: pointer;
+  font-family: var(--font-body); font-size: 12px; font-weight: 600;
+  color: var(--color-teal-700);
+  text-decoration: underline; text-underline-offset: 0.25em;
+}
+.testi-card__more:hover{ color: var(--color-aqua-700); }
+.testi-card__sig{ font-family: var(--font-body); font-size: 12px; margin-top: auto; }
+.testi-card__sig strong{ display: block; color: var(--fg); font-weight: 600; }
+.testi-card__sig span{ color: var(--fg-subtle); font-size: 11px; }
 .testi-card__ph{ font-style: normal; font-weight: 400; color: var(--color-clay-700); font-size: 11px; letter-spacing: 0.04em; text-transform: uppercase; }
 
 /* ===== Partners ===== */

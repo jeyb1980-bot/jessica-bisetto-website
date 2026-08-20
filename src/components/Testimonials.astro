@@ -36,12 +36,15 @@ try {
 <section class="testi">
   <div class="testi__head">
     <p class="eyebrow">Kundenstimmen</p>
-    <h2 class="h1">Was Menschen mitnehmen.</h2>
+    <h2 class="h2">Was Menschen mitnehmen.</h2>
   </div>
   <div class="testi__grid">
     {items.map((it) => (
       <figure class="testi-card">
-        <blockquote class="testi-card__q">{it.zitat}</blockquote>
+        <blockquote class="testi-card__q" data-testi-quote>{it.zitat}</blockquote>
+        <button class="testi-card__more" type="button" data-testi-more hidden>
+          Weiterlesen
+        </button>
         <figcaption class="testi-card__sig">
           <strong>{it.name}</strong>
           <span>{it.kontext}</span>
@@ -50,3 +53,41 @@ try {
     ))}
   </div>
 </section>
+
+<script>
+  /*
+    Die Zitate sind sehr unterschiedlich lang (rund 230 bis 900 Zeichen).
+    Damit die Kacheln gleich hoch bleiben, kürzt CSS jedes Zitat auf sechs
+    Zeilen. Der Weiterlesen-Knopf erscheint nur dort, wo tatsächlich etwas
+    abgeschnitten ist — sonst wäre er eine leere Versprechung.
+  */
+  function initTestimonials() {
+    document.querySelectorAll<HTMLElement>(".testi-card").forEach((card) => {
+      const quote = card.querySelector<HTMLElement>("[data-testi-quote]");
+      const btn = card.querySelector<HTMLButtonElement>("[data-testi-more]");
+      if (!quote || !btn) return;
+
+      const isTruncated = quote.scrollHeight > quote.clientHeight + 2;
+      if (!isTruncated) {
+        btn.hidden = true;
+        return;
+      }
+      btn.hidden = false;
+
+      btn.addEventListener("click", () => {
+        const open = card.classList.toggle("is-open");
+        btn.textContent = open ? "Weniger anzeigen" : "Weiterlesen";
+        btn.setAttribute("aria-expanded", String(open));
+      });
+      btn.setAttribute("aria-expanded", "false");
+    });
+  }
+
+  // Erst messen, wenn die Schriften geladen sind — sonst stimmt die
+  // Zeilenhöhe noch nicht und der Knopf erscheint an falscher Stelle.
+  if (document.fonts && document.fonts.ready) {
+    document.fonts.ready.then(initTestimonials);
+  } else {
+    window.addEventListener("load", initTestimonials);
+  }
+</script>

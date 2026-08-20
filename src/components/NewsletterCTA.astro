@@ -59,4 +59,7 @@ const BREVO_FORM_URL =
   .nl__fineprint--embed{
     color: var(--fg-subtle); margin: 0 0 12px; padding: 0 4px;
   }
+  /* Der Hinweis sitzt auf der hellen Formularkarte, nicht auf dem dunklen
+     Block — die helle Linkfarbe aus .nl__fineprint a wäre hier unlesbar. */
+  .nl__fineprint--embed a{ color: var(--color-teal-700); }
 </style>

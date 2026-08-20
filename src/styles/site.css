@@ -10,7 +10,7 @@ body { background: var(--bg); color: var(--fg); }
   height: 38vh; min-height: 240px; max-height: 360px;
   z-index: 0; pointer-events: none;
   overflow: hidden;
-  color: var(--color-teal-500);
+  color: var(--color-sage-500);
 }
 .bg-wave__svg{
   position: absolute; left: 0; top: 0;
@@ -23,7 +23,7 @@ body { background: var(--bg); color: var(--fg); }
 }
 .bg-wave__svg--b{
   opacity: 0.05;
-  color: var(--color-teal-700);
+  color: var(--color-sage-700);
   top: 18px;
   animation: bgwave-drift 92s linear infinite reverse;
 }

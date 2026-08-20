@@ -39,15 +39,20 @@
   --color-cream:       #ECEAE3;  /* raised surfaces, cards on bone */
   --color-sand:        #E4D9C6;  /* divider blocks, soft fills */
   --color-stone-300:   #C9BFAE;  /* hairlines, disabled */
-  --color-stone-500:   #746A5D;  /* muted text, captions — darkened slightly for WCAG AA (4.5:1 on --bg) */
+  --color-stone-500:   #6F6559;  /* muted text, captions — dunkel genug für WCAG AA auch auf --bg-raised */
   --color-stone-700:   #5A5247;  /* secondary text */
   --color-ink:         #1F1B16;  /* primary text — warm charcoal, not black */
 
   /* ===========================================================
      COLOR — Brand accents (psychologically grounded)
-     teal  = trust, depth, still water     → primary
-     clay  = warmth, humanity, terracotta  → secondary
-     sage  = growth, balance, nature       → tertiary
+     sage = Eukalyptus, Ruhe, Erholung      → Leitfarbe (Flächen)
+     teal = Petrol, Vertrauen, Tiefe        → Anker (Text, Buttons)
+     clay = gedämpfte Wärme, Menschlichkeit → Akzent
+
+     Die Grüntöne liegen bewusst im bläulichen Bereich (Farbwinkel
+     ~155°, niedrige Sättigung) — das ist der Eukalyptus-Ton der
+     bisherigen Marke. Ein gelbstichiges Oliv wirkt rustikal statt
+     beruhigend und ist hier fehl am Platz.
      =========================================================== */
   --color-teal-50:     #E1ECEC;
   --color-teal-100:    #B6D0CF;
@@ -56,34 +61,34 @@
   --color-teal-700:    #14545A;   /* deeper, for text-on-light or hover */
   --color-teal-900:    #0F3539;
 
-  --color-clay-50:     #FBEAE0;
-  --color-clay-100:    #F4D2BB;
-  --color-clay-300:    #DC9870;
-  --color-clay-500:    #C5683A;   /* main brand clay — vivid terracotta */
-  --color-clay-700:    #934A28;
-  --color-clay-900:    #5F2E17;
+  --color-clay-50:     #F7EEE9;
+  --color-clay-100:    #ECDBD0;
+  --color-clay-300:    #CB9576;   /* Akzentwort im Hero — muss auf dem hellen Foto tragen */
+  --color-clay-500:    #AB6A49;   /* main brand clay — gedämpftes Terrakotta */
+  --color-clay-700:    #774831;
+  --color-clay-900:    #472B1F;
 
-  --color-sage-50:     #EBEEE5;
-  --color-sage-100:    #D1DBC2;
-  --color-sage-300:    #9CAE87;
-  --color-sage-500:    #6F8B61;   /* main brand sage */
-  --color-sage-700:    #4A6041;
-  --color-sage-900:    #2C3A26;
+  --color-sage-50:     #EAF1ED;
+  --color-sage-100:    #CDDFD6;
+  --color-sage-300:    #97BAA8;
+  --color-sage-500:    #6F9385;   /* main brand sage — Eukalyptus */
+  --color-sage-700:    #436557;
+  --color-sage-900:    #253C34;
 
   /* ===========================================================
      COLOR — Audience accents (Angebote / Kurse rooms)
      =========================================================== */
-  --aud-kinder:        #E8A881;   /* warm peach — playful, gentle */
-  --aud-kinder-bg:     #FBEDE2;
+  --aud-kinder:        #DAB195;   /* weiches Apricot — playful, gentle */
+  --aud-kinder-bg:     #F8EFE7;
   --aud-erwachsene:    #1F7373;   /* teal — introspection, depth */
   --aud-erwachsene-bg: #E1ECEC;
-  --aud-unternehmen:   #6F8B61;   /* sage — stability, growth */
-  --aud-unternehmen-bg:#EBEEE5;
+  --aud-unternehmen:   #6F9385;   /* Eukalyptus — stability, growth */
+  --aud-unternehmen-bg:#EAF1ED;
 
   /* ===========================================================
      COLOR — Semantic
      =========================================================== */
-  --color-success:     #6F8869;
+  --color-success:     #5F8A76;
   --color-warning:     #C99650;
   --color-danger:      #B5604E;
   --color-info:        #5C8585;

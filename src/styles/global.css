@@ -33,15 +33,20 @@
 
 :root {
   /* ===========================================================
-     COLOR — Neutrals (warm, paper-like, never pure white/black)
+     COLOR — Neutrals (papierweich, aber kühl statt beige)
+
+     Die Neutraltöne liegen bewusst im grün-grauen Bereich, nicht im
+     Beige/Braun. Beige neben Eukalyptus wirkt erdig und schwer; ein
+     leicht kühles Papierweiß lässt die Farben frischer wirken und
+     erhöht nebenbei den Kontrast zum Text.
      =========================================================== */
-  --color-bone:        #F4F4F2;  /* page background, warm off-white */
-  --color-cream:       #ECEAE3;  /* raised surfaces, cards on bone */
-  --color-sand:        #E4D9C6;  /* divider blocks, soft fills */
-  --color-stone-300:   #C9BFAE;  /* hairlines, disabled */
-  --color-stone-500:   #6F6559;  /* muted text, captions — dunkel genug für WCAG AA auch auf --bg-raised */
-  --color-stone-700:   #5A5247;  /* secondary text */
-  --color-ink:         #1F1B16;  /* primary text — warm charcoal, not black */
+  --color-bone:        #F6F8F6;  /* page background, kühles Papierweiß */
+  --color-cream:       #EAEFEB;  /* raised surfaces, cards on bone */
+  --color-sand:        #D8E4DD;  /* divider blocks, soft fills */
+  --color-stone-300:   #BDC7C1;  /* hairlines, disabled */
+  --color-stone-500:   #5E6863;  /* muted text, captions — WCAG AA auch auf --bg-raised */
+  --color-stone-700:   #414B46;  /* secondary text */
+  --color-ink:         #16201C;  /* primary text — kühles Anthrazit, nie reines Schwarz */
 
   /* ===========================================================
      COLOR — Brand accents (psychologically grounded)
@@ -74,6 +79,15 @@
   --color-sage-500:    #6F9385;   /* main brand sage — Eukalyptus */
   --color-sage-700:    #436557;
   --color-sage-900:    #253C34;
+
+  /* Frischer Akzent — bringt Bewegung und Leichtigkeit hinein.
+     Sparsam einsetzen: Unterstreichungen, kleine Punkte, Hover,
+     der Leuchtturm-Schein. aqua-500 ist NUR dekorativ (zu hell für
+     Text), für Schrift immer aqua-700 nehmen. */
+  --color-aqua-100:    #CDEBE6;
+  --color-aqua-300:    #6FC9BE;
+  --color-aqua-500:    #2AA69A;
+  --color-aqua-700:    #1B7A72;
 
   /* ===========================================================
      COLOR — Audience accents (Angebote / Kurse rooms)
@@ -171,10 +185,10 @@
   /* ===========================================================
      SHADOWS — warm, low contrast (never neutral gray)
      =========================================================== */
-  --shadow-xs: 0 1px 2px rgba(31, 27, 22, 0.04);
-  --shadow-sm: 0 2px 6px rgba(31, 27, 22, 0.06), 0 1px 2px rgba(31, 27, 22, 0.04);
-  --shadow-md: 0 8px 20px rgba(31, 27, 22, 0.08), 0 2px 4px rgba(31, 27, 22, 0.04);
-  --shadow-lg: 0 20px 40px rgba(31, 27, 22, 0.10), 0 4px 8px rgba(31, 27, 22, 0.04);
+  --shadow-xs: 0 1px 2px rgba(22, 32, 28, 0.05);
+  --shadow-sm: 0 2px 6px rgba(22, 32, 28, 0.07), 0 1px 2px rgba(22, 32, 28, 0.05);
+  --shadow-md: 0 8px 20px rgba(22, 32, 28, 0.09), 0 2px 4px rgba(22, 32, 28, 0.05);
+  --shadow-lg: 0 20px 40px rgba(22, 32, 28, 0.12), 0 4px 8px rgba(22, 32, 28, 0.05);
   --shadow-inset: inset 0 1px 0 rgba(255, 255, 255, 0.5);
 
   /* ===========================================================
@@ -198,11 +212,14 @@
      <h1 class="h-display">…</h1>
      <p class="eyebrow">Kinder & Jugendliche</p>
    ============================================================= */
+/* Die Größen sind bewusst zurückgenommener als in der ersten Fassung —
+   ruhiger im Seitenbild, aber alles bleibt deutlich über der
+   Mindestlesegröße. Body bleibt unangetastet bei 16px. */
 .h-display {
   font-family: var(--font-display);
   font-weight: 420;
-  font-size: clamp(2.5rem, 5vw + 1rem, var(--fs-80));
-  line-height: var(--lh-tight);
+  font-size: clamp(2rem, 3.4vw + 0.9rem, 3.5rem);
+  line-height: 1.1;
   letter-spacing: var(--ls-tight);
   color: var(--fg);
   text-wrap: balance;
@@ -212,7 +229,7 @@
 .h1 {
   font-family: var(--font-display);
   font-weight: 400;
-  font-size: clamp(2rem, 3vw + 1rem, var(--fs-52));
+  font-size: clamp(1.6rem, 2vw + 0.85rem, 2.5rem);
   line-height: var(--lh-snug);
   letter-spacing: var(--ls-snug);
   color: var(--fg);
@@ -221,7 +238,7 @@
 .h2 {
   font-family: var(--font-display);
   font-weight: 400;
-  font-size: var(--fs-32);
+  font-size: var(--fs-24);
   line-height: var(--lh-snug);
   letter-spacing: var(--ls-snug);
   color: var(--fg);
@@ -230,7 +247,7 @@
 .h3 {
   font-family: var(--font-body);
   font-weight: 600;
-  font-size: var(--fs-20);
+  font-size: var(--fs-18);
   line-height: var(--lh-snug);
   letter-spacing: var(--ls-normal);
   color: var(--fg);
@@ -257,7 +274,7 @@
   font-family: var(--font-display);
   font-weight: 300;
   font-style: italic;
-  font-size: var(--fs-24);
+  font-size: var(--fs-20);
   line-height: var(--lh-relaxed);
   color: var(--fg-muted);
   text-wrap: pretty;
@@ -293,7 +310,7 @@
   font-family: var(--font-display);
   font-weight: 300;
   font-style: italic;
-  font-size: var(--fs-24);
+  font-size: var(--fs-18);
   line-height: var(--lh-relaxed);
   color: var(--fg);
   text-wrap: pretty;

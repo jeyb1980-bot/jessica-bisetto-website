@@ -18,13 +18,13 @@
   /* ===========================================================
      COLOR — Neutrals (warm, paper-like, never pure white/black)
      =========================================================== */
-  --color-bone:        #F4F4F2;  /* page background, warm off-white */
-  --color-cream:       #ECEAE3;  /* raised surfaces, cards on bone */
-  --color-sand:        #E4D9C6;  /* divider blocks, soft fills */
-  --color-stone-300:   #C9BFAE;  /* hairlines, disabled */
-  --color-stone-500:   #6F6559;  /* muted text, captions — WCAG AA auf bone und cream */
-  --color-stone-700:   #5A5247;  /* secondary text */
-  --color-ink:         #1F1B16;  /* primary text — warm charcoal, not black */
+  --color-bone:        #F6F8F6;  /* page background, kühles Papierweiß */
+  --color-cream:       #EAEFEB;  /* raised surfaces, cards on bone */
+  --color-sand:        #D8E4DD;  /* divider blocks, soft fills */
+  --color-stone-300:   #BDC7C1;  /* hairlines, disabled */
+  --color-stone-500:   #5E6863;  /* muted text, captions — WCAG AA auf bone und cream */
+  --color-stone-700:   #414B46;  /* secondary text */
+  --color-ink:         #16201C;  /* primary text — kühles Anthrazit, nie reines Schwarz */
 
   /* ===========================================================
      COLOR — Brand accents (psychologically grounded)
@@ -52,6 +52,12 @@
   --color-sage-500:    #6F9385;   /* main brand sage — Eukalyptus, Leitfarbe */
   --color-sage-700:    #436557;
   --color-sage-900:    #253C34;
+
+  /* Frischer Akzent — sparsam, nur dekorativ. Für Schrift aqua-700. */
+  --color-aqua-100:    #CDEBE6;
+  --color-aqua-300:    #6FC9BE;
+  --color-aqua-500:    #2AA69A;
+  --color-aqua-700:    #1B7A72;
 
   /* ===========================================================
      COLOR — Audience accents (Angebote / Kurse rooms)

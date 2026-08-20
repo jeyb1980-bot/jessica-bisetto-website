@@ -1,0 +1,139 @@
+---
+/*
+  Ruhiger Wasserstreifen als Übergang zwischen zwei Abschnitten.
+
+  Anders als die feste Hintergrundwelle (BackgroundWave) steht dieser
+  Streifen im Seitenfluss — er wird also nie von darüberliegenden
+  Abschnitten verdeckt und ist die eigentliche Bühne für Leuchtturm
+  und Surfbrett.
+
+  Rein dekorativ: aria-hidden, keine Mauszeiger-Interaktion. Bei
+  „Bewegung reduzieren" steht alles still.
+*/
+const WAVE_BACK =
+  "M0,60 C150,28 300,92 450,60 C600,28 750,92 900,60 C1050,28 1200,92 1350,60 C1500,28 1650,92 1800,60 L1800,140 L0,140 Z";
+const WAVE_FRONT =
+  "M0,84 C150,56 300,112 450,84 C600,56 750,112 900,84 C1050,56 1200,112 1350,84 C1500,56 1650,112 1800,84 L1800,140 L0,140 Z";
+---
+<div class="seaband" aria-hidden="true">
+  <div class="seaband__wave seaband__wave--back">
+    <svg viewBox="0 0 1800 140" preserveAspectRatio="none"><path d={WAVE_BACK} /></svg>
+  </div>
+
+  <div class="seaband__lighthouse">
+    <svg viewBox="0 0 120 170" width="120" height="170">
+      <g class="sb-beam">
+        <path d="M60,52 L-70,14 L-70,90 Z" fill="var(--color-aqua-300)" opacity="0.2" />
+      </g>
+      <g fill="none" stroke="var(--color-sage-700)" stroke-width="2.4" stroke-linejoin="round">
+        <path d="M47,152 L53,62 L67,62 L73,152 Z" />
+        <path d="M50,62 L50,46 L70,46 L70,62" />
+        <path d="M47,46 L60,32 L73,46 Z" />
+        <path d="M41,152 L79,152" stroke-linecap="round" />
+        <path d="M49,104 L71,104" stroke-linecap="round" opacity="0.55" />
+        <path d="M48,128 L72,128" stroke-linecap="round" opacity="0.55" />
+      </g>
+      <circle class="sb-lamp" cx="60" cy="54" r="4.5" fill="var(--color-aqua-500)" />
+    </svg>
+  </div>
+
+  <div class="seaband__board">
+    <svg viewBox="0 0 150 46" width="150" height="46">
+      <g transform="rotate(-7 75 23)">
+        <path
+          d="M8,23 C8,10 40,3 75,3 C110,3 142,10 142,23 C142,36 110,43 75,43 C40,43 8,36 8,23 Z"
+          fill="var(--color-clay-300)"
+        />
+        <path
+          d="M20,23 C40,17 110,17 130,23 C110,29 40,29 20,23 Z"
+          fill="var(--color-bone)"
+          opacity="0.7"
+        />
+      </g>
+    </svg>
+  </div>
+
+  <div class="seaband__wave seaband__wave--front">
+    <svg viewBox="0 0 1800 140" preserveAspectRatio="none"><path d={WAVE_FRONT} /></svg>
+  </div>
+</div>
+
+<style>
+  .seaband{
+    position: relative;
+    height: 190px;
+    overflow: hidden;
+    background: linear-gradient(180deg, var(--bg) 0%, var(--color-sage-50) 100%);
+  }
+
+  .seaband__wave{
+    position: absolute; left: 0; bottom: 0;
+    width: 200%; height: 96px;
+    will-change: transform;
+  }
+  .seaband__wave svg{ width: 100%; height: 100%; display: block; }
+  .seaband__wave--back{
+    animation: sb-drift 34s linear infinite;
+  }
+  .seaband__wave--back path{ fill: var(--color-sage-300); opacity: 0.45; }
+  .seaband__wave--front{
+    height: 76px;
+    animation: sb-drift 21s linear infinite reverse;
+  }
+  .seaband__wave--front path{ fill: var(--color-sage-500); opacity: 0.4; }
+
+  .seaband__lighthouse{
+    position: absolute; right: 11%; bottom: 56px;
+    width: 78px; opacity: 0.75;
+  }
+  .seaband__lighthouse svg{ width: 100%; height: auto; display: block; overflow: visible; }
+  .sb-beam{
+    transform-origin: 60px 52px;
+    animation: sb-sweep 10s ease-in-out infinite;
+  }
+  .sb-lamp{ animation: sb-pulse 10s ease-in-out infinite; }
+
+  .seaband__board{
+    position: absolute; left: 0; bottom: 20px;
+    width: 88px; opacity: 0.9;
+    animation: sb-board 46s linear infinite;
+  }
+  .seaband__board svg{
+    width: 100%; height: auto; display: block;
+    animation: sb-bob 5.5s ease-in-out infinite;
+  }
+
+  @keyframes sb-drift{
+    0%   { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+  @keyframes sb-sweep{
+    0%, 100% { transform: rotate(-24deg); }
+    50%      { transform: rotate(24deg); }
+  }
+  @keyframes sb-pulse{
+    0%, 100% { opacity: 0.4; }
+    50%      { opacity: 1; }
+  }
+  @keyframes sb-board{
+    0%   { transform: translateX(-140px); }
+    100% { transform: translateX(calc(100vw + 140px)); }
+  }
+  @keyframes sb-bob{
+    0%, 100% { transform: translateY(0) rotate(-2deg); }
+    50%      { transform: translateY(-5px) rotate(2deg); }
+  }
+
+  @media (max-width: 700px){
+    .seaband{ height: 140px; }
+    .seaband__lighthouse{ width: 58px; bottom: 42px; right: 7%; }
+    .seaband__board{ width: 66px; bottom: 14px; }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .seaband__wave--back, .seaband__wave--front,
+    .sb-beam, .sb-lamp, .seaband__board, .seaband__board svg{
+      animation: none;
+    }
+  }
+</style>

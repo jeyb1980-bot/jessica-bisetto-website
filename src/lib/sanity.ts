@@ -60,7 +60,7 @@ export interface Partner {
 
 export async function getKurse(): Promise<Kurs[]> {
   return sanityClient.fetch(
-    `*[_type == "kurs" && status != "Vorbei"] | order(datum asc)`
+    `*[_type == "kurs" && status != "Vorbei" && datum >= now()] | order(datum asc)`
   );
 }
 

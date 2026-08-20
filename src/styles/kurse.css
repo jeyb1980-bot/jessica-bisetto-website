@@ -5,17 +5,33 @@
 }
 @media (max-width: 760px){ .kurs-grid{ grid-template-columns: 1fr; } }
 
+/* Das Bild ist Beiwerk, nicht die Hauptsache: schmaler Streifen links
+   neben dem Text statt breitem Aufmacher darüber. Auf der Kursseite
+   zählen Titel, Termin, Ort und Preis — die sollen zuerst ins Auge
+   fallen. */
 .kurs-card{
   background: var(--bg-raised); border-radius: var(--r-lg); overflow: hidden;
   box-shadow: var(--shadow-xs);
-  display: flex; flex-direction: column;
-  transition: box-shadow var(--dur-med) var(--ease-soft), transform var(--dur-med) var(--ease-soft);
+  display: flex; flex-direction: row; align-items: stretch;
+  transition: box-shadow var(--dur-med) var(--ease-soft);
 }
-.kurs-card:hover{ box-shadow: var(--shadow-md); transform: translateY(-2px); }
+.kurs-card:hover{ box-shadow: var(--shadow-sm); }
+/* Die hinterlegten Bilder sind meist Anbieter-Logos (VHS). Ein
+   formatfüllender Ausschnitt zerschneidet sie zu Buchstabenresten —
+   deshalb contain statt cover, damit das Logo ganz zu sehen bleibt.
+   Auch ein Foto funktioniert in dieser kleinen Fläche noch. */
 .kurs-card__img{
-  aspect-ratio: 16/9; background-size: cover; background-position: center;
+  flex: 0 0 108px; width: 108px; align-self: stretch;
+  background-size: contain; background-position: center;
+  background-repeat: no-repeat;
+  background-color: var(--bg);
+  border-right: 1px solid var(--border);
 }
-.kurs-card__body{ padding: 28px 28px 32px; display: flex; flex-direction: column; gap: 10px; flex: 1; }
+.kurs-card__body{ padding: 20px 22px 18px; display: flex; flex-direction: column; gap: 8px; flex: 1; min-width: 0; }
+@media (max-width: 460px){
+  .kurs-card__img{ flex-basis: 84px; width: 84px; }
+  .kurs-card__body{ padding: 16px 16px 14px; }
+}
 .kurs-card__eb--kinder{ color: var(--color-clay-700); }
 .kurs-card__eb--erwachsene{ color: var(--color-teal-700); }
 .kurs-card__eb--unternehmen{ color: var(--color-sage-700); }
@@ -24,12 +40,12 @@
   font-family: var(--font-body); font-size: 13px; color: var(--fg-muted);
   font-feature-settings: "tnum";
 }
-.kurs-card__t{ font-family: var(--font-display); font-weight: 400; font-size: 24px; line-height: 1.2; margin: 0; }
+.kurs-card__t{ font-family: var(--font-display); font-weight: 400; font-size: 19px; line-height: 1.25; margin: 0; }
 .kurs-card__sub{ font-family: var(--font-body); font-size: 15px; color: var(--fg-muted); margin: 0; }
 .kurs-card__meta{ font-family: var(--font-body); font-size: 13px; color: var(--fg-subtle); margin: 0; }
 .kurs-card__meta .dot{ margin: 0 6px; opacity: 0.6; }
 .kurs-card__foot{
-  margin-top: auto; padding-top: 16px;
+  margin-top: auto; padding-top: 12px;
   display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap;
   border-top: 1px solid var(--border);
 }

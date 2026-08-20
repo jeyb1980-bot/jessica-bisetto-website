@@ -58,8 +58,11 @@ const related = allPosts.filter((p) => p._id !== post._id).slice(0, 2);
         {post.lesedauer && <> · {post.lesedauer}</>}
       </p>
     </header>
+    {/* Höhe mitgeben, damit Sanity selbst zuschneidet und dabei den im Studio
+        gesetzten Bildfokus berücksichtigt. Ohne Höhe schneidet erst der
+        Browser zu — immer mittig, egal wo das Motiv sitzt. */}
     {post.coverBild && (
-      <div class="article-cover" style={`background-image: url(${urlFor(post.coverBild).width(1600).url()})`}></div>
+      <div class="article-cover" style={`background-image: url(${urlFor(post.coverBild).width(1600).height(686).url()})`}></div>
     )}
     <article class="article-body" set:html={contentHtml} />
 

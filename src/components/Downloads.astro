@@ -5,9 +5,17 @@ const DOWNLOADS = [
   {
     eb: "Kinder & Eltern",
     tone: "kinder",
-    title: "Malvorlage — Wutmonster",
-    desc: "Eine Vorlage, mit der dein Kind seiner Wut ein Gesicht geben kann — auf Papier statt im Wohnzimmer. Ausdrucken, ausmalen, drüber reden.",
-    file: "/downloads/malvorlage-wutmonster.pdf",
+    title: "Schreib’s auf — Tagebuch-Seite",
+    desc: "Eine Seite für einen Tag: Was war gut, was war es nicht — und was habe ich selbst dazu beigetragen. Mit Stolz- und Stimmungs-Barometer.",
+    file: "/downloads/tagebuch-schreibs-auf.pdf",
+    meta: "PDF · A4",
+  },
+  {
+    eb: "Kinder & Eltern",
+    tone: "kinder",
+    title: "Gefühls-Memory",
+    desc: "Sechzehn Karten, acht Gefühle. Wer ein Paar findet, erzählt dazu — so wird aus dem Spiel nebenbei ein Gespräch über Gefühle.",
+    file: "/downloads/gefuehls-memory.pdf",
     meta: "PDF · A4",
   },
   {
@@ -16,6 +24,14 @@ const DOWNLOADS = [
     title: "Papierpuppe — Löwe",
     desc: "Eine Bastelvorlage zum Ausschneiden. Mit kleinen Fragen für nebenher: Was macht dich mutig? Wann brüllst du, wann schmust du?",
     file: "/downloads/papierpuppe-loewe.pdf",
+    meta: "PDF · A4",
+  },
+  {
+    eb: "Für Eltern",
+    tone: "erwachsene",
+    title: "Wenn zu Hause alles zusammenbricht",
+    desc: "In der Kita lief alles gut — und daheim kippt es. Warum das passiert und was in dieser Viertelstunde hilft, auf einer Seite.",
+    file: "/downloads/leitfaden-ankommen.pdf",
     meta: "PDF · A4",
   },
 ];
@@ -52,4 +68,11 @@ const DOWNLOADS = [
       </a>
     ))}
   </div>
+
+  {/* Der Verweis steht bewusst unter dem Raster: Die Kacheln sind selbst
+      Links auf die PDF — ein zweiter Link darin wäre kein gültiges HTML. */}
+  <p class="dl__mehr">
+    Zum letzten Blatt gibt es einen ausführlichen Beitrag im Blog:{" "}
+    <a href="/blog/ankommen-nach-kita-und-schule">Warum dein Kind ausgerechnet bei dir zusammenbricht</a>
+  </p>
 </section>

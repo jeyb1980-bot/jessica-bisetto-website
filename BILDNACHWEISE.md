@@ -28,6 +28,7 @@ Risiko, das sich mit Sach- und Naturmotiven schlicht vermeiden lässt.
 | Fehlzeiten-Zahlen | Heller Arbeitsplatz am Fenster | `photo-1497215728101-856f4ea42174` |
 | Heidenheimer Lernnacht | Moderne, helle Bibliothek | `photo-1756037020659-6f9d3418f6b6` |
 | Mentale Gesundheit (Triumph Heubach) | Eukalyptuszweige | `photo-1611255550543-b5ecb01dfddc` |
+| Warum dein Kind bei dir zusammenbricht | Kinderschuhe (ohne Gesicht) | `photo-1552912276-56ef47874741` |
 
 Die vollständige Bildadresse lautet jeweils `https://images.unsplash.com/<ID>`.
 
@@ -40,3 +41,11 @@ Nicht aus Fremdquellen, sondern von Jessica Bisetto selbst bereitgestellt:
 - Zeitungsscans auf der Presse-Seite — die Rechte liegen beim jeweiligen
   Medium, sie sind dort mit Quelle und Autor gekennzeichnet
 - Kurs-Coverbilder in Sanity (überwiegend Logos der Volkshochschulen)
+
+## Download-Vorlagen
+
+Die druckbaren Vorlagen unter „Material zum Mitnehmen" sind eigens für
+diese Website gestaltet — Aufbau, Texte, Aquarellflächen und Zeichnungen
+sind Eigenentwicklung, es steckt kein fremdes Material darin. Die Quellen
+liegen als HTML unter `downloads/`, die PDFs entstehen daraus per
+Browser-Druck. Wer etwas ändern will, ändert die HTML-Datei und druckt neu.

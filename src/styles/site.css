@@ -382,9 +382,16 @@ body { background: var(--bg); color: var(--fg); }
 .dl-card--neutral     .dl-card__eb{ color: var(--fg-muted); }
 .dl-card__t{
   font-family: var(--font-display); font-weight: 400;
-  font-size: 22px; line-height: 1.18; margin: 4px 0 0;
+  font-size: 19px; line-height: 1.2; margin: 4px 0 0;
   text-wrap: balance; max-width: 26ch;
 }
+.dl__mehr{
+  max-width: var(--w-wide); margin: 22px auto 0;
+  font-family: var(--font-body); font-size: 14px; color: var(--fg-muted);
+  text-align: center;
+}
+.dl__mehr a{ color: var(--color-teal-700); text-underline-offset: 0.25em; }
+.dl__mehr a:hover{ color: var(--color-aqua-700); }
 .dl-card__d{
   font-family: var(--font-body); font-size: 14px; line-height: 1.55;
   color: var(--fg-muted); margin: 0; text-wrap: pretty;

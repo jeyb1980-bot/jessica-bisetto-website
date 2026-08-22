@@ -433,40 +433,10 @@ body { background: var(--bg); color: var(--fg); }
 .nl__eb{ color: var(--color-clay-100); margin-bottom: 14px; }
 .nl__inner .h1, .nl__inner .h2{ color: var(--color-bone); margin: 0; }
 .nl__lede{ color: rgba(250,246,240,0.85); margin: 16px 0 0; max-width: 38ch; }
-.nl__form{ display: flex; flex-direction: column; gap: 12px; }
-.nl__field{ display: block; }
-.nl__field input{
-  width: 100%; font-family: var(--font-body); font-size: 16px; color: var(--color-bone);
-  background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.18);
-  border-radius: var(--r-md); padding: 14px 16px;
-  outline: none;
-  transition: border-color var(--dur-fast) var(--ease-soft), background var(--dur-fast) var(--ease-soft);
-}
-.nl__field input::placeholder{ color: rgba(250,246,240,0.55); }
-.nl__field input:focus{ border-color: var(--color-clay-300); background: rgba(255,255,255,0.12); }
-.nl__submit{
-  font-family: var(--font-body); font-size: 15px; font-weight: 500;
-  display: inline-flex; align-items: center; justify-content: center; gap: 10px;
-  padding: 14px 24px;
-  background: var(--color-bone); color: var(--color-teal-900);
-  border: 0; border-radius: var(--r-md); cursor: pointer; line-height: 1;
-  transition: background var(--dur-fast) var(--ease-soft), transform var(--dur-fast) var(--ease-soft);
-}
-.nl__submit:hover{ background: var(--color-clay-100); transform: translateY(-1px); }
-.nl__submit .arr{ transition: transform var(--dur-fast) var(--ease-soft); }
-.nl__submit:hover .arr{ transform: translateX(3px); }
-.nl__fineprint{
-  font-family: var(--font-body); font-size: 12px; color: rgba(250,246,240,0.65);
-  margin: 4px 0 0; line-height: 1.5;
-}
-.nl__fineprint a{ color: var(--color-clay-100); text-underline-offset: 0.25em; }
-.nl__done{
-  display: flex; align-items: flex-start; gap: 12px;
-  background: rgba(255,255,255,0.08); border-radius: var(--r-md); padding: 18px 20px;
-}
-.nl__done img{ filter: invert(1) brightness(2); margin-top: 2px; flex-shrink: 0; }
-.nl__done p{ font-family: var(--font-body); font-size: 14px; line-height: 1.55; color: var(--color-bone); margin: 0; }
-.nl__done em{ color: var(--color-clay-100); font-style: normal; }
+
+/* Das Formular selbst (Feld, Knopf, Kleingedrucktes, Bestätigung) wird in
+   NewsletterCTA.astro gestaltet — dort liegt auch das Markup. Hier stehen
+   nur noch Rahmen und Textspalte des Kastens. */
 
 /* Compact variant for end-of-article */
 .nl--compact{ padding: 56px 32px 32px; }
@@ -477,26 +447,9 @@ body { background: var(--bg); color: var(--fg); }
   grid-template-columns: 1fr; gap: 24px; max-width: 760px;
 }
 .nl--compact .nl__inner::before{ display: none; }
-.nl--compact .nl__inner .h2{ color: var(--fg); font-size: 28px; }
+.nl--compact .nl__inner .h2{ color: var(--fg); font-size: 24px; }
 .nl--compact .nl__lede{ color: var(--fg-muted); margin: 8px 0 0; max-width: 60ch; }
-.nl--compact .nl__form{
-  display: grid; grid-template-columns: 1fr auto; gap: 10px; align-items: center;
-}
-.nl--compact .nl__field{ grid-column: 1; }
-.nl--compact .nl__submit{
-  grid-column: 2; background: var(--color-teal-700); color: var(--color-bone);
-}
-.nl--compact .nl__submit:hover{ background: var(--color-teal-900); }
-.nl--compact .nl__fineprint{ grid-column: 1 / -1; color: var(--fg-subtle); }
-.nl--compact .nl__field input{
-  background: var(--bg); border-color: var(--border); color: var(--fg);
-}
-.nl--compact .nl__field input::placeholder{ color: var(--fg-subtle); }
-.nl--compact .nl__field input:focus{ border-color: var(--color-teal-500); background: var(--bg); }
-.nl--compact .nl__done{ background: var(--bg); color: var(--fg); }
-.nl--compact .nl__done img{ filter: none; }
-.nl--compact .nl__done p{ color: var(--fg); }
-.nl--compact .nl__done em{ color: var(--color-teal-700); }
+.nl--compact .nl__eb{ color: var(--color-teal-700); }
 
 .visually-hidden{
   position: absolute !important; width: 1px; height: 1px;

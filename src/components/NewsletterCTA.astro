@@ -5,7 +5,19 @@ interface Props {
 const { variant = "default" } = Astro.props;
 const isCompact = variant === "compact";
 
-const BREVO_FORM_URL =
+/*
+  Das Formular wird direkt an Brevo geschickt — dieselbe Adresse und
+  dieselben Feldnamen, die auch das eingebettete Brevo-Formular nutzt.
+  Damit bleibt das Double-Opt-in unverändert bei Brevo: Wer sich einträgt,
+  bekommt von dort die Bestätigungsmail.
+
+  Vorher steckte hier ein Brevo-iframe. Das brachte eine zweite Überschrift
+  „Newsletter" und einen zweiten Einleitungstext mit — beides doppelte
+  bereits vorhandene Inhalte, in fremder Stimme („unserem Newsletter")
+  und in fremder Typografie. Mit dem eigenen Formular passt der Kasten
+  ins Seitendesign und spricht in Jessis Stimme.
+*/
+const BREVO_ACTION =
   "https://803f88cf.sibforms.com/serve/MUIFAG_8N9KU-HPVIbBAf6kIwm9OBFHtz9VzN_WKGc_2f6C71Nh9ZelZu5Jdjubo8cZR3rVHXOZJ_UhNc6MhWdP2pOD8-AA_T83PTuzmvyk1HyKADUV6rx7qVHMizjA0XHY3y6A9zMpOqf7nA99Xt56ZE3GCkv1987vUQcl23OOBiTVyK_LDBIf7jhHYkUhC4uhEYO8Wh9Mjw8v3";
 ---
 <section class={"nl" + (isCompact ? " nl--compact" : "")}>
@@ -30,36 +42,172 @@ const BREVO_FORM_URL =
       )}
     </div>
 
-    <div class="nl__embed">
-      <iframe
-        title="Newsletter-Anmeldung"
-        src={BREVO_FORM_URL}
-        width="100%"
-        height="330"
-        frameborder="0"
-        scrolling="no"
-        allowfullscreen
-      ></iframe>
-      <p class="nl__fineprint nl__fineprint--embed">
-        Double-Opt-in über Brevo. Mit der Anmeldung stimmst du den{" "}
-        <a href="/datenschutz">Datenschutzhinweisen</a> zu.
-      </p>
+    <div class="nl__side">
+      <form
+        class="nl__form"
+        action={BREVO_ACTION}
+        method="POST"
+        target="nl-sink"
+        data-nl-form
+      >
+        <label class="nl__field">
+          <span class="nl__label">E-Mail-Adresse</span>
+          <input
+            type="email"
+            name="EMAIL"
+            required
+            autocomplete="email"
+            placeholder="name@beispiel.de"
+          />
+        </label>
+
+        {/* Honigtopf gegen automatische Eintragungen — für Menschen
+            unsichtbar, aber nicht per display:none, damit Ausfüllhilfen
+            das Feld nicht doch bedienen. */}
+        <div class="nl__honey" aria-hidden="true">
+          <label>
+            Bitte dieses Feld leer lassen
+            <input type="text" name="email_address_check" value="" tabindex="-1" autocomplete="off" />
+          </label>
+        </div>
+        <input type="hidden" name="locale" value="de" />
+
+        <button type="submit" class="btn btn-pri nl__submit">
+          Eintragen
+          <span class="arr" aria-hidden="true">→</span>
+        </button>
+
+        <p class="nl__fineprint">
+          Double-Opt-in über Brevo — du bekommst eine E-Mail zur Bestätigung.
+          Mit der Anmeldung stimmst du den{" "}
+          <a href="/datenschutz">Datenschutzhinweisen</a> zu.
+        </p>
+      </form>
+
+      <div class="nl__done" data-nl-done hidden>
+        <p>
+          <em>Fast geschafft.</em> Ich habe dir eine E-Mail geschickt —
+          bitte klicke darin auf den Bestätigungslink. Erst dann bist du
+          eingetragen. Schau notfalls im Spam-Ordner nach.
+        </p>
+      </div>
     </div>
   </div>
+
+  <iframe name="nl-sink" title="Newsletter-Versand" data-nl-sink></iframe>
 </section>
 
+<script>
+  /*
+    Das Formular schickt an Brevo und landet in einem versteckten iframe,
+    damit die Besucherin auf der Seite bleibt. Die Bestätigung zeigen wir
+    erst, wenn das iframe wirklich geladen hat — also wenn Brevo geantwortet
+    hat. Der erste load beim Seitenaufbau (leeres iframe) zählt nicht mit,
+    sonst erschiene die Bestätigung ohne jede Anmeldung.
+  */
+  document.querySelectorAll<HTMLElement>(".nl").forEach((section) => {
+    const form = section.querySelector<HTMLFormElement>("[data-nl-form]");
+    const done = section.querySelector<HTMLElement>("[data-nl-done]");
+    const sink = section.querySelector<HTMLIFrameElement>("[data-nl-sink]");
+    if (!form || !done || !sink) return;
+
+    let submitted = false;
+
+    form.addEventListener("submit", () => {
+      submitted = true;
+      const btn = form.querySelector<HTMLButtonElement>("button[type=submit]");
+      if (btn) {
+        btn.disabled = true;
+        btn.textContent = "Wird gesendet …";
+      }
+    });
+
+    sink.addEventListener("load", () => {
+      if (!submitted) return;
+      form.hidden = true;
+      done.hidden = false;
+      done.setAttribute("role", "status");
+    });
+  });
+</script>
+
 <style>
-  .nl__embed{
-    background: var(--color-bone);
-    border-radius: var(--r-lg);
-    padding: 20px 20px 4px;
+  .nl__side{ display: flex; flex-direction: column; gap: 14px; }
+
+  .nl__form{ display: flex; flex-direction: column; gap: 14px; }
+  .nl__field{ display: block; }
+  .nl__label{
+    display: block; font-family: var(--font-body); font-size: 13px;
+    margin-bottom: 6px; color: rgba(250, 246, 240, 0.85);
   }
-  .nl--compact .nl__embed{ background: var(--bg); }
-  .nl__embed iframe{ display: block; border: 0; width: 100%; }
-  .nl__fineprint--embed{
-    color: var(--fg-subtle); margin: 0 0 12px; padding: 0 4px;
+  .nl__field input{
+    width: 100%; box-sizing: border-box;
+    font-family: var(--font-body); font-size: 15px;
+    padding: 13px 16px; border-radius: var(--r-md);
+    border: 1px solid rgba(250, 246, 240, 0.28);
+    background: rgba(255, 255, 255, 0.08);
+    color: var(--color-bone);
+    transition: border-color var(--dur-fast) var(--ease-soft),
+                background var(--dur-fast) var(--ease-soft);
   }
-  /* Der Hinweis sitzt auf der hellen Formularkarte, nicht auf dem dunklen
-     Block — die helle Linkfarbe aus .nl__fineprint a wäre hier unlesbar. */
-  .nl__fineprint--embed a{ color: var(--color-teal-700); }
+  .nl__field input::placeholder{ color: rgba(250, 246, 240, 0.5); }
+  .nl__field input:focus{
+    outline: none;
+    border-color: var(--color-aqua-300);
+    background: rgba(255, 255, 255, 0.14);
+  }
+
+  /* Der Honigtopf muss für Bildschirmleser und Augen weg sein, aber
+     für ausfüllende Bots erreichbar bleiben. */
+  .nl__honey{
+    position: absolute; width: 1px; height: 1px;
+    overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap;
+  }
+
+  .nl__submit{
+    align-self: flex-start;
+    background: var(--color-bone); color: var(--color-teal-900);
+  }
+  .nl__submit:hover{ background: var(--color-aqua-100); }
+  .nl__submit:disabled{ opacity: 0.7; cursor: default; }
+
+  .nl__fineprint{
+    font-family: var(--font-body); font-size: 12px; line-height: 1.5;
+    color: rgba(250, 246, 240, 0.7); margin: 0;
+  }
+  .nl__fineprint a{ color: var(--color-aqua-100); text-underline-offset: 0.25em; }
+
+  .nl__done{
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: var(--r-md); padding: 18px 20px;
+  }
+  .nl__done p{
+    font-family: var(--font-body); font-size: 14px; line-height: 1.6;
+    color: var(--color-bone); margin: 0;
+  }
+  .nl__done em{ color: var(--color-aqua-100); font-style: normal; font-weight: 600; }
+
+  [data-nl-sink]{
+    display: none;
+    width: 0; height: 0; border: 0;
+  }
+
+  /* Helle Variante am Ende eines Blogbeitrags */
+  .nl--compact .nl__label{ color: var(--fg-muted); }
+  .nl--compact .nl__field input{
+    background: var(--bg); border-color: var(--border); color: var(--fg);
+  }
+  .nl--compact .nl__field input::placeholder{ color: var(--fg-subtle); }
+  .nl--compact .nl__field input:focus{
+    border-color: var(--color-teal-500); background: var(--bg);
+  }
+  .nl--compact .nl__submit{
+    background: var(--color-teal-700); color: var(--color-bone);
+  }
+  .nl--compact .nl__submit:hover{ background: var(--color-teal-900); }
+  .nl--compact .nl__fineprint{ color: var(--fg-subtle); }
+  .nl--compact .nl__fineprint a{ color: var(--color-teal-700); }
+  .nl--compact .nl__done{ background: var(--color-sage-50); }
+  .nl--compact .nl__done p{ color: var(--fg); }
+  .nl--compact .nl__done em{ color: var(--color-teal-700); }
 </style>

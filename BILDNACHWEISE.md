@@ -26,7 +26,7 @@ Risiko, das sich mit Sach- und Naturmotiven schlicht vermeiden lässt.
 | Mobbingprävention (Mücken vom Schulhof) | Leerer Basketballplatz | `photo-1502736393269-6ca11b688701` |
 | Respekt ist mehr als „Danke“ und „Bitte“ | Zwei Tassen auf Holztisch | `photo-1577650294547-9e6889330f05` |
 | Fehlzeiten-Zahlen | Heller Arbeitsplatz am Fenster | `photo-1497215728101-856f4ea42174` |
-| Heidenheimer Lernnacht | Bücherregale | `photo-1625053376622-e462848c453f` |
+| Heidenheimer Lernnacht | Moderne, helle Bibliothek | `photo-1756037020659-6f9d3418f6b6` |
 | Mentale Gesundheit (Triumph Heubach) | Eukalyptuszweige | `photo-1611255550543-b5ecb01dfddc` |
 
 Die vollständige Bildadresse lautet jeweils `https://images.unsplash.com/<ID>`.

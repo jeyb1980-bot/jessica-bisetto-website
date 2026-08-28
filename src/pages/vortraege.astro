@@ -26,60 +26,74 @@ const MESSE = {
 
 const ANMELDUNG = "https://www.jessicahrusa.de/familienraum/";
 
+/* Die vier Referentinnen mit ihren eigenen Seiten. Die Namen in der
+   Terminliste werden darüber automatisch verlinkt — so muss ein Wechsel
+   nur an einer Stelle gepflegt werden. */
+const REFERENTINNEN = [
+  { name: "Jessica Bisetto", url: null, hinweis: "diese Seite" },
+  { name: "Kerstin Fehst", url: "https://www.kerstinfehst.de" },
+  { name: "Johanna Hörter", url: "https://www.starkfuerkinder.de" },
+  { name: "Jessica Hrusa", url: "https://www.jessicahrusa.de" },
+];
+
 const TERMINE = [
   {
     datum: new Date("2026-10-21"),
-    titel: "Auftaktveranstaltung: Was Familien trägt und Kinder stärkt",
-    text: "Was braucht ein Kind, um stark zu werden? Was hält Familien verbunden, wenn es schwierig wird? Und was trägt dich selbst, wenn du täglich trägst? Drei Impulse, drei Blickwinkel, ein Abend.",
-    wer: "Kerstin Fehst · Jessica Hrusa · Jessica Bisetto",
+    titel: "Auftakt: Stark durch den Familienalltag — vier Perspektiven auf einen Abend",
+    text: "Was braucht ein Kind, um stark zu werden? Was macht ihm Mut, Neues zu wagen? Was hält Familien verbunden, wenn es schwierig wird? Und was trägt dich selbst, wenn du täglich trägst? Vier Impulse, vier Blickwinkel, ein Abend — der Auftakt zeigt, was dich in dieser Reihe erwartet, und lädt danach zum Kennenlernen ein.",
+    wer: ["Jessica Bisetto", "Kerstin Fehst", "Johanna Hörter", "Jessica Hrusa"],
   },
   {
     datum: new Date("2026-11-18"),
-    titel: "Wenn „Reiß dich mal zusammen“ nicht hilft — ein anderer Blick auf Konflikte",
+    titel: "Hinter jedem Streit steckt ein Bedürfnis — was Kinder uns mit ihrem Verhalten sagen",
     text: "Trotzen, verweigern, provozieren: Verhalten ist eine Sprache. Wer sie versteht, muss weniger kämpfen. An diesem Abend lernst du, hinter das Verhalten deines Kindes zu schauen — und zu erkennen, welches Bedürfnis gerade Gehör sucht.",
-    wer: "Kerstin Fehst",
+    wer: ["Kerstin Fehst"],
   },
   {
     datum: new Date("2026-12-16"),
-    titel: "Mehr Verbindung, weniger Machtkampf — wie Rituale den Alltag entspannen",
-    text: "Rituale geben Kindern Halt und Familien einen gemeinsamen Rhythmus — gerade in vollen Zeiten. Passend zum Advent schauen wir uns an, warum Rituale so sinnvoll sind und wie sie eurer Familie den Alltag erleichtern.",
-    wer: "Jessica Hrusa",
+    titel: "Familienrituale",
+    text: "Rituale geben Kindern Halt und Familien einen gemeinsamen Rhythmus — gerade in vollen Zeiten. Passend zum Advent schauen wir uns an, welche kleinen, alltagstauglichen Rituale wirklich verbinden und wie sie sich ganz ohne Aufwand etablieren lassen.",
+    wer: ["Jessica Hrusa"],
   },
   {
     datum: new Date("2027-01-20"),
-    titel: "Zwischen Gewohnheit und Aufbruch — wie Veränderung gelingt",
-    text: "Du weißt genau, was du anders machen willst — und am dritten Tag läuft es wieder wie immer. Das liegt nicht an fehlender Disziplin. Ein Abend darüber, wie Veränderung wirklich funktioniert und warum kleine Schritte mehr bewegen als große Vorsätze.",
-    wer: "Jessica Bisetto",
+    titel: "Wie Veränderung gelingt",
+    text: "Du weißt genau, was du anders machen willst — und am dritten Tag läuft es wieder wie immer. Das liegt nicht an fehlender Disziplin. Ein Abend für dich als Erwachsene:r darüber, wie Veränderung wirklich funktioniert und warum kleine Schritte mehr bewegen als große Vorsätze.",
+    wer: ["Jessica Bisetto"],
   },
   {
     datum: new Date("2027-02-17"),
-    titel: "Warum bringt mein Kind mich so auf die Palme? Eigene Stressmuster erkennen",
-    text: "Manchmal reicht ein Satz — und du bist auf 180. Warum gerade dieses Verhalten dich so trifft, hat oft mehr mit deinen eigenen Mustern zu tun als mit deinem Kind. Ein Abend, der den Blick von außen nach innen dreht.",
-    wer: "Kerstin Fehst",
+    titel: "Bloß nicht blamieren — wie ein Growth Mindset Kindern Mut macht, Neues zu wagen",
+    text: "Lieber gar nicht erst versuchen, als sich zu blamieren: Viele Kinder bremsen sich selbst aus, bevor es überhaupt losgeht. Kurz vor den Halbjahresinformationen ein Abend darüber, wie Kinder Fehler aushalten lernen, Neues wagen und sich vom möglichen Scheitern nicht stoppen lassen — und was Erwachsene dazu beitragen, oft ohne es zu merken.",
+    wer: ["Johanna Hörter"],
   },
   {
     datum: new Date("2027-03-17"),
-    titel: "„Leg dein Handy weg“ — wie Familien Konflikte lösen und klare Regeln finden",
-    text: "Smartphone, Games, Social Media. Ganz verbieten geht nicht, wegsehen ist keine Option. Dieser Abend gibt dir Orientierung, wie du dein Kind sicher und kompetent in der digitalen Welt begleiten kannst. Mit klarem Blick statt Panik.",
-    wer: "Jessica Hrusa",
+    titel: "Warum bringt mein Kind mich so auf die Palme? Eigene Stressmuster erkennen",
+    text: "Manchmal reicht ein Satz — und du bist auf 180. Warum gerade dieses Verhalten dich so trifft, hat oft mehr mit deinen eigenen Mustern zu tun als mit deinem Kind. Ein Abend, der den Blick von außen nach innen dreht.",
+    wer: ["Kerstin Fehst"],
   },
   {
     datum: new Date("2027-04-21"),
-    titel: "Lernen statt kämpfen — wie gehirngerechtes Lernen den Alltag entlastet",
+    titel: "Gehirngerechtes Lernen",
     text: "Lernen scheitert selten am Fleiß — sondern daran, dass wir gegen das Gehirn arbeiten statt mit ihm. Du erfährst, wie Lernen leichter wird, wenn man versteht, wie der Kopf tickt. Für dich selbst genauso spannend wie für die Lernbegleitung zu Hause.",
-    wer: "Jessica Bisetto",
+    wer: ["Jessica Bisetto"],
+  },
+  {
+    datum: new Date("2027-05-19"),
+    pause: "Mai 2027 — kein Vortrag, Pfingstferien",
   },
   {
     datum: new Date("2027-06-16"),
-    titel: "Starke Gefühle gelassen begleiten",
-    text: "Wutanfall im Supermarkt, Tränen vor der Schule: Große Gefühle gehören zur Entwicklung dazu. Du erfährst, was in deinem Kind dabei passiert und wie du gelassen bleibst und Halt gibst — ohne die Gefühle klein zu reden.",
-    wer: "Jessica Hrusa",
+    titel: "Da verliere ich doch mein Gesicht — warum verlässlich sein nicht bedeutet, immer konsequent bleiben zu müssen",
+    text: "Einmal Nein gesagt — und jetzt musst du dabei bleiben, koste es, was es wolle? Genau dieser Gedanke führt in Situationen, die niemandem guttun. Ein Abend über Grenzen und Haltung, über den Mut, eine Entscheidung auch einmal zu korrigieren — und darüber, warum Kinder gerade dadurch Klarheit und Verlässlichkeit erleben.",
+    wer: ["Johanna Hörter"],
   },
   {
     datum: new Date("2027-07-21"),
-    titel: "Alle rennen — du nicht! Der Weg zurück zu mehr Leichtigkeit",
-    text: "Leichtigkeit ist kein Zufall und kein Luxus. Sie entsteht, wenn du weißt, was du loslassen darfst. Zum Abschluss vor der Sommerpause ein Abend mit Impulsen, die dich leichter gehen lassen, als du gekommen bist.",
-    wer: "Jessica Bisetto",
+    titel: "Generation Internet — sicher in der digitalen Welt",
+    text: "Smartphone, Games, Social Media: verbieten bringt wenig, wegsehen noch weniger. Direkt vor den Sommerferien — wenn die Bildschirmzeit erfahrungsgemäß steigt — bekommst du Orientierung, wie du dein Kind sicher und kompetent in der digitalen Welt begleitest. Mit klarem Blick statt Panik.",
+    wer: ["Jessica Hrusa"],
   },
 ];
 
@@ -124,9 +138,12 @@ const fmtKurz = (d: Date) =>
 
     <section class="vt-reihe">
       <div class="vt-reihe__head">
-        <p class="eyebrow">Abendreihe · Schwäbisch Gmünd</p>
-        <h2 class="h1 vt-reihe__h">Der <em>FamilienRAUM</em></h2>
-        <p class="lede vt-reihe__lede">Was Familien trägt und Kinder stärkt.</p>
+        <p class="eyebrow">Vortragsreihe für Eltern und Familien · Schuljahr 2026/27</p>
+        <h2 class="h1 vt-reihe__h"><em>Stark</em> durch den Familienalltag</h2>
+        <p class="lede vt-reihe__lede">
+          Impulse für Familien — jeden dritten Mittwoch im Monat, in Präsenz
+          und online, mit anschließendem Come-together.
+        </p>
       </div>
 
       <div class="vt-reihe__intro">
@@ -140,39 +157,71 @@ const fmtKurz = (d: Date) =>
           um?
         </p>
         <p class="body">
-          Genau dafür haben wir den FamilienRAUM ins Leben gerufen — einmal im
-          Monat ein Abend für Wissen, Verbindung und Austausch. Denn niemand
-          muss den Familienalltag allein meistern.
+          Genau dafür haben wir diese Reihe ins Leben gerufen — einmal im Monat
+          ein Abend für Wissen, Verbindung und Austausch. Denn niemand muss den
+          Familienalltag allein meistern.
         </p>
       </div>
 
       <ul class="vt-fakten">
-        <li><strong>Wann</strong><span>Jeden dritten Mittwoch im Monat, 19:00 Uhr — außerhalb der Schulferien</span></li>
-        <li><strong>Wo</strong><span>Zapp Areal, Schwäbisch Gmünd</span></li>
-        <li><strong>Ablauf</strong><span>Rund 45 Minuten fachlicher Input, danach Zeit für Fragen und Austausch</span></li>
-        <li><strong>Kosten</strong><span>12 € pro Abend, bitte passend in bar mitbringen</span></li>
-        <li><strong>Getränke</strong><span>Stehen bereit — gegen eine freiwillige Spende. 100 % davon gehen an die SOS-Kinderdörfer.</span></li>
-        <li><strong>Wer</strong><span>Jessica Bisetto, Kerstin Fehst und Jessica Hrusa</span></li>
+        <li><strong>Termin</strong><span>Jeden dritten Mittwoch im Monat, von Oktober 2026 bis Juli 2027. Liegt der Termin in den Schulferien oder auf einem Feiertag, entfällt der Vortrag in diesem Monat.</span></li>
+        <li><strong>Format</strong><span>Vortrag in Präsenz mit Online-Übertragung. Im Anschluss laden wir dich zum Come-together ein — Getränke und kleine Snacks stehen bereit.</span></li>
+        <li><strong>Eintritt</strong><span>12 Euro. Bitte bar und passend mitbringen.</span></li>
+        <li><strong>Anmeldung</strong><span>Über das Formular bei Jessica Hrusa.</span></li>
       </ul>
+
+      <div class="vt-anmeldung">
+        <a href={ANMELDUNG} class="btn btn-pri btn-lg" target="_blank" rel="noopener noreferrer">
+          Zur Anmeldung
+          <span class="arr" aria-hidden="true">→</span>
+        </a>
+        <span class="vt-anmeldung__note body-sm">
+          Die Anmeldung ist verbindlich und läuft über die Seite meiner
+          Kollegin Jessica Hrusa.
+        </span>
+      </div>
 
       {kommendeTermine.length > 0 ? (
         <>
-          <h3 class="h3 vt-termine__h">Die Termine</h3>
+          <h3 class="h3 vt-termine__h">Die Termine im Überblick</h3>
           <ol class="vt-termine">
-            {kommendeTermine.map((t) => (
-              <li class="vt-termin">
-                <div class="vt-termin__datum">
-                  <time datetime={t.datum.toISOString().slice(0, 10)}>
-                    {fmtKurz(t.datum)}
-                  </time>
-                </div>
-                <div class="vt-termin__body">
-                  <p class="vt-termin__t">{t.titel}</p>
-                  <p class="vt-termin__d">{t.text}</p>
-                  <p class="vt-termin__wer">{t.wer}</p>
-                </div>
-              </li>
-            ))}
+            {kommendeTermine.map((t) =>
+              t.pause ? (
+                <li class="vt-termin vt-termin--pause">
+                  <div class="vt-termin__datum" aria-hidden="true">—</div>
+                  <div class="vt-termin__body">
+                    <p class="vt-termin__pause">{t.pause}</p>
+                  </div>
+                </li>
+              ) : (
+                <li class="vt-termin">
+                  <div class="vt-termin__datum">
+                    <time datetime={t.datum.toISOString().slice(0, 10)}>
+                      {fmtKurz(t.datum)}
+                    </time>
+                  </div>
+                  <div class="vt-termin__body">
+                    <p class="vt-termin__t">{t.titel}</p>
+                    <p class="vt-termin__d">{t.text}</p>
+                    <p class="vt-termin__wer">
+                      {t.wer.map((name, i) => {
+                        const r = REFERENTINNEN.find((x) => x.name === name);
+                        return (
+                          <>
+                            {i > 0 && <span class="vt-sep"> · </span>}
+                            {r && r.url ? (
+                              <a href={r.url} target="_blank" rel="noopener noreferrer">{name}</a>
+                            ) : (
+                              <span>{name}</span>
+                            )}
+                          </>
+                        );
+                      })}
+                    </p>
+                  </div>
+                </li>
+              )
+            )}
           </ol>
         </>
       ) : (
@@ -182,16 +231,29 @@ const fmtKurz = (d: Date) =>
         </p>
       )}
 
-      <div class="vt-anmeldung">
-        <p class="body">
-          Die Anmeldung ist verbindlich und läuft über das Formular bei meiner
-          Kollegin Jessica Hrusa.
-        </p>
-        <a href={ANMELDUNG} class="btn btn-pri" target="_blank" rel="noopener noreferrer">
-          Zur Anmeldung
-          <span class="arr" aria-hidden="true">→</span>
-        </a>
+      <div class="vt-refs">
+        <h3 class="h3 vt-refs__h">Die Referentinnen</h3>
+        <ul class="vt-refs__list">
+          {REFERENTINNEN.map((r) => (
+            <li>
+              <strong>{r.name}</strong>
+              {r.url ? (
+                <a href={r.url} target="_blank" rel="noopener noreferrer">
+                  {r.url.replace("https://www.", "")}
+                </a>
+              ) : (
+                <span class="vt-refs__hier">{r.hinweis}</span>
+              )}
+            </li>
+          ))}
+        </ul>
       </div>
+
+      <p class="vt-disclaimer">
+        Die Vorträge dienen der Information und geben Impulse. Sie ersetzen
+        keine ärztliche oder psychologische Unterstützung.
+        Terminänderungen vorbehalten.
+      </p>
     </section>
 
     <section class="vt-outro">
@@ -271,9 +333,39 @@ const fmtKurz = (d: Date) =>
 
   .vt-anmeldung{
     margin-top: var(--sp-6);
-    display: flex; align-items: center; gap: 24px; flex-wrap: wrap;
+    display: flex; align-items: center; gap: 20px; flex-wrap: wrap;
   }
-  .vt-anmeldung .body{ margin: 0; max-width: 46ch; }
+  .vt-anmeldung__note{ margin: 0; max-width: 42ch; }
+  .btn-lg{ padding: 16px 30px; font-size: 16px; }
+
+  .vt-termin--pause{ padding: 10px 0; }
+  .vt-termin__pause{
+    font-size: 13px; color: var(--fg-subtle); margin: 0; font-style: italic;
+  }
+  .vt-termin__wer a{ color: var(--color-teal-700); text-underline-offset: 0.25em; }
+  .vt-termin__wer a:hover{ color: var(--color-aqua-700); }
+  .vt-sep{ color: var(--fg-subtle); }
+
+  .vt-refs{ margin-top: var(--sp-7); }
+  .vt-refs__h{ margin: 0 0 14px; }
+  .vt-refs__list{
+    list-style: none; padding: 0; margin: 0;
+    display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px 32px;
+    max-width: 640px;
+  }
+  @media (max-width: 620px){ .vt-refs__list{ grid-template-columns: 1fr; } }
+  .vt-refs__list li{ display: flex; flex-direction: column; gap: 2px; }
+  .vt-refs__list strong{ font-family: var(--font-body); font-size: 14px; font-weight: 600; color: var(--fg); }
+  .vt-refs__list a{ font-size: 13px; color: var(--color-teal-700); text-underline-offset: 0.25em; }
+  .vt-refs__list a:hover{ color: var(--color-aqua-700); }
+  .vt-refs__hier{ font-size: 13px; color: var(--fg-subtle); }
+
+  .vt-disclaimer{
+    margin: var(--sp-6) 0 0; padding-top: 14px;
+    border-top: 1px solid var(--border);
+    font-family: var(--font-body); font-size: 12px; line-height: 1.55;
+    color: var(--fg-subtle); max-width: 68ch;
+  }
 
   .vt-outro{
     margin-top: var(--sp-9); padding-top: var(--sp-7);

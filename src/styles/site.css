@@ -76,8 +76,11 @@ body { background: var(--bg); color: var(--fg); }
   line-height: 1;
 }
 .btn-sm{ padding: 10px 18px; font-size: 14px; }
-.btn-pri{ background: var(--color-ink); color: var(--color-bone); }
-.btn-pri:hover{ background: var(--color-teal-700); }
+/* Alle Hauptknöpfe tragen dasselbe Petrol wie „Erstgespräch" in der
+   Kopfzeile — vorher war es das dunkle Anthrazit, wodurch die Seite zwei
+   verschiedene Hauptfarben für dieselbe Sache hatte. */
+.btn-pri{ background: var(--color-teal-700); color: var(--color-bone); }
+.btn-pri:hover{ background: var(--color-teal-900); }
 .btn-sec{ background: transparent; color: var(--fg); border-color: var(--color-stone-500); }
 .btn-sec:hover{ background: var(--bg-raised); border-color: var(--fg); }
 .btn-ghost{ background: transparent; color: var(--color-teal-700); padding: 14px 12px; }
@@ -112,8 +115,7 @@ body { background: var(--bg); color: var(--fg); }
 .nav-link:hover{ background: var(--color-cream); color: var(--color-teal-700); }
 .nav-link.is-current{ color: var(--color-teal-700); }
 .nav-link.is-current::after{ content: ""; position: absolute; left: 14px; right: 14px; bottom: 2px; height: 2px; border-radius: 2px; background: var(--color-aqua-500); }
-.nav-desk .btn-pri{ margin-left: 6px; background: var(--color-teal-700); color: var(--color-bone); }
-.nav-desk .btn-pri:hover{ background: var(--color-teal-900); }
+.nav-desk .btn-pri{ margin-left: 6px; }
 .nav-burger{ display: none; background: none; border: 0; padding: 8px; cursor: pointer; }
 .nav-mobile{ display: none; }
 /* Die waagerechte Navigation braucht mit Logo rund 1040px. Darunter
@@ -136,8 +138,10 @@ body { background: var(--bg); color: var(--fg); }
 .hero__h em{ color: var(--color-clay-300); font-style: italic; }
 .hero__lede{ color: var(--color-bone); opacity: 0.93; max-width: 48ch; font-size: 18px; }
 .hero__cta{ display: flex; gap: 14px; margin-top: 30px; flex-wrap: wrap; }
-.hero .btn-pri{ background: var(--color-bone); color: var(--color-ink); }
-.hero .btn-pri:hover{ background: var(--color-clay-500); color: var(--color-bone); }
+/* Einzige Ausnahme: Im Hero steht der Knopf auf einem dunklen Foto.
+   Petrol auf Dunkel wäre kaum zu erkennen — hier bleibt er hell. */
+.hero .btn-pri{ background: var(--color-bone); color: var(--color-teal-900); }
+.hero .btn-pri:hover{ background: var(--color-aqua-100); color: var(--color-teal-900); }
 .hero .btn-ghost{ color: var(--color-bone); }
 .hero .btn-ghost:hover{ color: var(--color-clay-300); }
 

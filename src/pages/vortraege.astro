@@ -1,0 +1,284 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+
+/*
+  Vorträge und Reihen. Die Termine stehen hier fest im Code, weil sie
+  selten wechseln und an mehreren Stellen zusammenhängen (Reihe, Ort,
+  Referentinnen). Vergangene Termine werden beim Bauen aussortiert —
+  die Seite altert also nicht still vor sich hin, solange die Website
+  ab und zu neu gebaut wird.
+*/
+const heute = new Date();
+heute.setHours(0, 0, 0, 0);
+
+const MESSE = {
+  datum: new Date("2026-10-11"),
+  messe: "„Gsond auf der Ostalb“ — Gesundheitsmesse",
+  ort: "Stadthalle Heubach, Kleiner Saal",
+  zeit: "15:30 Uhr",
+  titel:
+    "Mentale Gesundheit — wie wir unseren Geist neu entdecken und Veränderung möglich machen können",
+  text: [
+    "Was, wenn Veränderung nicht bedeutet, alles anders zu machen — sondern neu hinzuschauen? In meinem Vortrag nehme ich dich mit auf eine Entdeckungsreise zu deinem eigenen Geist. Wir schauen gemeinsam, wie mentale Gesundheit wirklich funktioniert, welche Denkmuster uns manchmal im Weg stehen — und wie wir sie mit Leichtigkeit lösen können.",
+    "Du bekommst Impulse, die sofort umsetzbar sind: kleine Perspektivwechsel mit großer Wirkung, die dir helfen, Stabilität in bewegten Zeiten zu finden und deine eigene Wirksamkeit neu zu entdecken. Es geht nicht um Perfektion, sondern um echte, machbare Veränderung — Schritt für Schritt.",
+  ],
+};
+
+const ANMELDUNG = "https://www.jessicahrusa.de/familienraum/";
+
+const TERMINE = [
+  {
+    datum: new Date("2026-10-21"),
+    titel: "Auftaktveranstaltung: Was Familien trägt und Kinder stärkt",
+    text: "Was braucht ein Kind, um stark zu werden? Was hält Familien verbunden, wenn es schwierig wird? Und was trägt dich selbst, wenn du täglich trägst? Drei Impulse, drei Blickwinkel, ein Abend.",
+    wer: "Kerstin Fehst · Jessica Hrusa · Jessica Bisetto",
+  },
+  {
+    datum: new Date("2026-11-18"),
+    titel: "Wenn „Reiß dich mal zusammen“ nicht hilft — ein anderer Blick auf Konflikte",
+    text: "Trotzen, verweigern, provozieren: Verhalten ist eine Sprache. Wer sie versteht, muss weniger kämpfen. An diesem Abend lernst du, hinter das Verhalten deines Kindes zu schauen — und zu erkennen, welches Bedürfnis gerade Gehör sucht.",
+    wer: "Kerstin Fehst",
+  },
+  {
+    datum: new Date("2026-12-16"),
+    titel: "Mehr Verbindung, weniger Machtkampf — wie Rituale den Alltag entspannen",
+    text: "Rituale geben Kindern Halt und Familien einen gemeinsamen Rhythmus — gerade in vollen Zeiten. Passend zum Advent schauen wir uns an, warum Rituale so sinnvoll sind und wie sie eurer Familie den Alltag erleichtern.",
+    wer: "Jessica Hrusa",
+  },
+  {
+    datum: new Date("2027-01-20"),
+    titel: "Zwischen Gewohnheit und Aufbruch — wie Veränderung gelingt",
+    text: "Du weißt genau, was du anders machen willst — und am dritten Tag läuft es wieder wie immer. Das liegt nicht an fehlender Disziplin. Ein Abend darüber, wie Veränderung wirklich funktioniert und warum kleine Schritte mehr bewegen als große Vorsätze.",
+    wer: "Jessica Bisetto",
+  },
+  {
+    datum: new Date("2027-02-17"),
+    titel: "Warum bringt mein Kind mich so auf die Palme? Eigene Stressmuster erkennen",
+    text: "Manchmal reicht ein Satz — und du bist auf 180. Warum gerade dieses Verhalten dich so trifft, hat oft mehr mit deinen eigenen Mustern zu tun als mit deinem Kind. Ein Abend, der den Blick von außen nach innen dreht.",
+    wer: "Kerstin Fehst",
+  },
+  {
+    datum: new Date("2027-03-17"),
+    titel: "„Leg dein Handy weg“ — wie Familien Konflikte lösen und klare Regeln finden",
+    text: "Smartphone, Games, Social Media. Ganz verbieten geht nicht, wegsehen ist keine Option. Dieser Abend gibt dir Orientierung, wie du dein Kind sicher und kompetent in der digitalen Welt begleiten kannst. Mit klarem Blick statt Panik.",
+    wer: "Jessica Hrusa",
+  },
+  {
+    datum: new Date("2027-04-21"),
+    titel: "Lernen statt kämpfen — wie gehirngerechtes Lernen den Alltag entlastet",
+    text: "Lernen scheitert selten am Fleiß — sondern daran, dass wir gegen das Gehirn arbeiten statt mit ihm. Du erfährst, wie Lernen leichter wird, wenn man versteht, wie der Kopf tickt. Für dich selbst genauso spannend wie für die Lernbegleitung zu Hause.",
+    wer: "Jessica Bisetto",
+  },
+  {
+    datum: new Date("2027-06-16"),
+    titel: "Starke Gefühle gelassen begleiten",
+    text: "Wutanfall im Supermarkt, Tränen vor der Schule: Große Gefühle gehören zur Entwicklung dazu. Du erfährst, was in deinem Kind dabei passiert und wie du gelassen bleibst und Halt gibst — ohne die Gefühle klein zu reden.",
+    wer: "Jessica Hrusa",
+  },
+  {
+    datum: new Date("2027-07-21"),
+    titel: "Alle rennen — du nicht! Der Weg zurück zu mehr Leichtigkeit",
+    text: "Leichtigkeit ist kein Zufall und kein Luxus. Sie entsteht, wenn du weißt, was du loslassen darfst. Zum Abschluss vor der Sommerpause ein Abend mit Impulsen, die dich leichter gehen lassen, als du gekommen bist.",
+    wer: "Jessica Bisetto",
+  },
+];
+
+const kommendeTermine = TERMINE.filter((t) => t.datum >= heute);
+const messeAktuell = MESSE.datum >= heute;
+
+const fmt = (d: Date) =>
+  d.toLocaleDateString("de-DE", { day: "2-digit", month: "long", year: "numeric" });
+const fmtKurz = (d: Date) =>
+  d.toLocaleDateString("de-DE", { day: "2-digit", month: "2-digit", year: "numeric" });
+---
+<BaseLayout
+  title="Vorträge & Reihen"
+  description="Vorträge und Abendreihen von Jessica Bisetto — der FamilienRAUM in Schwäbisch Gmünd und Auftritte wie die Gesundheitsmesse „Gsond auf der Ostalb“."
+  current="angebote"
+>
+  <main class="screen vt">
+    <div class="page-head">
+      <p class="eyebrow">Vorträge & Reihen</p>
+      <h1 class="h-display page-head__h">Zum Zuhören und Mitreden.</h1>
+      <p class="lede page-head__lede">
+        Neben dem Coaching bin ich regelmäßig mit Vorträgen unterwegs — mal
+        einzeln auf einer Messe, mal in einer Reihe, die über Monate läuft.
+      </p>
+    </div>
+
+    {messeAktuell && (
+      <section class="vt-messe">
+        <div class="vt-messe__side">
+          <p class="eyebrow">Nächster Vortrag</p>
+          <p class="vt-messe__datum">{fmt(MESSE.datum)}</p>
+          <p class="vt-messe__zeit">{MESSE.zeit}</p>
+          <p class="vt-messe__ort">{MESSE.ort}</p>
+        </div>
+        <div class="vt-messe__body">
+          <p class="vt-messe__messe">{MESSE.messe}</p>
+          <h2 class="h2 vt-messe__t">{MESSE.titel}</h2>
+          {MESSE.text.map((p) => <p class="body vt-messe__p">{p}</p>)}
+        </div>
+      </section>
+    )}
+
+    <section class="vt-reihe">
+      <div class="vt-reihe__head">
+        <p class="eyebrow">Abendreihe · Schwäbisch Gmünd</p>
+        <h2 class="h1 vt-reihe__h">Der <em>FamilienRAUM</em></h2>
+        <p class="lede vt-reihe__lede">Was Familien trägt und Kinder stärkt.</p>
+      </div>
+
+      <div class="vt-reihe__intro">
+        <p class="body">
+          Im ersten Lebensjahr gibt es viele Angebote für Familien — von PEKiP
+          bis Babyschwimmen. Später stehen meist Bewegung, Musik oder
+          Kreativität im Mittelpunkt. Was fehlt, ist ein Ort für die Fragen, die
+          den Familienalltag wirklich bewegen: Wie entwickeln Kinder ein
+          gesundes Selbstwertgefühl? Wie gibt man Orientierung und setzt
+          liebevoll Grenzen? Wie geht man mit Konflikten, Lernstress oder Medien
+          um?
+        </p>
+        <p class="body">
+          Genau dafür haben wir den FamilienRAUM ins Leben gerufen — einmal im
+          Monat ein Abend für Wissen, Verbindung und Austausch. Denn niemand
+          muss den Familienalltag allein meistern.
+        </p>
+      </div>
+
+      <ul class="vt-fakten">
+        <li><strong>Wann</strong><span>Jeden dritten Mittwoch im Monat, 19:00 Uhr — außerhalb der Schulferien</span></li>
+        <li><strong>Wo</strong><span>Zapp Areal, Schwäbisch Gmünd</span></li>
+        <li><strong>Ablauf</strong><span>Rund 45 Minuten fachlicher Input, danach Zeit für Fragen und Austausch</span></li>
+        <li><strong>Kosten</strong><span>12 € pro Abend, bitte passend in bar mitbringen</span></li>
+        <li><strong>Getränke</strong><span>Stehen bereit — gegen eine freiwillige Spende. 100 % davon gehen an die SOS-Kinderdörfer.</span></li>
+        <li><strong>Wer</strong><span>Jessica Bisetto, Kerstin Fehst und Jessica Hrusa</span></li>
+      </ul>
+
+      {kommendeTermine.length > 0 ? (
+        <>
+          <h3 class="h3 vt-termine__h">Die Termine</h3>
+          <ol class="vt-termine">
+            {kommendeTermine.map((t) => (
+              <li class="vt-termin">
+                <div class="vt-termin__datum">
+                  <time datetime={t.datum.toISOString().slice(0, 10)}>
+                    {fmtKurz(t.datum)}
+                  </time>
+                </div>
+                <div class="vt-termin__body">
+                  <p class="vt-termin__t">{t.titel}</p>
+                  <p class="vt-termin__d">{t.text}</p>
+                  <p class="vt-termin__wer">{t.wer}</p>
+                </div>
+              </li>
+            ))}
+          </ol>
+        </>
+      ) : (
+        <p class="body vt-leer">
+          Aktuell stehen keine weiteren Termine fest. Schreib mir gern, wenn du
+          erfahren möchtest, wann es weitergeht.
+        </p>
+      )}
+
+      <div class="vt-anmeldung">
+        <p class="body">
+          Die Anmeldung ist verbindlich und läuft über das Formular bei meiner
+          Kollegin Jessica Hrusa.
+        </p>
+        <a href={ANMELDUNG} class="btn btn-pri" target="_blank" rel="noopener noreferrer">
+          Zur Anmeldung
+          <span class="arr" aria-hidden="true">→</span>
+        </a>
+      </div>
+    </section>
+
+    <section class="vt-outro">
+      <h2 class="h2">Einen Vortrag für Ihre Einrichtung?</h2>
+      <p class="body">
+        Für Schulen, Kitas, Vereine und Unternehmen halte ich Vorträge und
+        Elternabende auch auf Anfrage — zu Resilienz, Lernen, Konflikten und
+        mentaler Gesundheit.
+      </p>
+      <a href="/kontakt" class="btn btn-sec">Anfrage senden</a>
+    </section>
+  </main>
+</BaseLayout>
+
+<style>
+  .vt { max-width: var(--w-content); }
+
+  .vt-messe {
+    display: grid; grid-template-columns: 210px 1fr; gap: var(--sp-6);
+    background: var(--color-teal-700); color: var(--color-bone);
+    border-radius: var(--r-lg); padding: 34px 38px;
+    margin-bottom: var(--sp-9);
+  }
+  @media (max-width: 760px){ .vt-messe{ grid-template-columns: 1fr; gap: 20px; padding: 26px 24px; } }
+  .vt-messe__side .eyebrow{ color: var(--color-aqua-100); margin-bottom: 10px; }
+  .vt-messe__datum{
+    font-family: var(--font-display); font-size: 22px; line-height: 1.2;
+    margin: 0; color: var(--color-bone);
+  }
+  .vt-messe__zeit{ font-size: 15px; margin: 4px 0 0; color: rgba(246,248,246,0.85); }
+  .vt-messe__ort{ font-size: 13px; margin: 10px 0 0; color: rgba(246,248,246,0.7); line-height: 1.45; }
+  .vt-messe__messe{ font-size: 13px; margin: 0 0 6px; color: var(--color-aqua-100); }
+  .vt-messe__t{ color: var(--color-bone); margin: 0 0 14px; }
+  .vt-messe__p{ color: rgba(246,248,246,0.88); margin: 0 0 10px; max-width: 60ch; }
+  .vt-messe__p:last-child{ margin-bottom: 0; }
+
+  .vt-reihe__head{ max-width: 62ch; }
+  .vt-reihe__h{ margin: 8px 0 0; }
+  .vt-reihe__h em{ font-style: italic; color: var(--color-teal-700); }
+  .vt-reihe__lede{ margin: 10px 0 0; }
+  .vt-reihe__intro{ margin-top: var(--sp-5); max-width: 68ch; }
+  .vt-reihe__intro .body{ margin: 0 0 14px; }
+
+  .vt-fakten{
+    list-style: none; padding: 22px 26px; margin: var(--sp-6) 0 0;
+    background: var(--bg-raised); border-radius: var(--r-lg);
+    display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px 32px;
+  }
+  @media (max-width: 700px){ .vt-fakten{ grid-template-columns: 1fr; } }
+  .vt-fakten li{ display: flex; flex-direction: column; gap: 3px; }
+  .vt-fakten strong{
+    font-family: var(--font-body); font-size: 12px; font-weight: 700;
+    letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-teal-700);
+  }
+  .vt-fakten span{ font-size: 14px; line-height: 1.5; color: var(--fg); }
+
+  .vt-termine__h{ margin: var(--sp-7) 0 16px; }
+  .vt-termine{ list-style: none; padding: 0; margin: 0; }
+  .vt-termin{
+    display: grid; grid-template-columns: 118px 1fr; gap: 20px;
+    padding: 16px 0; border-top: 1px solid var(--border);
+  }
+  .vt-termin:last-child{ border-bottom: 1px solid var(--border); }
+  @media (max-width: 620px){ .vt-termin{ grid-template-columns: 1fr; gap: 6px; } }
+  .vt-termin__datum time{
+    font-family: var(--font-body); font-size: 14px; font-weight: 600;
+    color: var(--color-teal-700); font-feature-settings: "tnum";
+  }
+  .vt-termin__t{
+    font-family: var(--font-display); font-size: 18px; line-height: 1.25;
+    margin: 0 0 5px; color: var(--fg);
+  }
+  .vt-termin__d{ font-size: 14px; line-height: 1.55; color: var(--fg-muted); margin: 0 0 6px; max-width: 62ch; }
+  .vt-termin__wer{ font-size: 12px; color: var(--fg-subtle); margin: 0; }
+
+  .vt-leer{ margin: var(--sp-6) 0 0; max-width: 52ch; }
+
+  .vt-anmeldung{
+    margin-top: var(--sp-6);
+    display: flex; align-items: center; gap: 24px; flex-wrap: wrap;
+  }
+  .vt-anmeldung .body{ margin: 0; max-width: 46ch; }
+
+  .vt-outro{
+    margin-top: var(--sp-9); padding-top: var(--sp-7);
+    border-top: 1px solid var(--border); max-width: 60ch;
+  }
+  .vt-outro .h2{ margin: 0 0 12px; }
+  .vt-outro .body{ margin: 0 0 22px; }
+</style>

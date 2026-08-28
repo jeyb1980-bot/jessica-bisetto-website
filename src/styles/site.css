@@ -118,10 +118,11 @@ body { background: var(--bg); color: var(--fg); }
 .nav-desk .btn-pri{ margin-left: 6px; }
 .nav-burger{ display: none; background: none; border: 0; padding: 8px; cursor: pointer; }
 .nav-mobile{ display: none; }
-/* Die waagerechte Navigation braucht mit Logo rund 1040px. Darunter
-   muss das Burger-Menü übernehmen, sonst schiebt die Navigationszeile
-   die ganze Seite in die Breite und man kann seitlich scrollen. */
-@media (max-width: 1080px){
+/* Die waagerechte Navigation braucht mit Logo und acht Einträgen rund
+   1130px. Darunter muss das Burger-Menü übernehmen, sonst schiebt die
+   Navigationszeile die ganze Seite in die Breite und man kann seitlich
+   scrollen. Beim Hinzufügen eines Menüpunkts diesen Wert mit prüfen. */
+@media (max-width: 1180px){
   .nav-desk{ display: none; }
   .nav-burger{ display: block; }
   .nav-mobile:not([hidden]){ display: flex; flex-direction: column; padding: 12px 24px 24px; gap: 14px; border-top: 1px solid var(--border); }
@@ -538,6 +539,21 @@ body { background: var(--bg); color: var(--fg); }
   transition: border-color var(--dur-fast) var(--ease-soft);
 }
 .ang-panel__link a:hover{ border-bottom-color: var(--color-teal-700); }
+
+/* Hinweis auf die Vorträge — liegt außerhalb der Reiter und ist damit
+   unabhängig davon sichtbar, welche Zielgruppe gerade gewählt ist. */
+.ang-vortraege{
+  max-width: var(--w-wide); margin: var(--sp-8) auto 0;
+  background: var(--color-sage-50); border-radius: var(--r-lg);
+  padding: 32px 36px;
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 28px; flex-wrap: wrap;
+  position: relative; z-index: 1;
+}
+.ang-vortraege__body{ flex: 1 1 380px; }
+.ang-vortraege__h{ margin: 8px 0 8px; }
+.ang-vortraege__d{ margin: 0; max-width: 62ch; color: var(--fg-muted); }
+@media (max-width: 620px){ .ang-vortraege{ padding: 26px 24px; } }
 
 /* ===== Featured project — Mut tut gut ===== */
 .ang-project{

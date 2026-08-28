@@ -1,5 +1,8 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import { naechsterTermin } from "../data/vortraege";
+
+const naechster = naechsterTermin();
 
 const data = {
   kinder: {
@@ -114,12 +117,6 @@ const order = ["kinder", "erwachsene", "unternehmen"] as const;
                   Themen — und unter <a href="/#material">Material zum Mitnehmen</a> kostenfreie Mal- und Bastelvorlagen.
                 </p>
               )}
-              {k === "erwachsene" && (
-                <p class="ang-panel__link body-sm">
-                  Du hörst lieber erst einmal zu? Meine <a href="/vortraege">Vorträge und Abendreihen</a> sind
-                  ein guter erster Schritt — ganz ohne Einzelgespräch.
-                </p>
-              )}
             </div>
           </article>
 
@@ -216,6 +213,27 @@ const order = ["kinder", "erwachsene", "unternehmen"] as const;
         </div>
       );
     })}
+
+    {/* Steht bewusst AUSSERHALB der Reiter. Vorher lag der Verweis im
+        Reiter „Erwachsene“ — die Seite öffnet aber mit „Kinder“, also war
+        er für alle unsichtbar, die nicht zufällig weiterklickten. Vorträge
+        richten sich ohnehin an Eltern wie an Erwachsene. */}
+    <section class="ang-vortraege">
+      <div class="ang-vortraege__body">
+        <p class="eyebrow">Vorträge & Reihen</p>
+        <h2 class="h2 ang-vortraege__h">Lieber erst einmal zuhören?</h2>
+        <p class="body ang-vortraege__d">
+          {naechster
+            ? `Nächster Termin: ${naechster.label} — ${naechster.titel}.`
+            : "Regelmäßig halte ich Vorträge und Abendreihen für Eltern und Erwachsene."}
+          {" "}Ein guter erster Schritt, ganz ohne Einzelgespräch.
+        </p>
+      </div>
+      <a href="/vortraege" class="btn btn-pri">
+        Alle Vorträge ansehen
+        <span class="arr" aria-hidden="true">→</span>
+      </a>
+    </section>
   </main>
 </BaseLayout>
 

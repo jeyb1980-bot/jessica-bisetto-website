@@ -116,7 +116,13 @@ body { background: var(--bg); color: var(--fg); }
 .nav-link.is-current{ color: var(--color-teal-700); }
 .nav-link.is-current::after{ content: ""; position: absolute; left: 14px; right: 14px; bottom: 2px; height: 2px; border-radius: 2px; background: var(--color-aqua-500); }
 .nav-desk .btn-pri{ margin-left: 6px; }
-.nav-burger{ display: none; background: none; border: 0; padding: 8px; cursor: pointer; }
+/* Der Burger ist auf dem Handy die einzige Navigation — er bekommt die
+   volle empfohlene Fingergröße von 44px, sonst trifft man daneben. */
+.nav-burger{
+  display: none; background: none; border: 0; cursor: pointer;
+  width: 44px; height: 44px; padding: 0;
+  align-items: center; justify-content: center;
+}
 .nav-mobile{ display: none; }
 /* Die waagerechte Navigation braucht mit Logo und acht Einträgen rund
    1130px. Darunter muss das Burger-Menü übernehmen, sonst schiebt die
@@ -124,7 +130,7 @@ body { background: var(--bg); color: var(--fg); }
    scrollen. Beim Hinzufügen eines Menüpunkts diesen Wert mit prüfen. */
 @media (max-width: 1180px){
   .nav-desk{ display: none; }
-  .nav-burger{ display: block; }
+  .nav-burger{ display: flex; }
   .nav-mobile:not([hidden]){ display: flex; flex-direction: column; padding: 12px 24px 24px; gap: 14px; border-top: 1px solid var(--border); }
 }
 
@@ -232,7 +238,8 @@ body { background: var(--bg); color: var(--fg); }
 .testi-card__q::before{ content: "„ "; color: var(--color-clay-500); }
 .testi-card__more{
   align-self: flex-start;
-  background: none; border: 0; padding: 0; cursor: pointer;
+  /* Etwas Höhe, damit der Knopf auf dem Handy sicher zu treffen ist. */
+  background: none; border: 0; padding: 5px 0; cursor: pointer; min-height: 28px;
   font-family: var(--font-body); font-size: 12px; font-weight: 600;
   color: var(--color-teal-700);
   text-decoration: underline; text-underline-offset: 0.25em;
@@ -240,8 +247,8 @@ body { background: var(--bg); color: var(--fg); }
 .testi-card__more:hover{ color: var(--color-aqua-700); }
 .testi-card__sig{ font-family: var(--font-body); font-size: 12px; margin-top: auto; }
 .testi-card__sig strong{ display: block; color: var(--fg); font-weight: 600; }
-.testi-card__sig span{ color: var(--fg-subtle); font-size: 11px; }
-.testi-card__ph{ font-style: normal; font-weight: 400; color: var(--color-clay-700); font-size: 11px; letter-spacing: 0.04em; text-transform: uppercase; }
+.testi-card__sig span{ color: var(--fg-subtle); font-size: 12px; }
+.testi-card__ph{ font-style: normal; font-weight: 400; color: var(--color-clay-700); font-size: 12px; letter-spacing: 0.04em; text-transform: uppercase; }
 
 /* ===== Partners ===== */
 .partners{ max-width: var(--w-wide); margin: 0 auto; padding: 68px 32px; }
@@ -272,7 +279,7 @@ body { background: var(--bg); color: var(--fg); }
   .partners__group:first-child{ border-top: 0; }
 }
 .partners__glabel{
-  font-family: var(--font-body); font-size: 11px; font-weight: 500;
+  font-family: var(--font-body); font-size: 12px; font-weight: 500;
   letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-teal-700);
   margin: 0 0 4px;
 }
@@ -407,7 +414,7 @@ body { background: var(--bg); color: var(--fg); }
   border-top: 1px solid var(--border);
 }
 .dl-card__meta{
-  font-family: var(--font-body); font-size: 11px; letter-spacing: 0.06em;
+  font-family: var(--font-body); font-size: 12px; letter-spacing: 0.06em;
   text-transform: uppercase; color: var(--fg-subtle); font-feature-settings: "tnum";
 }
 .dl-card__cta{
@@ -481,8 +488,18 @@ body { background: var(--bg); color: var(--fg); }
 .ft-eb{ color: var(--color-clay-100); margin-bottom: 14px; }
 .site-footer .body-sm, .site-footer .body{ color: rgba(250,246,240,0.82); }
 .ft-a{ color: rgba(250,246,240,0.88); text-decoration: none; cursor: pointer; }
-.ft-a:hover{ color: var(--color-clay-100); }
+.ft-a:hover{ color: var(--color-aqua-100); }
 .ft-list{ list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 8px; font-size: 14px; }
+
+/* Auf dem Handy waren die Fußzeilen-Links nur 19px hoch — mit dem Finger
+   kaum zu treffen. Sie bekommen etwas Luft nach oben und unten, damit die
+   Trefferfläche wächst, ohne dass die Liste optisch auseinanderfällt. */
+@media (max-width: 880px){
+  .ft-list{ gap: 2px; }
+  .ft-list .ft-a{ display: inline-block; padding: 7px 0; }
+  .site-footer__legal .ft-a{ display: inline-block; padding: 6px 2px; }
+  .ft-col p .ft-a{ display: inline-block; padding: 5px 0; }
+}
 .site-footer__legal{
   max-width: var(--w-wide); margin: 0 auto; padding-top: 28px;
   font-size: 12px; color: rgba(250,246,240,0.55);
@@ -743,7 +760,7 @@ body { background: var(--bg); color: var(--fg); }
 .ref-box__body .ref-grp:first-child{ padding-top: 24px; }
 .ref-grp{ display: flex; flex-direction: column; gap: 10px; }
 .ref-grp__l{
-  font-family: var(--font-body); font-size: 11px; font-weight: 600;
+  font-family: var(--font-body); font-size: 12px; font-weight: 600;
   letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-teal-700);
   margin: 0;
 }
@@ -764,8 +781,12 @@ body { background: var(--bg); color: var(--fg); }
 .fld-row{ display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
 @media (max-width: 600px){ .fld-row{ grid-template-columns: 1fr; } }
 .lbl{ font-family: var(--font-body); font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--fg-muted); font-weight: 600; }
+/* 16px ist hier kein Geschmack, sondern Pflicht: Safari auf dem iPhone
+   zoomt automatisch in jedes Eingabefeld, dessen Schrift kleiner ist —
+   die Seite springt beim Antippen und muss von Hand zurückgezoomt
+   werden. Gilt für alle Felder, in die getippt wird. */
 .fld{
-  width: 100%; font-family: var(--font-body); font-size: 15px; color: var(--fg);
+  width: 100%; font-family: var(--font-body); font-size: 16px; color: var(--fg);
   background: var(--bg); border: 1px solid var(--border); border-radius: var(--r-sm);
   padding: 13px 14px; transition: border-color var(--dur-fast) var(--ease-soft);
   outline: none;
@@ -780,8 +801,15 @@ body { background: var(--bg); color: var(--fg); }
 }
 .seg-btn:hover{ border-color: var(--color-ink); }
 .seg-btn.is-on{ background: var(--color-ink); color: var(--color-bone); border-color: var(--color-ink); }
-.cbox{ display: flex; align-items: center; gap: 10px; font-family: var(--font-body); font-size: 14px; color: var(--fg); }
-.cbox input{ accent-color: var(--color-teal-500); width: 18px; height: 18px; }
+/* Das ganze Label ist anklickbar, deshalb reicht die Trefferfläche weit
+   über das Kästchen hinaus. Etwas Höhe bekommt es trotzdem, damit auch
+   ein Treffer direkt aufs Kästchen sicher sitzt. */
+.cbox{
+  display: flex; align-items: center; gap: 10px; cursor: pointer;
+  font-family: var(--font-body); font-size: 14px; color: var(--fg);
+  min-height: 44px;
+}
+.cbox input{ accent-color: var(--color-teal-500); width: 22px; height: 22px; flex: none; }
 .kontakt-side{ background: var(--bg-raised); border-radius: var(--r-lg); padding: 32px; }
 .kontakt-side .h3{ margin: 0 0 20px; }
 .kontakt-line{ display: flex; align-items: flex-start; gap: 12px; margin: 14px 0; font-family: var(--font-body); font-size: 15px; }

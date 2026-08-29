@@ -19,7 +19,7 @@
 .bk-step__n{
   width: 22px; height: 22px; border-radius: 50%;
   display: inline-flex; align-items: center; justify-content: center;
-  font-size: 11px; font-weight: 500; font-feature-settings: "tnum";
+  font-size: 12px; font-weight: 500; font-feature-settings: "tnum";
   background: var(--bg-raised); border: 1px solid var(--border); color: var(--fg-subtle);
   transition: all var(--dur-fast) var(--ease-soft);
 }
@@ -132,8 +132,10 @@
 .bk-field--full{ grid-column: 1 / -1; }
 .bk-field > span{ font-family: var(--font-body); font-size: 13px; color: var(--fg-muted); }
 .bk-field > span em{ color: var(--fg-subtle); font-style: normal; }
+/* 16px, damit Safari auf dem iPhone beim Antippen nicht in die Seite
+   hineinzoomt — mitten im Anmeldeformular besonders störend. */
 .bk-field input, .bk-field textarea{
-  font-family: var(--font-body); font-size: 15px; color: var(--fg);
+  font-family: var(--font-body); font-size: 16px; color: var(--fg);
   background: var(--bg); border: 1px solid var(--border); border-radius: var(--r-sm);
   padding: 11px 14px; outline: none;
   transition: border-color var(--dur-fast) var(--ease-soft), box-shadow var(--dur-fast) var(--ease-soft);

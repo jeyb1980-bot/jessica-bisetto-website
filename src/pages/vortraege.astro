@@ -261,7 +261,12 @@ const fmtKurz = (d: Date) =>
   .vt-termin__pause{
     font-size: 13px; color: var(--fg-subtle); margin: 0; font-style: italic;
   }
-  .vt-termin__wer a{ color: var(--color-teal-700); text-underline-offset: 0.25em; }
+  /* Etwas Höhe für den Finger — die Namen sind Links auf die Seiten der
+     Kolleginnen und waren mit 17px kaum zu treffen. */
+  .vt-termin__wer a{
+    color: var(--color-teal-700); text-underline-offset: 0.25em;
+    display: inline-block; padding: 4px 0;
+  }
   .vt-termin__wer a:hover{ color: var(--color-aqua-700); }
   .vt-sep{ color: var(--fg-subtle); }
 
@@ -275,7 +280,10 @@ const fmtKurz = (d: Date) =>
   @media (max-width: 620px){ .vt-refs__list{ grid-template-columns: 1fr; } }
   .vt-refs__list li{ display: flex; flex-direction: column; gap: 2px; }
   .vt-refs__list strong{ font-family: var(--font-body); font-size: 14px; font-weight: 600; color: var(--fg); }
-  .vt-refs__list a{ font-size: 13px; color: var(--color-teal-700); text-underline-offset: 0.25em; }
+  .vt-refs__list a{
+    font-size: 13px; color: var(--color-teal-700); text-underline-offset: 0.25em;
+    display: inline-block; padding: 4px 0; min-height: 24px;
+  }
   .vt-refs__list a:hover{ color: var(--color-aqua-700); }
   .vt-refs__hier{ font-size: 13px; color: var(--fg-subtle); }
 

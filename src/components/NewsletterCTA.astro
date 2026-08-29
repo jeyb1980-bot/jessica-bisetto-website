@@ -142,7 +142,9 @@ const BREVO_ACTION =
   }
   .nl__field input{
     width: 100%; box-sizing: border-box;
-    font-family: var(--font-body); font-size: 15px;
+    /* 16px verhindert, dass Safari auf dem iPhone beim Antippen
+       automatisch in die Seite hineinzoomt. */
+    font-family: var(--font-body); font-size: 16px;
     padding: 13px 16px; border-radius: var(--r-md);
     border: 1px solid rgba(250, 246, 240, 0.28);
     background: rgba(255, 255, 255, 0.08);
@@ -175,7 +177,12 @@ const BREVO_ACTION =
     font-family: var(--font-body); font-size: 12px; line-height: 1.5;
     color: rgba(250, 246, 240, 0.7); margin: 0;
   }
-  .nl__fineprint a{ color: var(--color-aqua-100); text-underline-offset: 0.25em; }
+  .nl__fineprint a{
+    color: var(--color-aqua-100); text-underline-offset: 0.25em;
+    /* Trefferfläche auf dem Handy vergrößern, ohne den Fließtext
+       auseinanderzureißen. */
+    display: inline-block; padding: 4px 0;
+  }
 
   .nl__done{
     background: rgba(255, 255, 255, 0.1);
